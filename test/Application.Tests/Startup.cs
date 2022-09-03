@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Tests;
+namespace Application.Tests;
 
 public class Startup
 {
