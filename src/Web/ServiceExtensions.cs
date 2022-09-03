@@ -4,7 +4,7 @@ using TodoApp.Infrastructure;
 using TodoApp.Presentation;
 using MassTransit;
 
-namespace TodoApp.WebApp;
+namespace TodoApp.Web;
 
 public static class ServiceExtensions
 {

@@ -4,12 +4,13 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<RootNamespace>TodoApp.WebApp</RootNamespace>
+		<RootNamespace>TodoApp.Web</RootNamespace>
 		<WarningsAsErrors>nullable</WarningsAsErrors>
 		<NoWarn>1701;1702;CS1591</NoWarn>
+		<AssemblyName>Web</AssemblyName>
 	</PropertyGroup>
 
-	<PropertyGroup Condition=" '$(RunConfiguration)' == 'WebApp' " />
+	<PropertyGroup Condition=" '$(RunConfiguration)' == 'Web' " />
 	<ItemGroup>
 		<PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
 		<PackageReference Include="MassTransit.RabbitMQ" Version="8.0.7-develop.566" />

@@ -6,8 +6,8 @@
 #
 name: todos
 services:
-- name: webapp
-  project: src/WebApp/WebApp.csproj
+- name: web
+  project: src/Web/Web.csproj
   bindings:
   - name: http
     protocol: http

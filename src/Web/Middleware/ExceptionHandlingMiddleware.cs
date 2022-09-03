@@ -3,7 +3,7 @@ using TodoApp.Application.Exceptions;
 using TodoApp.Domain.Exceptions;
 using ApplicationException = TodoApp.Domain.Exceptions.ApplicationException;
 
-namespace TodoApp.WebApp.Middleware;
+namespace TodoApp.Web.Middleware;
 
 internal sealed class ExceptionHandlingMiddleware : IMiddleware
 {

@@ -1,7 +1,7 @@
 using TodoApp.Infrastructure.Persistance;
 using TodoApp.Presentation;
-using TodoApp.WebApp;
-using TodoApp.WebApp.Middleware;
+using TodoApp.Web;
+using TodoApp.Web.Middleware;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 

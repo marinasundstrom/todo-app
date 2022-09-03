@@ -9,7 +9,7 @@ public class ArchitectureTests
     private const string ApplicationNamespace = "TodoApp.Application";
     private const string InfrastructureNamespace = "TodoApp.Infrastructure";
     private const string PresentationNamespace = "TodoApp.Presentation";
-    private const string WebAppNamespace = "TodoApp.WebApp";
+    private const string WebNamespace = "TodoApp.Web";
 
     [Fact]
     public void Domain_Should_Not_HaveDependencyOnOtherProjects()
@@ -22,7 +22,7 @@ public class ArchitectureTests
             ApplicationNamespace,
             InfrastructureNamespace,
             PresentationNamespace,
-            WebAppNamespace
+            WebNamespace
         };
 
         // Act
@@ -46,7 +46,7 @@ public class ArchitectureTests
         {
             InfrastructureNamespace,
             PresentationNamespace,
-            WebAppNamespace
+            WebNamespace
         };
 
         // Act
@@ -88,7 +88,7 @@ public class ArchitectureTests
         var otherProjects = new[]
         {
             PresentationNamespace,
-            WebAppNamespace
+            WebNamespace
         };
 
         // Act
@@ -112,7 +112,7 @@ public class ArchitectureTests
         {
             InfrastructureNamespace,
             PresentationNamespace,
-            WebAppNamespace
+            WebNamespace
         };
 
         // Act
