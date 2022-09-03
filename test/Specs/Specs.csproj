@@ -30,9 +30,4 @@
 		<ProjectReference Include="..\..\src\Application\Application.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <SpecFlowFeatureFiles Update="Features\Todos.feature">
-	    <Visible>False</Visible>
-	  </SpecFlowFeatureFiles>
-	</ItemGroup>
 </Project>
