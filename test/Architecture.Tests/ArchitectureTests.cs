@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using NetArchTest.Rules;
 
-namespace Architecture.Tests;
+namespace TodoApp.Architecture.Tests;
 
 public class ArchitectureTests
 {

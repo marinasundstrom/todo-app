@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 using TodoApp.Application.Services;
 using TodoApp.Infrastructure.Persistance;
-using Microsoft.EntityFrameworkCore;
 
 namespace Tests;
 

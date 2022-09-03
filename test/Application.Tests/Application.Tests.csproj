@@ -7,6 +7,10 @@
 		<NoWarn>1701;1702;CS1591</NoWarn>
 
 		<IsPackable>false</IsPackable>
+
+		<RootNamespace>TodoApp.Application</RootNamespace>
+		<WarningsAsErrors>nullable</WarningsAsErrors>
+		<NoWarn>1701;1702;CS1591</NoWarn>
 	</PropertyGroup>
 
 

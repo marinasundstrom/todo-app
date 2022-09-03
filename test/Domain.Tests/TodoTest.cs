@@ -2,7 +2,7 @@
 using TodoApp.Domain.Enums;
 using TodoApp.Domain.Events;
 
-namespace Domain.Tests;
+namespace TodoApp.Domain.Tests;
 
 public class TodoTest
 {
