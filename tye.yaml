@@ -1,0 +1,54 @@
+# tye application configuration file
+# read all about it at https://github.com/dotnet/tye
+#
+# when you've given us a try, we'd love to know what you think:
+#    https://aka.ms/AA7q20u
+#
+name: todos
+services:
+- name: webapp
+  project: src/WebApp/WebApp.csproj
+  bindings:
+  - name: http
+    protocol: http
+    port: 5000
+  - name: https
+    protocol: https
+    port: 5001
+
+- name: clientapp
+  project: src/ClientApp/ClientApp.csproj
+  bindings:
+  - name: http
+    protocol: http
+    port: 5020
+  - name: https
+    protocol: https
+    port: 5021
+
+- name: mssql
+  image: mcr.microsoft.com/azure-sql-edge:latest
+  env:
+  - name: MSSQL_SA_PASSWORD
+    value: P@ssw0rd
+  - name: MSSQL_PID
+    value: Developer
+  - name: ACCEPT_EULA
+    value: "Y"
+  bindings:
+  - port: 1433
+    connectionString: Server=${host},${port};User Id=sa;Password=${env:MSSQL_SA_PASSWORD};Encrypt=false
+  volumes:
+  - source: .data/sql-edge
+    target: /var/opt/mssql/data
+
+- name: rabbitmq
+  image: rabbitmq:3-management
+  bindings:
+    - name: rabbit
+      port: 5672
+      protocol: rabbitmq
+    - name: management
+      port: 15672
+
+

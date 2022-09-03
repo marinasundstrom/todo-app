@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<RootNamespace>TodoApp.WebApp</RootNamespace>
+		<WarningsAsErrors>nullable</WarningsAsErrors>
+		<NoWarn>1701;1702;CS1591</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(RunConfiguration)' == 'WebApp' " />
+	<ItemGroup>
+		<PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
+		<PackageReference Include="MassTransit.RabbitMQ" Version="8.0.7-develop.566" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.8">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="NSwag.AspNetCore" Version="13.16.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Application\Application.csproj" />
+		<ProjectReference Include="..\Consumers\Consumers.csproj" />
+		<ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+		<ProjectReference Include="..\Presentation\Presentation.csproj" />
+	</ItemGroup>
+
+</Project>

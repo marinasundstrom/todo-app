@@ -1,0 +1,26 @@
+﻿@using System.ComponentModel.DataAnnotations
+
+<EditForm Model="@this" OnValidSubmit="Submit">
+    <DataAnnotationsValidator />
+
+    <MudDialog>
+        <DialogContent>
+            <MudText Class="mb-4">Are you sure?</MudText>
+            <MudTextField Label="Comment" Lines="5" Variant="Variant.Outlined" @bind-Value="Comment" For="() => Comment" />
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="Cancel">Abort</MudButton>
+            <MudButton Color="Color.Primary" OnClick="Submit">Proceed</MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; } = null!;
+
+    [MaxLength(240)]
+    string? Comment { get; set; }
+
+    void Submit() => MudDialog.Close(DialogResult.Ok(Comment));
+    void Cancel() => MudDialog.Cancel();
+}

@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<RootNamespace>TodoApp.Domain</RootNamespace>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<WarningsAsErrors>nullable</WarningsAsErrors>
+		<NoWarn>1701;1702;CS1591</NoWarn>
+	</PropertyGroup>
+
+
+	<ItemGroup>
+		<PackageReference Include="MediatR" Version="10.0.1" />
+	</ItemGroup>
+
+</Project>

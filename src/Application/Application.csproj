@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>TodoApp.Application</RootNamespace>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <WarningsAsErrors>nullable</WarningsAsErrors>
+	<NoWarn>1701;1702;CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.2.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.2.0" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Todos\Commands\" />
+    <None Remove="Todos\Queries\" />
+    <None Remove="Todos\EventHandlers\" />
+    <None Remove="Todos\Dtos\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Todos\Commands\" />
+    <Folder Include="Todos\Queries\" />
+    <Folder Include="Todos\EventHandlers\" />
+    <Folder Include="Todos\Dtos\" />
+  </ItemGroup>
+</Project>

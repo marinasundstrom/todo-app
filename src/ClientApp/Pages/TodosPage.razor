@@ -1,0 +1,186 @@
+﻿@page "/"
+@page "/todos"
+@using Microsoft.AspNetCore.SignalR.Client
+@using TodoApp
+@implements IAsyncDisposable
+@inject ISnackbar Snackbar
+@inject ITodosClient TodosClient
+@inject NavigationManager NavigationManager
+
+<PageTitle>Todos</PageTitle>
+
+<MudText Typo="Typo.h4" GutterBottom="true">Todos</MudText>
+
+<MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/todos/new" Class="mb-2">Create todo</MudButton>
+
+<MudTable T="TodoDto" ServerData="@(new Func<TableState, Task<TableData<TodoDto>>>(ServerReload))" Elevation="25"
+    OnRowClick="(e) => NavigateTo(e.Item)" Dense="true" Hover="true" @ref="table" Class="mb-8">
+    <HeaderContent>
+        <MudTh>
+            <MudTableSortLabel SortLabel="Title" T="TodoDto">Title</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortLabel="Status" T="TodoDto">Status</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortLabel="Created" T="TodoDto">Created</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortLabel="LastModified" T="TodoDto">Last modified</MudTableSortLabel>
+        </MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Title">@context.Title</MudTd>
+        <MudTd DataLabel="Status">@context.Status.ToString()</MudTd>
+        <MudTd DataLabel="Created">@context.Created.ToString("g")</MudTd>
+        <MudTd DataLabel="Last modified">@context.LastModified?.ToString("g")</MudTd>
+    </RowTemplate>
+    <NoRecordsContent>
+        <MudText>No matching records found</MudText>
+    </NoRecordsContent>
+    <LoadingContent>
+        <MudText>Loading...</MudText>
+    </LoadingContent>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
+
+@code {
+    HubConnection hubConnection = null!;
+    MudTable<TodoDto> table = null!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            hubConnection = new HubConnectionBuilder()
+            .WithUrl($"https://localhost:5001/hubs/todos")
+            .WithAutomaticReconnect().Build();
+
+            hubConnection.On<string>("Created", OnCreated);
+            hubConnection.On<string>("Updated", OnUpdated);
+            hubConnection.On<string>("Deleted", OnDeleted);
+
+            //hubConnection.On<string, string>("TitleUpdated", OnTitleUpdated);
+            //hubConnection.On<string, string?>("DescriptionUpdated", OnDescriptionUpdated);
+            //hubConnection.On<string, TodoStatusDto>("StatusUpdated", OnStatusUpdated);
+
+            hubConnection.Closed += (error) =>
+            {
+                if (error is not null)
+                {
+                    Snackbar.Add($"{error.Message}", Severity.Error);
+                }
+
+                Snackbar.Add("Connection closed");
+                return Task.CompletedTask;
+            };
+            hubConnection.Reconnected += (error) =>
+            {
+                Snackbar.Add("Reconnected");
+                return Task.CompletedTask;
+            };
+            hubConnection.Reconnecting += (error) =>
+            {
+                Snackbar.Add("Reconnecting");
+                return Task.CompletedTask;
+            };
+            await hubConnection.StartAsync();
+            Snackbar.Add("Connected");
+        }
+        catch (Exception exc)
+        {
+            Snackbar.Add(exc.Message.ToString(), Severity.Error);
+        }
+    }
+
+    void NavigateTo(TodoDto todo)
+    {
+        NavigationManager.NavigateTo($"/todos/{todo.Id}");
+    }
+
+    private async Task<TableData<TodoDto>> ServerReload(TableState state)
+    {
+        var result = await TodosClient.GetTodosAsync(null, state.Page + 1, state.PageSize, state.SortLabel, state.SortDirection
+        == MudBlazor.SortDirection.Ascending ? null : (state.SortDirection == MudBlazor.SortDirection.Ascending ?
+        TodoApp.SortDirection.Ascending : TodoApp.SortDirection.Descending));
+        return new TableData<TodoDto>() { TotalItems = result.TotalItems, Items = result.Items };
+    }
+
+    async Task<TodoDto> FetchTodo(string id)
+    {
+        return await TodosClient.GetTodoByIdAsync(id);
+    }
+
+    async Task OnCreated(string todoId)
+    {
+        await table.ReloadServerData();
+    }
+
+    async Task OnUpdated(string todoId)
+    {
+        bool hasUpdated = await UpdateItem(todoId);
+    }
+
+    async Task OnDeleted(string todoId)
+    {
+        await table.ReloadServerData();
+    }
+
+    /* void OnTitleUpdated(string todoId, string title)
+    {
+        var item = GetTodoFromTable(todoId);
+
+        if(item is not null) 
+        {
+            item.Title = Title;
+            
+            StateHasChanged();          
+        }
+    } */
+
+    private async Task<bool> UpdateItem(string id) 
+    {
+        var newItem = await FetchTodo(id);
+        var hasReplaced = ReplaceItemInTable(id, newItem);
+        
+        StateHasChanged();
+
+        return hasReplaced;
+    }
+
+    private bool ReplaceItemInTable(string id, TodoDto item) 
+    {
+        var data = GetTableData();
+        var items = data!.Items.ToList();
+        var existingItem = items.FirstOrDefault(x => x.Id == id);
+        if (existingItem is not null) 
+        {
+            var index = items.TakeWhile(x => x.Id != id).Count();
+            items[index] = item;
+            data!.Items = items;
+
+            return true;
+        }
+        return false;
+    }
+
+    private TodoDto? GetItemFromTable(string id) 
+    {
+        var data = GetTableData();
+        return data!.Items.FirstOrDefault(x => x.Id == id);
+    }
+
+    private TableData<TodoDto>? GetTableData()
+    {
+        return (TableData<TodoDto>?)table?.GetType()?
+        .GetField("_server_data", System.Reflection.BindingFlags.NonPublic |
+        System.Reflection.BindingFlags.Instance)?
+        .GetValue(table);
+    }
+    public async ValueTask DisposeAsync()
+    {
+        await hubConnection.DisposeAsync();
+    }
+}

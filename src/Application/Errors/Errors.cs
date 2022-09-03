@@ -1,0 +1,11 @@
+﻿using TodoApp.Application.Common;
+
+namespace TodoApp.Application;
+
+public static class Errors
+{
+    public static class Todos
+    {
+        public static readonly Error TodoNotFound = new Error(nameof(TodoNotFound), "Todo not found", string.Empty);
+    }
+}

@@ -1,0 +1,1 @@
+﻿dotnet ef migrations add <Name> --project src/Infrastructure/Infrastructure.csproj --startup-project src/WebApp/WebApp.csproj

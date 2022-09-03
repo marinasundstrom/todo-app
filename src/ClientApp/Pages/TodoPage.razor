@@ -1,0 +1,204 @@
+﻿@page "/todos/new"
+@page "/todos/{id}"
+@using System.ComponentModel.DataAnnotations
+@using TodoApp
+@using Microsoft.AspNetCore.SignalR.Client
+@implements IAsyncDisposable
+@inject NavigationManager NavigationManager
+@inject ISnackbar Snackbar
+@inject ITodosClient TodosClient
+@inject IDialogService DialogService
+
+@if(notFound) 
+{
+    <PageTitle>Not found</PageTitle>
+
+    <MudText Typo="Typo.h4" GutterBottom="true">Not found</MudText>
+}
+else if(error) 
+{
+    <PageTitle>Error</PageTitle>
+
+    <MudText Typo="Typo.h4" GutterBottom="true">Error</MudText>
+}
+else 
+{
+    @if (todo is not null)
+    {
+        <PageTitle>@todo.Title</PageTitle>
+
+        <EditForm EditContext="editContext" OnValidSubmit="Submit">
+            <DataAnnotationsValidator />
+
+            <MudTextField Label="Title" Variant="Variant.Outlined" @bind-Value="Title" For="() => Title"
+                        Class="mb-4" />
+
+            <MudTextField Label="Description" Lines="5" Variant="Variant.Outlined" @bind-Value="Description"
+                        For="() => Description" Class="mb-4" />
+
+            <MudSelect Label="Status" @bind-Value="Status" For="() => Status" Variant="Variant.Outlined" Class="mb-4">
+                @foreach (var status in Enum.GetValues<TodoStatusDto>())
+                {
+                    <MudSelectItem Value="@status">@Enum.GetName(typeof(TodoStatusDto), status)</MudSelectItem>
+                }
+            </MudSelect>
+
+            <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Submit">Update</MudButton>
+
+        </EditForm>
+    }
+}
+
+
+@code {
+    EditContext editContext = null!;
+    TodoDto? todo;
+    HubConnection hubConnection = null!;
+    bool notFound = false;
+    bool error = false;
+
+    [Parameter] public string? Id { get; set; }
+
+    [MaxLength(60)]
+    public string Title { get; set; } = null!;
+
+    [MaxLength(340)]
+    public string? Description { get; set; }
+
+    public TodoStatusDto Status { get; set; }
+
+    async Task Submit()
+    {
+        await TodosClient.UpdateTitleAsync(Id, Title);
+
+        await TodosClient.UpdateDescriptionAsync(Id, Description);
+
+        await TodosClient.UpdateStatusAsync(Id, Status);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        editContext = new EditContext(this);
+
+        notFound = false;
+        error = false;
+
+        if (Id is null)
+        {
+            await CreateTodo();
+        }
+        else
+        {
+            try 
+            {
+                await LoadTodo(Id);
+            }
+            catch(ApiException<ProblemDetails> exc) 
+            {
+                if(exc.StatusCode == (int)System.Net.HttpStatusCode.NotFound)
+                {
+                    notFound = true;
+                }
+                else
+                {
+                    error = true;
+                }
+            }
+            catch(Exception exc) 
+            {
+                error = true;
+            }
+        }
+
+        try
+        {
+            hubConnection = new HubConnectionBuilder()
+            .WithUrl($"https://localhost:5001/hubs/todos?itemId={Id}")
+            .WithAutomaticReconnect().Build();
+
+            hubConnection.On<string, string>("TitleUpdated", OnTitleUpdated);
+            hubConnection.On<string, string?>("DescriptionUpdated", OnDescriptionUpdated);
+            hubConnection.On<string, TodoStatusDto>("StatusUpdated", OnStatusUpdated);
+
+            hubConnection.Closed += (error) =>
+            {
+                if (error is not null)
+                {
+                    Snackbar.Add($"{error.Message}", Severity.Error);
+                }
+
+                Snackbar.Add("Connection closed");
+                return Task.CompletedTask;
+            };
+            hubConnection.Reconnected += (error) =>
+            {
+                Snackbar.Add("Reconnected");
+                return Task.CompletedTask;
+            };
+            hubConnection.Reconnecting += (error) =>
+            {
+                Snackbar.Add("Reconnecting");
+                return Task.CompletedTask;
+            };
+            await hubConnection.StartAsync();
+            Snackbar.Add("Connected");
+        }
+        catch (Exception exc)
+        {
+            Snackbar.Add(exc.Message.ToString(), Severity.Error);
+        }
+    }
+
+    async Task CreateTodo()
+    {
+        todo = await TodosClient.CreateTodoAsync(new CreateTodoRequest
+        {
+            Title = "Test",
+            Description = "Lorem ipsum",
+            Status = TodoStatusDto.New
+        });
+
+            Title = todo.Title;
+            Description = todo.Description;
+            Status = todo.Status;
+
+            NavigationManager.NavigateTo($"/todos/{todo.Id}", replace: true);
+    }
+
+    async Task FetchTodo()
+    {
+        await LoadTodo(todo!.Id);
+    }
+
+    async Task LoadTodo(string id)
+    {
+        this.todo = await TodosClient.GetTodoByIdAsync(id);
+
+        Title = todo.Title;
+        Description = todo.Description;
+        Status = todo.Status;
+    }
+
+    void  OnTitleUpdated(string todoId, string title)
+    {
+        Title = title;
+        StateHasChanged();
+    }
+
+    void OnDescriptionUpdated(string todoId, string? description)
+    {
+        Description = description;
+        StateHasChanged();
+    }
+
+    void OnStatusUpdated(string todoId, TodoStatusDto status)
+    {
+        Status = status;
+        StateHasChanged();
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await hubConnection.DisposeAsync();
+    }
+}
