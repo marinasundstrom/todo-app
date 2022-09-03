@@ -40,9 +40,9 @@ public record DeleteTodo(string Id) : IRequest<Result>
 
             await todoRepository.SaveChangesAsync(cancellationToken);
 
-            await todoNotificationService.Created(todo.Id);
+            await todoNotificationService.Deleted(todo.Id);
 
-            return Result.Success(todo);
+            return Result.Success();
         }
     }
 }

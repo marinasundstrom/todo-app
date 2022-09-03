@@ -52,7 +52,7 @@ public class TodosController : ControllerBase
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<TodoDto>> DeleteTodo(string id, CancellationToken cancellationToken)
+    public async Task<ActionResult> DeleteTodo(string id, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new DeleteTodo(id), cancellationToken);
         return this.HandleResult(result);

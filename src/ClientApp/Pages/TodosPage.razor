@@ -6,6 +6,7 @@
 @inject ISnackbar Snackbar
 @inject ITodosClient TodosClient
 @inject NavigationManager NavigationManager
+@inject IDialogService DialogService
 
 <PageTitle>Todos</PageTitle>
 
@@ -14,7 +15,7 @@
 <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/todos/new" Class="mb-2">Create todo</MudButton>
 
 <MudTable T="TodoDto" ServerData="@(new Func<TableState, Task<TableData<TodoDto>>>(ServerReload))" Elevation="25"
-    OnRowClick="(e) => NavigateTo(e.Item)" Dense="true" Hover="true" @ref="table" Class="mb-8">
+          OnRowClick="(e) => NavigateTo(e.Item)" Dense="true" Hover="true" @ref="table" Class="mb-8">
     <HeaderContent>
         <MudTh>
             <MudTableSortLabel SortLabel="Title" T="TodoDto">Title</MudTableSortLabel>
@@ -28,12 +29,16 @@
         <MudTh>
             <MudTableSortLabel SortLabel="LastModified" T="TodoDto">Last modified</MudTableSortLabel>
         </MudTh>
+        <MudTh>
+
+        </MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Title">@context.Title</MudTd>
         <MudTd DataLabel="Status">@context.Status.ToString()</MudTd>
         <MudTd DataLabel="Created">@context.Created.ToString("g")</MudTd>
         <MudTd DataLabel="Last modified">@context.LastModified?.ToString("g")</MudTd>
+        <MudTh><MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="async () => await DeleteTodo(context.Id)"></MudIconButton></MudTh>
     </RowTemplate>
     <NoRecordsContent>
         <MudText>No matching records found</MudText>
@@ -113,6 +118,18 @@
         return await TodosClient.GetTodoByIdAsync(id);
     }
 
+    async Task DeleteTodo(string id)
+    {
+        var result = await DialogService.ShowMessageBox("Delete todo?", "Are you sure?", "Yes", "No");
+
+        if (result.GetValueOrDefault())
+        {
+            await TodosClient.DeleteTodoAsync(id);
+
+            //await table.ReloadServerData();}
+        }
+    }
+
     async Task OnCreated(string todoId)
     {
         await table.ReloadServerData();
@@ -132,30 +149,30 @@
     {
         var item = GetTodoFromTable(todoId);
 
-        if(item is not null) 
+        if(item is not null)
         {
             item.Title = Title;
-            
-            StateHasChanged();          
+
+            StateHasChanged();
         }
     } */
 
-    private async Task<bool> UpdateItem(string id) 
+    private async Task<bool> UpdateItem(string id)
     {
         var newItem = await FetchTodo(id);
         var hasReplaced = ReplaceItemInTable(id, newItem);
-        
+
         StateHasChanged();
 
         return hasReplaced;
     }
 
-    private bool ReplaceItemInTable(string id, TodoDto item) 
+    private bool ReplaceItemInTable(string id, TodoDto item)
     {
         var data = GetTableData();
         var items = data!.Items.ToList();
         var existingItem = items.FirstOrDefault(x => x.Id == id);
-        if (existingItem is not null) 
+        if (existingItem is not null)
         {
             var index = items.TakeWhile(x => x.Id != id).Count();
             items[index] = item;
@@ -166,7 +183,7 @@
         return false;
     }
 
-    private TodoDto? GetItemFromTable(string id) 
+    private TodoDto? GetItemFromTable(string id)
     {
         var data = GetTableData();
         return data!.Items.FirstOrDefault(x => x.Id == id);
