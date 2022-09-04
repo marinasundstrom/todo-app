@@ -14,7 +14,7 @@ public class CustomWebApplicationFactory<TStartup>
     {
         builder.ConfigureServices(async services =>
         {
-            var descriptor = services.SingleOrDefault(
+            var descriptor = services.Single(
         d => d.ServiceType ==
             typeof(DbContextOptions<ApplicationDbContext>));
 
