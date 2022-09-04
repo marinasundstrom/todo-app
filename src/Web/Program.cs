@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using TodoApp.Infrastructure.Persistance;
 using TodoApp.Presentation;
 using TodoApp.Web;
@@ -57,12 +58,53 @@ app.MapControllers();
 
 app.MapHubsForApp();
 
-if (args.Contains("--seed"))
+using (var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
 {
-    await Seed.EnsureSeedData(app.Services);
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+    //await context.Database.EnsureDeletedAsync();
+    //await context.Database.EnsureCreatedAsync();
+
+    var dbProviderName = context.Database.ProviderName;
+
+    if (dbProviderName!.Contains("SqlServer"))
+    {
+        try
+        {
+            await ApplyMigrations(context);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "An error occurred when applying migrations to the " +
+                "database. Error: {Message}", ex.Message);
+        }
+    }
+
+    if (args.Contains("--seed"))
+    {
+        try
+        {
+            await Seed.SeedData(context);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "An error occurred seeding the " +
+                "database. Error: {Message}", ex.Message);
+        }
+    }
 }
 
 app.Run();
+
+static async Task ApplyMigrations(ApplicationDbContext context)
+{
+    var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
+    if (pendingMigrations.Count() > 0)
+    {
+        await context.Database.MigrateAsync();
+    }
+}
 
 // INFO: Makes Program class visible to IntegrationTests.
 public partial class Program { }
