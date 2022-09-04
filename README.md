@@ -31,14 +31,14 @@ Add ```--watch``` to make it recompile on changes to any project.
 
 To adapt this into your own project:
 
-* In, ```Application```, remove the Todos folder, containing Commands and Queries. Add your own.
+* In ```Application```, remove the Todos folder, containing Commands and Queries. Add your own.
 * In ```Domain```, replace Entities, Enums and Events etc with your domain.
 * In ```Infrastructure```, update ApplicationDbContext and define your own Repositories.
 * In ```Presentation```, empty Controllers and Hubs. Create your own.
 
-And for the client-side, just empty ```ClientApp``` and build your own. Or, replace with whatever you like.
+And for the client-side, just empty ```ClientApp``` and build your own. Or, replace with whatever tech you like, e.g. an app build with a JS framework, like React.
 
-The ```Client``` generates client-code from Open API/Swagger file. Update that as you develop.
+The ```Client``` project is setup to generate C# client code from Open API/Swagger file. Update that file as you develop.
 
 ## Testing
 
@@ -54,7 +54,7 @@ This solution contains the following test projects:
 
 * ```Domain.Tests``` - verifies the domain logic, i.e. domain objects and services.
 
-* ```Infrastructure.Tests``` - verifies the infrastructure layer works as intended.
+* ```Infrastructure.Tests``` - verifies that the infrastructure layer works as intended.
 
 * ```ClientApp.Tests``` - verifies that the UI components behave the way that they should.
 
