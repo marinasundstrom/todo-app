@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestPlatform.TestHost;
 
 namespace TodoApp.IntegrationTests;
 
-public class TodosTest : IClassFixture<CustomWebApplicationFactory<Program>>
+public partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Program>>
 {
     private readonly CustomWebApplicationFactory<Program> _factory;
 

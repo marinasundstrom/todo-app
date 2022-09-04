@@ -22,7 +22,7 @@ public class CustomWebApplicationFactory<TStartup>
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlite("Data Source=testdb.db");
+                options.UseSqlite($"Data Source=testdb.db");
             });
 
             services.AddMassTransitTestHarness(cfg =>
