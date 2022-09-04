@@ -8,8 +8,9 @@ To run this solution, Install .NET Tye and Docker.
 
 ## Contents
 
-* Clean Architecture / Layered Architecture 
-* Domain-driven design - CQRS, Event-driven
-* Tests - Architecture, Application, Domain
+* Architecture: Clean Architecture / Layered Architecture 
+* Approaches: Domain-driven design - CQRS, Event-driven
+* Tests - Architecture, Application, Domain, Integration Tests
 * Client app in Blazor
+* SignalR
 * MassTransit
