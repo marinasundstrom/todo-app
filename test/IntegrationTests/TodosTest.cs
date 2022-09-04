@@ -1,43 +1,21 @@
-﻿using MassTransit;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
-using TodoApp.Infrastructure.Persistance;
+﻿using Microsoft.VisualStudio.TestPlatform.TestHost;
 
 namespace TodoApp.IntegrationTests;
 
-public class TodosTest
+public class TodosTest : IClassFixture<CustomWebApplicationFactory<Program>>
 {
+    private readonly CustomWebApplicationFactory<Program> _factory;
+
+    public TodosTest(CustomWebApplicationFactory<Program> factory)
+    {
+        _factory = factory;
+    }
+
     [Fact]
     public async Task CreatedTodoShouldBeRetrieved()
     {
         // Arrange
-
-        var application = new WebApplicationFactory<Program>()
-            .WithWebHostBuilder(builder =>
-            {
-                builder.ConfigureServices(services =>
-                {
-                    var descriptor = services.SingleOrDefault(
-                d => d.ServiceType ==
-                    typeof(DbContextOptions<ApplicationContext>));
-
-                    services.Remove(descriptor);
-
-                    services.AddDbContext<ApplicationContext>(options =>
-                    {
-                        options.UseSqlite("Data Source=testdb.db");
-                    });
-
-                    services.AddMassTransitTestHarness(cfg =>
-                    {
-                        //cfg.AddConsumer<SubmitOrderConsumer>();
-                    });
-                });
-            });
-
-        var client = application.CreateClient();
-        //...
+        var client = _factory.CreateClient();
 
         TodosClient todosClient = new(client);
 
