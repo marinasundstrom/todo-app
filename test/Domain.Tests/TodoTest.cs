@@ -11,7 +11,7 @@ public class TodoTest
     {
         var todo = new Todo("Foo", "Bar", TodoApp.Domain.Enums.TodoStatus.New);
 
-        Assert.Single(todo.DomainEvents.OfType<TodoCreated>());
+        todo.DomainEvents.OfType<TodoCreated>().Should().ContainSingle();
     }
 
     [Fact]
@@ -28,11 +28,11 @@ public class TodoTest
         todo.UpdateTitle(newTitle);
 
         // Assert
-        Assert.NotEqual(oldTitle, todo.Title);
-        Assert.Equal(newTitle, todo.Title);
+        todo.Title.Should().NotBe(oldTitle);
+        todo.Title.Should().Be(newTitle);
 
-        Assert.Single(todo.DomainEvents.OfType<TodoTitleUpdated>());
-        Assert.Single(todo.DomainEvents.OfType<TodoUpdated>());
+        todo.DomainEvents.OfType<TodoTitleUpdated>().Should().ContainSingle();
+        todo.DomainEvents.OfType<TodoUpdated>().Should().ContainSingle();
     }
 
     [Fact]
@@ -49,11 +49,11 @@ public class TodoTest
         todo.UpdateDescription(newDescription);
 
         // Assert
-        Assert.NotEqual(oldDescription, todo.Description);
-        Assert.Equal(newDescription, todo.Description);
+        todo.Description.Should().NotBe(oldDescription);
+        todo.Description.Should().Be(newDescription);
 
-        Assert.Single(todo.DomainEvents.OfType<TodoDescriptionUpdated>());
-        Assert.Single(todo.DomainEvents.OfType<TodoUpdated>());
+        todo.DomainEvents.OfType<TodoDescriptionUpdated>().Should().ContainSingle();
+        todo.DomainEvents.OfType<TodoUpdated>().Should().ContainSingle();
     }
 
     [Fact]
@@ -70,10 +70,10 @@ public class TodoTest
         todo.UpdateStatus(newStatus);
 
         // Assert
-        Assert.NotEqual(oldStatus, todo.Status);
-        Assert.Equal(TodoStatus.Completed, todo.Status);
+        todo.Status.Should().NotBe(oldStatus);
+        todo.Status.Should().Be(TodoStatus.Completed);
 
-        Assert.Single(todo.DomainEvents.OfType<TodoStatusUpdated>());
-        Assert.Single(todo.DomainEvents.OfType<TodoUpdated>());
+        todo.DomainEvents.OfType<TodoStatusUpdated>().Should().ContainSingle();
+        todo.DomainEvents.OfType<TodoUpdated>().Should().ContainSingle();
     }
 }
