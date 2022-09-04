@@ -6,10 +6,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<WarningsAsErrors>nullable</WarningsAsErrors>
 		<NoWarn>1701;1702;CS1591</NoWarn>
-	</PropertyGroup>
-
-	<PropertyGroup Condition=" '$(RunConfiguration)' == 'Mudblazor.Template' ">
-	  <ExternalConsole>true</ExternalConsole>
+		<RootNamespace>TodoApp</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>

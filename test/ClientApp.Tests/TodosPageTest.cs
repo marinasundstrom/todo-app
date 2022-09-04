@@ -1,11 +1,11 @@
 ﻿using Bunit;
-using ClientApp.Pages;
+using TodoApp.Pages;
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor.Services;
 using NSubstitute;
 using TodoApp;
 
-namespace ClientApp.Tests;
+namespace TodoApp.Tests;
 
 public class TodosPageTest
 {
