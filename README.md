@@ -48,7 +48,7 @@ This solution contains the following test projects:
 
 * ```Specs``` verifies Use Cases (scenarios). They are being grouped by Feature - not corresponding to User Stories. Implementation TBD.
 
-* ```IntegrationTests``` verifies that the Web API works as intended.
+* ```IntegrationTests``` verifies that the integration points - Web API, SignalR, MassTransit - work as intended.
 
 * ```Application.Tests``` - verifies the application logic - commands, queries, event handlers, and services.
 
