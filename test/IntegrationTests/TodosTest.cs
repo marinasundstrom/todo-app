@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestPlatform.TestHost;
+﻿using System.Net;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
 
 namespace TodoApp.IntegrationTests;
 
@@ -12,7 +13,7 @@ public class TodosTest : IClassFixture<CustomWebApplicationFactory<Program>>
     }
 
     [Fact]
-    public async Task CreatedTodoShouldBeRetrieved()
+    public async Task CreatedTodoShouldBeRetrievedByItsId()
     {
         // Arrange
 
@@ -49,5 +50,28 @@ public class TodosTest : IClassFixture<CustomWebApplicationFactory<Program>>
         todo2.Status.Should().Be(todo.Status);
         todo2.Created.Should().Be(todo.Created);
         todo2.LastModified.Should().Be(todo.LastModified);
+    }
+
+    [Fact]
+    public async Task NonExistentIdShouldReturnNotFound()
+    {
+        // Arrange
+
+        var client = _factory.CreateClient();
+
+        TodosClient todosClient = new(client);
+
+        string nonExistentId = Guid.NewGuid().ToString();
+
+        // Act
+
+        var exception = await Assert.ThrowsAsync<ApiException<ProblemDetails>>(async () =>
+        {
+            var todo = await todosClient.GetTodoByIdAsync(nonExistentId);
+        });
+
+        // Assert
+
+        exception.StatusCode.Should().Be((int)HttpStatusCode.NotFound); 
     }
 }
