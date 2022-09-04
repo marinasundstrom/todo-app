@@ -5,6 +5,8 @@ namespace TodoApp.Domain.Entities;
 
 public class Todo : AuditableEntity, IAggregateRoot<string>
 {
+    private HashSet<Comment> comments = new HashSet<Comment>();
+
     protected Todo()
     {
     }
@@ -74,4 +76,10 @@ public class Todo : AuditableEntity, IAggregateRoot<string>
 
         return false;
     }
+
+    public IReadOnlyCollection<Comment> Comments => comments;
+
+    public void AddComment(Comment comment) => comments.Add(comment);
+
+    public void DeleteComment(Comment comment) => comments.Remove(comment);
 }

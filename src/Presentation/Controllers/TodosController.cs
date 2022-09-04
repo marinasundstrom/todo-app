@@ -13,7 +13,7 @@ namespace TodoApp.Presentation.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class TodosController : ControllerBase
+public partial class TodosController : ControllerBase
 {
     private readonly IMediator mediator;
 

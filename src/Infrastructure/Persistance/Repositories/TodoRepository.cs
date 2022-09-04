@@ -19,4 +19,9 @@ public class TodoRepository : RepositoryBase<Todo, string>, ITodoRepository
     {
         return await dbSet.FirstOrDefaultAsync(x => x.Id.Equals(id), cancellationToken);
     }
+
+    public IQueryable<Comment> GetCommentsForTodo(string todoId)
+    {
+        return context.Comments.Where(x => x.TodoId == todoId);
+    }
 }

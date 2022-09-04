@@ -35,6 +35,8 @@ namespace TodoApp.Infrastructure.Persistance
 
     public DbSet<Todo> Todos { get; set; }
 
+    public DbSet<Comment> Comments { get; set; }
+
 #nullable restore
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
