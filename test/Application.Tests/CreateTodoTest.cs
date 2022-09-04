@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using NSubstitute;
-using Shouldly;
 using TodoApp.Application.Services;
 using TodoApp.Domain.Events;
 using TodoApp.Infrastructure.Persistance.Repositories.Mocks;
@@ -45,7 +44,7 @@ public class CreateTodoTest
 
         var newTodoCount = todos.Count();
 
-        newTodoCount.ShouldBeGreaterThan(initialTodoCount);
+        newTodoCount.Should().BeGreaterThan(initialTodoCount);
 
         // Has Domain Event been published ?
 
