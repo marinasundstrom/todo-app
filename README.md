@@ -39,3 +39,22 @@ To adapt this into your own project:
 And for the client-side, just empty ```ClientApp``` and build your own. Or, replace with whatever you like.
 
 The ```Client``` generates client-code from Open API/Swagger file. Update that as you develop.
+
+## Testing
+
+This solution contains the following test projects:
+
+* ```Architecture.Tests``` - verifies that the integritity of the architecture, the dependencies between projects, have not been broken.
+
+* ```Specs``` verifies Use Cases (scenarios). They are being grouped by Feature - not corresponding to User Stories. Implementation TBD.
+
+* ```IntegrationTests``` verifies that the Web API works as intended.
+
+* ```Application.Tests``` - verifies the application logic - commands, queries, event handlers, and services.
+
+* ```Domain.Tests``` - verifies the domain logic, i.e. domain objects and services.
+
+* ```ClientApp.Tests``` - verifies that the UI components behave the way that they should.
+
+
+
