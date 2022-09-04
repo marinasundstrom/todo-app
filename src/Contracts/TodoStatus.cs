@@ -1,6 +1,6 @@
 namespace TodoApp.Contracts;
 
-public enum TodoStatusDto
+public enum TodoStatus
 {
     New,
     Ongoing,

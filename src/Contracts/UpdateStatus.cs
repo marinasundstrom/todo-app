@@ -1,3 +1,3 @@
 ﻿namespace TodoApp.Contracts;
 
-public record UpdateStatus(string Id, TodoStatusDto Status);
+public record UpdateStatus(string Id, TodoStatus Status);
