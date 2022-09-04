@@ -18,7 +18,9 @@ public class TodoTest
     public void UpdateTitle()
     {
         // Arrange
-        var todo = new Todo("Foo", "Bar", TodoApp.Domain.Enums.TodoStatus.New);
+        var oldTitle = "Foo";
+
+        var todo = new Todo(oldTitle, "Bar", TodoApp.Domain.Enums.TodoStatus.New);
 
         var newTitle = "Zack";
 
@@ -26,6 +28,7 @@ public class TodoTest
         todo.UpdateTitle(newTitle);
 
         // Assert
+        Assert.NotEqual(oldTitle, todo.Title);
         Assert.Equal(newTitle, todo.Title);
 
         Assert.Single(todo.DomainEvents.OfType<TodoTitleUpdated>());
@@ -36,7 +39,9 @@ public class TodoTest
     public void UpdateDescription()
     {
         // Arrange
-        var todo = new Todo("Foo", "Bar", TodoApp.Domain.Enums.TodoStatus.New);
+        var oldDescription = "Bar";
+
+        var todo = new Todo("Foo", oldDescription, TodoApp.Domain.Enums.TodoStatus.New);
 
         var newDescription = "This is a new description";
 
@@ -44,6 +49,7 @@ public class TodoTest
         todo.UpdateDescription(newDescription);
 
         // Assert
+        Assert.NotEqual(oldDescription, todo.Description);
         Assert.Equal(newDescription, todo.Description);
 
         Assert.Single(todo.DomainEvents.OfType<TodoDescriptionUpdated>());
@@ -54,7 +60,9 @@ public class TodoTest
     public void UpdateStatus()
     {
         // Arrange
-        var todo = new Todo("Foo", "Bar", TodoApp.Domain.Enums.TodoStatus.New);
+        var oldStatus = TodoApp.Domain.Enums.TodoStatus.New;
+
+        var todo = new Todo("Foo", "Bar", oldStatus);
 
         var newStatus = TodoStatus.Completed;
 
@@ -62,6 +70,7 @@ public class TodoTest
         todo.UpdateStatus(newStatus);
 
         // Assert
+        Assert.NotEqual(oldStatus, todo.Status);
         Assert.Equal(TodoStatus.Completed, todo.Status);
 
         Assert.Single(todo.DomainEvents.OfType<TodoStatusUpdated>());

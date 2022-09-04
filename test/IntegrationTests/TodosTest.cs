@@ -15,6 +15,7 @@ public class TodosTest : IClassFixture<CustomWebApplicationFactory<Program>>
     public async Task CreatedTodoShouldBeRetrieved()
     {
         // Arrange
+
         var client = _factory.CreateClient();
 
         TodosClient todosClient = new(client);
@@ -22,7 +23,6 @@ public class TodosTest : IClassFixture<CustomWebApplicationFactory<Program>>
         string title = "Foo Bar";
         string description = "Lorem ipsum";
         TodoStatusDto status = TodoStatusDto.Ongoing;
-
 
         // Act
 
