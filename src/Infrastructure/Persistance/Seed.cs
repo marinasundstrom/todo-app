@@ -14,9 +14,14 @@ public class Seed
             var logger = scope.ServiceProvider.GetRequiredService<ILogger<Seed>>();
 
             var context = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
-            await context.Database.EnsureDeletedAsync();
+            //await context.Database.EnsureDeletedAsync();
             await context.Database.EnsureCreatedAsync();
-            //await context.Database.MigrateAsync();
+
+            var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
+            if(pendingMigrations.Count() > 0) 
+            {
+                await context.Database.MigrateAsync();
+            }
         }
     }
 }
