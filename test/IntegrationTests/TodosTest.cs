@@ -38,14 +38,16 @@ public class TodosTest : IClassFixture<CustomWebApplicationFactory<Program>>
         // Assert
 
         Assert.Equal(title, todo.Title);
-        Assert.Equal(description, todo.Description);
-        Assert.Equal(status, todo.Status);
 
-        Assert.Equal(todo.Id, todo2.Id);
-        Assert.Equal(todo.Title, todo2.Title);
-        Assert.Equal(todo.Description, todo2.Description);
-        Assert.Equal(todo.Status, todo2.Status);
-        Assert.Equal(todo.Created, todo2.Created);
-        Assert.Equal(todo.LastModified, todo2.LastModified);
+        todo.Title.Should().Be(title);
+        todo.Description.Should().Be(description);
+        todo.Status.Should().Be(status);
+
+        todo2.Id.Should().Be(todo.Id);
+        todo2.Title.Should().Be(todo.Title);
+        todo2.Description.Should().Be(todo.Description);
+        todo2.Status.Should().Be(todo.Status);
+        todo2.Created.Should().Be(todo.Created);
+        todo2.LastModified.Should().Be(todo.LastModified);
     }
 }
