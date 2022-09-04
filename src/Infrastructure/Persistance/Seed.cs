@@ -15,12 +15,26 @@ public class Seed
 
             var context = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
             //await context.Database.EnsureDeletedAsync();
-            await context.Database.EnsureCreatedAsync();
+            //await context.Database.EnsureCreatedAsync();
 
-            var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
-            if(pendingMigrations.Count() > 0) 
+            var dbProviderName = context.Database.ProviderName;
+
+            if (dbProviderName!.Contains("SqlServer"))
             {
-                await context.Database.MigrateAsync();
+                // INFO: This will execute for a real database
+
+                var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
+                if (pendingMigrations.Count() > 0)
+                {
+                    await context.Database.MigrateAsync();
+                }
+            }
+            else
+            {
+                // INFO: This will run for IntegrationTests
+
+                await context.Database.EnsureDeletedAsync();
+                await context.Database.EnsureCreatedAsync();
             }
         }
     }

@@ -64,3 +64,6 @@ await Seed.EnsureSeedData(app.Services);
 //}
 
 app.Run();
+
+// INFO: Makes Program class visible to IntegrationTests.
+public partial class Program { }

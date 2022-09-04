@@ -10,6 +10,10 @@
 		<AssemblyName>Web</AssemblyName>
 	</PropertyGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="IntegrationTests" />
+	</ItemGroup>
+
 	<PropertyGroup Condition=" '$(RunConfiguration)' == 'Web' " />
 	<ItemGroup>
 		<PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
