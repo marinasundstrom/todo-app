@@ -1,27 +1,35 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
-		<Nullable>enable</Nullable>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<WarningsAsErrors>Nullable</WarningsAsErrors>
-		<NoWarn>1701;1702;CS1591</NoWarn>
-	</PropertyGroup>
+  <PropertyGroup>
+	<TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+
+    <RootNamespace>TodoApp.Specs</RootNamespace>
+	<WarningsAsErrors>nullable</WarningsAsErrors>
+	<NoWarn>1701;1702;CS1591</NoWarn>
+  </PropertyGroup>
+
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0-preview-20220726-02" />
 		<PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57" />
-		<PackageReference Include="SpecFlow.xUnit" Version="3.9.74" />
-		<PackageReference Include="xunit" Version="2.4.2" />
-		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.5"><IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-<PrivateAssets>all</PrivateAssets>
-</PackageReference>
-		<PackageReference Include="FluentAssertions" Version="6.7.0" />
+		<PackageReference Include="SpecFlow.xUnit" Version="3.9.40" />
+		<PackageReference Include="xunit" Version="2.4.1" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.3" />
+		<PackageReference Include="FluentAssertions" Version="6.2.0" />
+		<PackageReference Include="SolidToken.SpecFlow.DependencyInjection" Version="3.9.3" />
+		<PackageReference Include="Microsoft.Playwright" Version="1.25.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.8" />
+		<PackageReference Include="Microsoft.Playwright.NUnit" Version="1.25.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<Folder Include="Drivers\" />
 		<Folder Include="Support\" />
+		<Folder Include="Infrastructure\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -32,4 +40,11 @@
 		<ProjectReference Include="..\..\src\Application\Application.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Remove="SolidToken.SpecFlow.DependencyInjection" />
+	  <None Remove="Microsoft.Playwright" />
+	  <None Remove="Infrastructure\" />
+	  <None Remove="Microsoft.AspNetCore.Mvc.Testing" />
+	  <None Remove="Microsoft.Playwright.NUnit" />
+	</ItemGroup>
 </Project>
