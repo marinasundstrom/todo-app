@@ -29,13 +29,6 @@ public class Seed
                     await context.Database.MigrateAsync();
                 }
             }
-            else
-            {
-                // INFO: This will run for IntegrationTests
-
-                await context.Database.EnsureDeletedAsync();
-                await context.Database.EnsureCreatedAsync();
-            }
         }
     }
 }
