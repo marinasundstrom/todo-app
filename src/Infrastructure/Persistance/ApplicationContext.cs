@@ -33,7 +33,7 @@ namespace TodoApp.Infrastructure.Persistance
 
 #nullable disable
 
-    public DbSet<Todo> Todos { get; set; } = null!;
+    public DbSet<Todo> Todos { get; set; }
 
 #nullable restore
 
