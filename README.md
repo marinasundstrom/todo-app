@@ -54,6 +54,8 @@ This solution contains the following test projects:
 
 * ```Domain.Tests``` - verifies the domain logic, i.e. domain objects and services.
 
+* ```Infrastructure.Tests``` - verifies the infrastructure layer works as intended.
+
 * ```ClientApp.Tests``` - verifies that the UI components behave the way that they should.
 
 
