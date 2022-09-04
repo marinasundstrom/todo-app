@@ -6,7 +6,7 @@ namespace TodoApp.Infrastructure.Persistance.Repositories;
 
 public class TodoRepository : RepositoryBase<Todo, string>, ITodoRepository
 {
-    public TodoRepository(ApplicationContext context) : base(context)
+    public TodoRepository(ApplicationDbContext context) : base(context)
     {
     }
 

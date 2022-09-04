@@ -15,7 +15,7 @@ namespace TodoApp.Infrastructure.Persistance
             var connectionString = Infrastructure.ConfigurationExtensions.GetConnectionString(configuration, ConnectionStringKey, "TodoApp")
                 ?? configuration.GetConnectionString("DefaultConnection");
 
-            services.AddDbContext<ApplicationContext>((sp, options) =>
+            services.AddDbContext<ApplicationDbContext>((sp, options) =>
             {
                 options.UseSqlServer(connectionString, o => o.EnableRetryOnFailure());
 #if DEBUG

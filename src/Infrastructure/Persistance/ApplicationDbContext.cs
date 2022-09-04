@@ -3,13 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TodoApp.Infrastructure.Persistance
 {
-    public class ApplicationContext : DbContext
+    public class ApplicationDbContext : DbContext
     {
         private IDomainEventDispatcher _domainEventDispatcher;
         private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;
 
-        public ApplicationContext(
-            DbContextOptions<ApplicationContext> options,
+        public ApplicationDbContext(
+            DbContextOptions<ApplicationDbContext> options,
             IDomainEventDispatcher domainEventDispatcher,
             AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor) : base(options)
         {
@@ -28,7 +28,7 @@ namespace TodoApp.Infrastructure.Persistance
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         }
 
 #nullable disable

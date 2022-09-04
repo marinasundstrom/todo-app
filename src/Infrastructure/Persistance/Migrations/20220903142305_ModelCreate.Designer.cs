@@ -11,7 +11,7 @@ using TodoApp.Infrastructure.Persistance;
 
 namespace TodoApp.Infrastructure.Persistence.Migrations
 {
-    [DbContext(typeof(ApplicationContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20220903142305_ModelCreate")]
     partial class ModelCreate
     {

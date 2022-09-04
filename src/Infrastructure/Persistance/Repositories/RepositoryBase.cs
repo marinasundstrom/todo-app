@@ -7,10 +7,10 @@ namespace TodoApp.Infrastructure.Persistance.Repositories
         where T : BaseEntity, IAggregateRoot<TKey>
         where TKey : notnull
     {
-        protected readonly ApplicationContext context;
+        protected readonly ApplicationDbContext context;
         protected readonly DbSet<T> dbSet;
 
-        public RepositoryBase(ApplicationContext context)
+        public RepositoryBase(ApplicationDbContext context)
         {
             this.context = context;
             this.dbSet = context.Set<T>();

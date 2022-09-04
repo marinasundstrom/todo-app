@@ -6,13 +6,13 @@ namespace Tests;
 
 public static class SqliteDbContextFactory
 {
-    public static ApplicationContext CreateDbContext(string name, IDomainEventDispatcher fakeDomainEventDispatcher, ICurrentUserService fakeCurrentUserService, IDateTime fakeDateTimeService)
+    public static ApplicationDbContext CreateDbContext(string name, IDomainEventDispatcher fakeDomainEventDispatcher, ICurrentUserService fakeCurrentUserService, IDateTime fakeDateTimeService)
     {
-        var options = new DbContextOptionsBuilder<ApplicationContext>()
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
            .UseSqlite($"Data Source={name}.db")
            .Options;
 
-        var context = new ApplicationContext(options, fakeDomainEventDispatcher,
+        var context = new ApplicationDbContext(options, fakeDomainEventDispatcher,
             new TodoApp.Infrastructure.Persistance.Interceptors.AuditableEntitySaveChangesInterceptor(fakeCurrentUserService, fakeDateTimeService));
 
         context.Database.EnsureDeleted();

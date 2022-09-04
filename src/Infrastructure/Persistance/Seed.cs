@@ -13,7 +13,7 @@ public class Seed
         {
             var logger = scope.ServiceProvider.GetRequiredService<ILogger<Seed>>();
 
-            var context = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
+            var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             //await context.Database.EnsureDeletedAsync();
             //await context.Database.EnsureCreatedAsync();
 

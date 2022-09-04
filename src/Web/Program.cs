@@ -57,11 +57,10 @@ app.MapControllers();
 
 app.MapHubsForApp();
 
-//if (args.Contains("--seed"))
-//{
-await Seed.EnsureSeedData(app.Services);
-//    return;
-//}
+if (args.Contains("--seed"))
+{
+    await Seed.EnsureSeedData(app.Services);
+}
 
 app.Run();
 
