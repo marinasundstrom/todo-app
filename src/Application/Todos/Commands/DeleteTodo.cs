@@ -1,5 +1,4 @@
-﻿using TodoApp.Application.Common;
-using MediatR;
+﻿using MediatR;
 using FluentValidation;
 
 namespace TodoApp.Application.Todos.Commands;

@@ -1,4 +1,4 @@
-﻿namespace TodoApp.Application.Common;
+﻿namespace TodoApp.Domain;
 
 public class Result
 {

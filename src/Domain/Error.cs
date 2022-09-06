@@ -1,3 +1,3 @@
-﻿namespace TodoApp.Application.Common;
+﻿namespace TodoApp.Domain;
 
 public record Error(string Id, string Title, string Detail);
