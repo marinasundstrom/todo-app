@@ -15,7 +15,7 @@
     "TodoApp.IntegrationTests": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:6432",
+      "applicationUrl": "http://localhost:36066",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
