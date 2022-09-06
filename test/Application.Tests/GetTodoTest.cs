@@ -2,6 +2,7 @@
 using NSubstitute;
 using TodoApp.Application.Services;
 using TodoApp.Application.Todos.Queries;
+using TodoApp.Domain;
 using TodoApp.Infrastructure.Persistance.Repositories.Mocks;
 using Xunit;
 

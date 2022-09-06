@@ -1,6 +1,4 @@
-﻿using TodoApp.Application.Common;
-
-namespace TodoApp.Application;
+﻿namespace TodoApp.Domain;
 
 public static class Errors
 {

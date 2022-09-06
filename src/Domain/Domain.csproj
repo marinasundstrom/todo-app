@@ -15,4 +15,10 @@
 		<PackageReference Include="MediatR" Version="10.0.1" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Remove="Errors\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Errors\" />
+	</ItemGroup>
 </Project>
