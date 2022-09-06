@@ -17,7 +17,7 @@ namespace TodoApp.Infrastructure.Persistance
 
             services.AddDbContext<ApplicationDbContext>((sp, options) =>
             {
-                options.UseSqlServer(connectionString, o => o.EnableRetryOnFailure());
+                options.UseSqlServer(connectionString!, o => o.EnableRetryOnFailure());
 #if DEBUG
                 options
                     .LogTo(Console.WriteLine)
