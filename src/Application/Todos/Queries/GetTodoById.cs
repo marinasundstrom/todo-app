@@ -29,7 +29,7 @@ public record GetTodoById(string Id) : IRequest<Result<TodoDto>>
 
             if (todo is null)
             {
-                return Result.Error<TodoDto>(Errors.Todos.TodoNotFound);
+                return Result.Failure<TodoDto>(Errors.Todos.TodoNotFound);
             }
 
             return Result.Success(todo.ToDto());

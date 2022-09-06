@@ -32,7 +32,7 @@ public record UpdateDescription(string Id, string? Description) : IRequest<Resul
 
             if(todo is null)
             {
-                return Result.Error(Errors.Todos.TodoNotFound);
+                return Result.Failure(Errors.Todos.TodoNotFound);
             }
 
             if(todo.UpdateDescription(request.Description))

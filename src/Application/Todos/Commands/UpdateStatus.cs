@@ -31,7 +31,7 @@ public record UpdateStatus(string Id, TodoStatusDto Status) : IRequest<Result>
 
             if(todo is null)
             {
-                return Result.Error(Errors.Todos.TodoNotFound);
+                return Result.Failure(Errors.Todos.TodoNotFound);
             }
 
             if(todo.UpdateStatus((Domain.Enums.TodoStatus)request.Status)) 

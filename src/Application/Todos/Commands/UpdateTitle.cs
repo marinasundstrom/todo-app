@@ -32,7 +32,7 @@ public record UpdateTitle(string Id, string Title) : IRequest<Result>
 
             if(todo is null)
             {
-                return Result.Error(Errors.Todos.TodoNotFound);
+                return Result.Failure(Errors.Todos.TodoNotFound);
             }
 
             if(todo.UpdateTitle(request.Title)) 

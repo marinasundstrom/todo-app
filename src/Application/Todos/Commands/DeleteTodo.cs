@@ -30,7 +30,7 @@ public record DeleteTodo(string Id) : IRequest<Result>
 
             if (todo is null)
             {
-                return Result.Error(Errors.Todos.TodoNotFound);
+                return Result.Failure(Errors.Todos.TodoNotFound);
             }
 
             todoRepository.Remove(todo);
