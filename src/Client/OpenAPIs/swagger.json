@@ -243,17 +243,20 @@
               "nullable": true
             },
             "x-position": 1
-          },
-          {
-            "name": "title",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 2
           }
         ],
+        "requestBody": {
+          "x-name": "title",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
         "responses": {
           "200": {
             "description": ""
@@ -287,17 +290,19 @@
               "nullable": true
             },
             "x-position": 1
-          },
-          {
-            "name": "description",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 2
           }
         ],
+        "requestBody": {
+          "x-name": "description",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "x-position": 2
+        },
         "responses": {
           "200": {
             "description": ""
@@ -331,16 +336,20 @@
               "nullable": true
             },
             "x-position": 1
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/TodoStatusDto"
-            },
-            "x-position": 2
           }
         ],
+        "requestBody": {
+          "x-name": "status",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TodoStatusDto"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
         "responses": {
           "200": {
             "description": ""

@@ -62,7 +62,7 @@ public class TodosController : ControllerBase
     [HttpPut("{id}/title")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult> UpdateTitle(string id, string title, CancellationToken cancellationToken)
+    public async Task<ActionResult> UpdateTitle(string id, [FromBody] string title, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new UpdateTitle(id, title), cancellationToken);
         return this.HandleResult(result);
@@ -71,7 +71,7 @@ public class TodosController : ControllerBase
     [HttpPut("{id}/description")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult> UpdateDescription(string id, string? description, CancellationToken cancellationToken)
+    public async Task<ActionResult> UpdateDescription(string id, [FromBody] string? description, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new UpdateDescription(id, description), cancellationToken);
         return this.HandleResult(result);
@@ -80,7 +80,7 @@ public class TodosController : ControllerBase
     [HttpPut("{id}/status")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult> UpdateStatus(string id, TodoStatusDto status, CancellationToken cancellationToken)
+    public async Task<ActionResult> UpdateStatus(string id, [FromBody] TodoStatusDto status, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new UpdateStatus(id, status), cancellationToken);
         return this.HandleResult(result);
