@@ -1,9 +1,12 @@
+using System.Reflection.Metadata;
 using MassTransit.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using NSwag;
+using NSwag.Generation.Processors.Security;
 using TodoApp.Infrastructure.Persistance;
 using TodoApp.Presentation;
 using TodoApp.Web;
@@ -57,6 +60,27 @@ foreach (ApiVersionDescription description in provider.ApiVersionDescriptions)
             document.Info.Version = $"v{description.ApiVersion.ToString()}";
         };
         config.ApiGroupNames = new[] { description.ApiVersion.ToString() };
+
+        config.AddSecurity("JWT", new OpenApiSecurityScheme
+        {
+            Type = OpenApiSecuritySchemeType.ApiKey,
+            Name = "Authorization",
+            In = OpenApiSecurityApiKeyLocation.Header,
+            Description = "Type into the textbox: Bearer {your JWT token}."
+        });
+
+        /*
+        config.AddSecurity("ApiKey", new OpenApiSecurityScheme
+        {
+            Type = OpenApiSecuritySchemeType.ApiKey,
+            Name = "X-API-KEY",
+            In = OpenApiSecurityApiKeyLocation.Header,
+            Description = "Type into the textbox: {your API key}."
+        });
+        */
+
+        config.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+        config.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("ApiKey"));
     });
 }
 
@@ -75,6 +99,8 @@ app.UseRouting();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
+
     app.UseOpenApi();
     app.UseSwaggerUi3();
 }
