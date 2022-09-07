@@ -11,7 +11,7 @@
     }
   ],
   "paths": {
-    "/Todos": {
+    "/v1/Todos": {
       "get": {
         "tags": [
           "Todos"
@@ -142,7 +142,7 @@
         }
       }
     },
-    "/Todos/{id}": {
+    "/v1/Todos/{id}": {
       "get": {
         "tags": [
           "Todos"
@@ -227,7 +227,7 @@
         }
       }
     },
-    "/Todos/{id}/title": {
+    "/v1/Todos/{id}/title": {
       "put": {
         "tags": [
           "Todos"
@@ -271,7 +271,7 @@
         }
       }
     },
-    "/Todos/{id}/description": {
+    "/v1/Todos/{id}/description": {
       "put": {
         "tags": [
           "Todos"
@@ -315,7 +315,7 @@
         }
       }
     },
-    "/Todos/{id}/status": {
+    "/v1/Todos/{id}/status": {
       "put": {
         "tags": [
           "Todos"

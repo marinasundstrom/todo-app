@@ -1,4 +1,9 @@
+using MassTransit.Configuration;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using TodoApp.Infrastructure.Persistance;
 using TodoApp.Presentation;
 using TodoApp.Web;
@@ -20,12 +25,40 @@ builder.Services.AddCors(options =>
 
 // Add services to the container.
 
-// Register the Swagger services
-builder.Services.AddOpenApiDocument(document =>
+builder.Services.AddApiVersioning(options =>
         {
-            document.Title = "Todo API";
-            document.Version = "v1";
+            options.AssumeDefaultVersionWhenUnspecified = true;
+            options.DefaultApiVersion = new ApiVersion(1, 0);
+            options.ReportApiVersions = true;
+            options.ApiVersionReader = new UrlSegmentApiVersionReader();
         });
+
+builder.Services.AddVersionedApiExplorer(option =>
+        {
+            option.GroupNameFormat = "VVV";
+            option.SubstituteApiVersionInUrl = true;
+        });
+
+
+// Register the Swagger services
+
+var provider = builder.Services
+    .BuildServiceProvider()
+    .GetRequiredService<IApiVersionDescriptionProvider>();
+
+foreach (ApiVersionDescription description in provider.ApiVersionDescriptions)
+{
+    builder.Services.AddOpenApiDocument(config =>
+    {
+        config.DocumentName = $"v{description.ApiVersion}";
+        config.PostProcess = document =>
+        {
+            document.Info.Title = "Todo API";
+            document.Info.Version = $"v{description.ApiVersion.ToString()}";
+        };
+        config.ApiGroupNames = new[] { description.ApiVersion.ToString() };
+    });
+}
 
 builder.Services.AddSignalR();
 

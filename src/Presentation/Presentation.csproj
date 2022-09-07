@@ -19,6 +19,7 @@
 
 	<ItemGroup>
 	  <PackageReference Include="MassTransit.Abstractions" Version="8.0.7-develop.566" />
+	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -28,6 +29,7 @@
 
 	<ItemGroup>
 	  <None Remove="Services\" />
+	  <None Remove="Microsoft.AspNetCore.Mvc.Versioning" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Services\" />

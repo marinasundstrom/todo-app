@@ -8,6 +8,7 @@
 		<WarningsAsErrors>nullable</WarningsAsErrors>
 		<NoWarn>1701;1702;CS1591</NoWarn>
 		<AssemblyName>Web</AssemblyName>
+		<UserSecretsId>5e2732b6-eadf-4f89-8e7c-bb5e71f138ef</UserSecretsId>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -23,6 +24,7 @@
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="NSwag.AspNetCore" Version="13.16.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>

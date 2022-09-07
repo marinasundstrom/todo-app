@@ -12,7 +12,8 @@ using TodoApp.Application.Todos;
 namespace TodoApp.Presentation.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[ApiVersion("1")]
+[Route("v{version:apiVersion}/[controller]")]
 public class TodosController : ControllerBase
 {
     private readonly IMediator mediator;
