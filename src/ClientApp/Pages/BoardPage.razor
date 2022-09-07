@@ -1,0 +1,89 @@
+﻿@page "/board"
+@inject ITodosClient TodosClient
+@inject ISnackbar Snackbar
+
+<PageTitle>Board</PageTitle>
+
+<MudText Typo="Typo.h4" Class="mb-4">Board</MudText>
+
+@if (loaded)
+{
+
+    <MudDropContainer T="TodoDto" Items="todos" Context="context" ItemsSelector="@((item, dropzone) => item.Status == Enum.Parse<TodoStatusDto>(dropzone))" ItemDropped="ItemUpdated">
+        <ChildContent>
+            <div class="d-flex flex-wrap flex-grow-1">
+                @foreach (var status in Enum.GetValues<TodoStatusDto>())
+                {
+                    <MudPaper Elevation="0" Class="ma-4 flex-1 mud-background-gray rounded-lg">
+                        <MudList Clickable="true" Class="d-flex flex-column mud-height-full">
+                            <MudListSubheader>
+                                <MudToolBar DisableGutters="true" Dense="true">
+                                    <MudText Typo="Typo.h6"><b>@status</b></MudText>
+                                    <MudSpacer />
+                                    @*
+                                    <MudMenu Icon="@Icons.Material.Rounded.MoreHoriz" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight" ListClass="pa-2 d-flex flex-column" PopoverClass="mud-elevation-25">
+                                        <MudButton Size="Size.Small" Color="Color.Error" StartIcon="@Icons.Outlined.Delete" OnClick="@( () => { })">Delete Section</MudButton>
+                                        <MudButton Size="Size.Small" Color="Color.Default" StartIcon="@Icons.Rounded.Edit">Rename Section</MudButton>
+                                    </MudMenu>
+                                    *@
+                                </MudToolBar>
+                            </MudListSubheader>
+                            <MudDropZone T="TodoDto" Identifier="@($"{status}")" Class="d-flex flex-grow-1 flex-wrap gap-1" AllowReorder="false" />
+                        </MudList>
+                        @*
+                            <MudButton OnClick="@(() => {})" Color="Color.Inherit" StartIcon="@Icons.Filled.Add" FullWidth="true" Class="py-2" Style="background-color: inherit;">Add Task</MudButton>
+                        *@
+                    </MudPaper>
+                }
+            </div>
+        </ChildContent>
+        <ItemRenderer>
+            <MudCard Class="ma-4 rounded-lg" Elevation="25">
+                <MudCardContent>
+                    <div class="d-flex">
+                        <MudIcon Icon="@Icons.Material.Filled.Task" class="mr-3"></MudIcon>
+                        <MudText>@context.Title</MudText>
+                    </div>
+
+                    <MudText Typo="Typo.body1" Class="mt-2">@context.Description</MudText>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Variant="Variant.Text" Color="Color.Primary" Href="@($"/todos/{context.Id}")">More</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </ItemRenderer>
+    </MudDropContainer>}
+
+@code {
+    List<TodoDto> todos = new List<TodoDto>();
+    bool loaded = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        todos.AddRange((await TodosClient.GetTodosAsync(null, 1, 100, null, null)).Items);
+        loaded = true;
+    }
+
+    private async void ItemUpdated(MudItemDropInfo<TodoDto> dropItem)
+    {
+        var newStatus = Enum.Parse<TodoStatusDto>(dropItem.DropzoneIdentifier);
+
+        var oldStatus = dropItem.Item.Status;
+        dropItem.Item.Status = newStatus;
+
+        try
+        {
+            await TodosClient.UpdateStatusAsync(dropItem.Item.Id, newStatus);
+        }
+        catch (ApiException<ProblemDetails> exc)
+        {
+            dropItem.Item.Status = oldStatus;
+
+            Snackbar.Add(exc.Result.Title, Severity.Error);
+        }
+        catch (Exception exc)
+        {
+            Snackbar.Add(exc.Message, Severity.Error);
+        }
+    }
+}
