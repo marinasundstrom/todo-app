@@ -2,7 +2,7 @@
 
 namespace TodoApp.Domain.Entities;
 
-public class BaseEntity : IHasDomainEvents
+public class Entity : IHasDomainEvents
 {
     private readonly HashSet<DomainEvent> domainEvents = new HashSet<DomainEvent>();
 

@@ -3,7 +3,7 @@
 namespace TodoApp.Infrastructure.Persistance.Repositories.Mocks
 {
     public class MockRepositoryBase<T, TKey> : IRepository<T, TKey>, IDisposable
-        where T : BaseEntity, IAggregateRoot<TKey>
+        where T : Entity, IAggregateRoot<TKey>
         where TKey : notnull
     {
         protected static List<T> items = new List<T>();

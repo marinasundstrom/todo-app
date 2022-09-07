@@ -1,6 +1,6 @@
 ﻿namespace TodoApp.Domain.Entities;
 
-public class AuditableEntity : BaseEntity
+public class AuditableEntity : Entity
 {
     public string CreatedById { get; set; } = null!;
     public DateTime Created { get; set; }

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace TodoApp.Infrastructure.Persistance.Repositories
 {
     public class RepositoryBase<T, TKey> : IRepository<T, TKey>
-        where T : BaseEntity, IAggregateRoot<TKey>
+        where T : Entity, IAggregateRoot<TKey>
         where TKey : notnull
     {
         protected readonly ApplicationDbContext context;
