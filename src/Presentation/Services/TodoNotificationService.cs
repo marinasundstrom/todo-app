@@ -30,12 +30,12 @@ public class TodoNotificationService : ITodoNotificationService
 
     public async Task DescriptionUpdated(string todoId, string? description)
     {
-        await hubsContext.Clients.Group($"item-{todoId}").DescriptionUpdated(todoId, description);
+        await hubsContext.Clients.All.DescriptionUpdated(todoId, description);
     }
 
     public async Task StatusUpdated(string todoId, TodoStatusDto status)
     {
-        await hubsContext.Clients.Group($"item-{todoId}").StatusUpdated(todoId, status);
+        await hubsContext.Clients.All.StatusUpdated(todoId, status);
     }
 
     public async Task TitleUpdated(string todoId, string title)

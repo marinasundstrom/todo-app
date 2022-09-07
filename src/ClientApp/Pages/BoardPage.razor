@@ -1,4 +1,5 @@
 ﻿@page "/board"
+@using Microsoft.AspNetCore.SignalR.Client
 @inject ITodosClient TodosClient
 @inject ISnackbar Snackbar
 
@@ -9,7 +10,7 @@
 @if (loaded)
 {
 
-    <MudDropContainer T="TodoDto" Items="todos" Context="context" ItemsSelector="@((item, dropzone) => item.Status == Enum.Parse<TodoStatusDto>(dropzone))" ItemDropped="ItemUpdated">
+    <MudDropContainer @ref="dropContainer" T="TodoDto" Items="todos" Context="context" ItemsSelector="@((item, dropzone) => item.Status == Enum.Parse<TodoStatusDto>(dropzone))" ItemDropped="ItemUpdated">
         <ChildContent>
             <div class="d-flex flex-wrap flex-grow-1">
                 @foreach (var status in Enum.GetValues<TodoStatusDto>())
@@ -21,10 +22,10 @@
                                     <MudText Typo="Typo.h6"><b>@status</b></MudText>
                                     <MudSpacer />
                                     @*
-                                    <MudMenu Icon="@Icons.Material.Rounded.MoreHoriz" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight" ListClass="pa-2 d-flex flex-column" PopoverClass="mud-elevation-25">
-                                        <MudButton Size="Size.Small" Color="Color.Error" StartIcon="@Icons.Outlined.Delete" OnClick="@( () => { })">Delete Section</MudButton>
-                                        <MudButton Size="Size.Small" Color="Color.Default" StartIcon="@Icons.Rounded.Edit">Rename Section</MudButton>
-                                    </MudMenu>
+                                        <MudMenu Icon="@Icons.Material.Rounded.MoreHoriz" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight" ListClass="pa-2 d-flex flex-column" PopoverClass="mud-elevation-25">
+                                            <MudButton Size="Size.Small" Color="Color.Error" StartIcon="@Icons.Outlined.Delete" OnClick="@( () => { })">Delete Section</MudButton>
+                                            <MudButton Size="Size.Small" Color="Color.Default" StartIcon="@Icons.Rounded.Edit">Rename Section</MudButton>
+                                        </MudMenu>
                                     *@
                                 </MudToolBar>
                             </MudListSubheader>
@@ -55,6 +56,8 @@
     </MudDropContainer>}
 
 @code {
+    MudDropContainer<TodoDto> dropContainer = null!;
+    HubConnection hubConnection = null!;
     List<TodoDto> todos = new List<TodoDto>();
     bool loaded = false;
 
@@ -62,6 +65,46 @@
     {
         todos.AddRange((await TodosClient.GetTodosAsync(null, 1, 100, null, null)).Items);
         loaded = true;
+
+        try
+        {
+            hubConnection = new HubConnectionBuilder()
+            .WithUrl($"https://localhost:5001/hubs/todos")
+            .WithAutomaticReconnect().Build();
+
+            hubConnection.On<string>("Created", OnCreated);
+            //hubConnection.On<string>("Updated", OnUpdated);
+            hubConnection.On<string>("Deleted", OnDeleted);
+
+            hubConnection.On<string, string>("TitleUpdated", OnTitleUpdated);
+            hubConnection.On<string, string?>("DescriptionUpdated", OnDescriptionUpdated);
+            hubConnection.On<string, TodoStatusDto>("StatusUpdated", OnStatusUpdated);
+
+            hubConnection.Closed += (error) =>
+            {
+                if (error is not null)
+                {
+                    Snackbar.Add($"{error.Message}", Severity.Error);
+                }
+
+                return Task.CompletedTask;
+            };
+            hubConnection.Reconnected += (error) =>
+            {
+                Snackbar.Add("Reconnected");
+                return Task.CompletedTask;
+            };
+            hubConnection.Reconnecting += (error) =>
+            {
+                Snackbar.Add("Reconnecting");
+                return Task.CompletedTask;
+            };
+            await hubConnection.StartAsync();
+        }
+        catch (Exception exc)
+        {
+            Snackbar.Add(exc.Message.ToString(), Severity.Error);
+        }
     }
 
     private async void ItemUpdated(MudItemDropInfo<TodoDto> dropItem)
@@ -85,5 +128,52 @@
         {
             Snackbar.Add(exc.Message, Severity.Error);
         }
+    }
+
+    async Task OnCreated(string todoId)
+    {
+        var item = await TodosClient.GetTodoByIdAsync(todoId);
+        todos.Add(item);
+        dropContainer.Refresh();
+        StateHasChanged();
+    }
+
+    /*
+        async Task OnUpdated(string todoId)
+        {
+
+        }
+    */
+
+    void OnDeleted(string todoId)
+    {
+        var item = todos.First(x => x.Id == todoId);
+        todos.Remove(item);
+        dropContainer.Refresh();
+        StateHasChanged();
+    }
+
+    void OnTitleUpdated(string todoId, string title)
+    {
+        var item = todos.First(x => x.Id == todoId);
+        item.Title = title;
+        dropContainer.Refresh();
+        StateHasChanged();
+    }
+
+    void OnDescriptionUpdated(string todoId, string? description)
+    {
+        var item = todos.First(x => x.Id == todoId);
+        item.Description = description;
+        dropContainer.Refresh();
+        StateHasChanged();
+    }
+
+    void OnStatusUpdated(string todoId, TodoStatusDto status)
+    {
+        var item = todos.First(x => x.Id == todoId);
+        item.Status = status;
+        dropContainer.Refresh();
+        StateHasChanged();
     }
 }
