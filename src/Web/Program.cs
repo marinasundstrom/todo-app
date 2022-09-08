@@ -122,13 +122,13 @@ using (var scope = app.Services.GetRequiredService<IServiceScopeFactory>().Creat
     var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-    //await context.Database.EnsureDeletedAsync();
-    //await context.Database.EnsureCreatedAsync();
-
     var dbProviderName = context.Database.ProviderName;
 
     if (dbProviderName!.Contains("SqlServer"))
     {
+        //await context.Database.EnsureDeletedAsync();
+        //await context.Database.EnsureCreatedAsync();
+
         try
         {
             await ApplyMigrations(context);
@@ -151,6 +151,8 @@ using (var scope = app.Services.GetRequiredService<IServiceScopeFactory>().Creat
             logger.LogError(ex, "An error occurred seeding the " +
                 "database. Error: {Message}", ex.Message);
         }
+
+        return;
     }
 }
 
