@@ -15,7 +15,9 @@ To run this solution, Install .NET Tye and Docker.
 
 ## Screenshots
 
-![Screenshot](/images/screenshot.png)
+![List](/images/screenshot.png)
+
+![Board](/images/screenshot2.png)
 
 ## Running the project
 
