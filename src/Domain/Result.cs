@@ -21,11 +21,11 @@ public class Result
 
     public static Result<T> Failure<T>(Error error) => new(error);
 
-    public bool IsSuccess() => error is null;
+    public bool IsSuccess => error is null;
 
-    public bool IsFailure() => error is not null;
+    public bool IsFailure => error is not null;
 
-    public bool HasError(Error error) => IsFailure() && this.error == error;
+    public bool HasError(Error error) => IsFailure && this.error == error;
 
     public bool HasError<T>(T error) where T : Error => this.error is T;
 
@@ -34,7 +34,7 @@ public class Result
     public T? GetError<T>() where T : Error => (T?)error;
 
     public static implicit operator Error(Result result) =>
-        !result.IsFailure()
+        !result.IsFailure
         ? throw new InvalidOperationException() : result.error!;
 }
 
@@ -54,6 +54,6 @@ public class Result<T> : Result
     public T GetValue() => data!;
 
     public static implicit operator T(Result<T> result) =>
-        result.IsFailure()
+        result.IsFailure
         ? throw new InvalidOperationException() : result.data!;
 }

@@ -36,7 +36,7 @@ public class CreateTodoTest
 
         // Assert
 
-        Assert.True(result.IsSuccess());
+        Assert.True(result.IsSuccess);
 
         var todo = result.GetValue();
 
