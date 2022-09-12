@@ -23,7 +23,7 @@ public partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Progr
 
         string title = "Foo Bar";
         string description = "Lorem ipsum";
-        TodoStatusDto status = TodoStatusDto.Ongoing;
+        TodoStatusDto status = TodoStatusDto.InProgress;
 
         // Act
 
@@ -61,7 +61,7 @@ public partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Progr
 
         TodosClient todosClient = new(client);
 
-        string nonExistentId = Guid.NewGuid().ToString();
+        int nonExistentId = 99999;
 
         // Act
 

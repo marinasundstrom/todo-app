@@ -18,9 +18,9 @@ partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Program>>
 
         var completion = new ManualResetEvent(false);
 
-        string? receivedId = null;
+        int? receivedId = null;
 
-        hubConnection.On<string>("Created", (id) =>
+        hubConnection.On<int>("Created", (id) =>
         {
             receivedId = id;
             completion.Set();
@@ -32,7 +32,7 @@ partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Program>>
 
         string title = "Foo Bar";
         string description = "Lorem ipsum";
-        TodoStatusDto status = TodoStatusDto.Ongoing;
+        TodoStatusDto status = TodoStatusDto.InProgress;
 
         // Act
 

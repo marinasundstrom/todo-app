@@ -43,10 +43,18 @@
                 <MudCardContent>
                     <div class="d-flex">
                         <MudIcon Icon="@Icons.Material.Filled.Task" class="mr-3"></MudIcon>
-                        <MudText>@context.Title</MudText>
+                        <MudText>@context.Id - @context.Title</MudText>
                     </div>
 
                     <MudText Typo="Typo.body1" Class="mt-2">@context.Description</MudText>
+                    @if(context.EstimatedHours is not null) 
+                    {
+                        <MudText Typo="Typo.caption" Class="mt-2">Estimated: @context.EstimatedHours hours</MudText> <br />
+                    }
+                    @if(context.RemainingHours is not null) 
+                    {
+                        <MudText Typo="Typo.caption" Class="mt-2">Remaining: @context.RemainingHours hours</MudText>
+                    }
                 </MudCardContent>
                 <MudCardActions>
                     <MudButton Variant="Variant.Text" Color="Color.Primary" Href="@($"/todos/{context.Id}")">More</MudButton>
@@ -72,13 +80,15 @@
             .WithUrl($"https://localhost:5001/hubs/todos")
             .WithAutomaticReconnect().Build();
 
-            hubConnection.On<string>("Created", OnCreated);
-            //hubConnection.On<string>("Updated", OnUpdated);
-            hubConnection.On<string>("Deleted", OnDeleted);
+            hubConnection.On<int>("Created", OnCreated);
+            //hubConnection.On<int>("Updated", OnUpdated);
+            hubConnection.On<int>("Deleted", OnDeleted);
 
-            hubConnection.On<string, string>("TitleUpdated", OnTitleUpdated);
-            hubConnection.On<string, string?>("DescriptionUpdated", OnDescriptionUpdated);
-            hubConnection.On<string, TodoStatusDto>("StatusUpdated", OnStatusUpdated);
+            hubConnection.On<int, string>("TitleUpdated", OnTitleUpdated);
+            hubConnection.On<int, string?>("DescriptionUpdated", OnDescriptionUpdated);
+            hubConnection.On<int, TodoStatusDto>("StatusUpdated", OnStatusUpdated);
+            hubConnection.On<int, double?>("EstimatedHoursUpdated", OnEstimatedHoursUpdated);
+            hubConnection.On<int, double?>("RemainingHoursUpdated", OnRemainingHoursUpdated);
 
             hubConnection.Closed += (error) =>
             {
@@ -130,7 +140,7 @@
         }
     }
 
-    async Task OnCreated(string todoId)
+    async Task OnCreated(int todoId)
     {
         var item = await TodosClient.GetTodoByIdAsync(todoId);
         todos.Add(item);
@@ -139,13 +149,13 @@
     }
 
     /*
-        async Task OnUpdated(string todoId)
+        async Task OnUpdated(int todoId)
         {
 
         }
     */
 
-    void OnDeleted(string todoId)
+    void OnDeleted(int todoId)
     {
         var item = todos.First(x => x.Id == todoId);
         todos.Remove(item);
@@ -153,7 +163,7 @@
         StateHasChanged();
     }
 
-    void OnTitleUpdated(string todoId, string title)
+    void OnTitleUpdated(int todoId, string title)
     {
         var item = todos.First(x => x.Id == todoId);
         item.Title = title;
@@ -161,7 +171,7 @@
         StateHasChanged();
     }
 
-    void OnDescriptionUpdated(string todoId, string? description)
+    void OnDescriptionUpdated(int todoId, string? description)
     {
         var item = todos.First(x => x.Id == todoId);
         item.Description = description;
@@ -169,10 +179,26 @@
         StateHasChanged();
     }
 
-    void OnStatusUpdated(string todoId, TodoStatusDto status)
+    void OnStatusUpdated(int todoId, TodoStatusDto status)
     {
         var item = todos.First(x => x.Id == todoId);
         item.Status = status;
+        dropContainer.Refresh();
+        StateHasChanged();
+    }
+
+    void OnEstimatedHoursUpdated(int todoId, double? hours)
+    {
+        var item = todos.First(x => x.Id == todoId);
+        item.EstimatedHours = hours;
+        dropContainer.Refresh();
+        StateHasChanged();
+    }
+
+    void OnRemainingHoursUpdated(int todoId, double? hours)
+    {
+        var item = todos.First(x => x.Id == todoId);
+        item.RemainingHours = hours;
         dropContainer.Refresh();
         StateHasChanged();
     }

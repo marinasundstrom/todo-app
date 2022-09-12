@@ -4,13 +4,13 @@ namespace TodoApp.Domain.Events;
 
 public class TodoDescriptionUpdated : DomainEvent, INotification
 {
-    public TodoDescriptionUpdated(string todoId, string? description)
+    public TodoDescriptionUpdated(int todoId, string? description)
     {
         TodoId = todoId;
         Description = description;
     }
 
-    public string TodoId { get; }
+    public int TodoId { get; }
     
     public string? Description { get; }
 }

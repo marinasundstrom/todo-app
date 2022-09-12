@@ -21,7 +21,7 @@ public class GetTodoTest
         var todoRepository = new MockTodoRepository(fakeDomainEventDispatcher);
         var commandHandler = new GetTodoById.Handler(todoRepository);
 
-        string nonExistentTodoId = "foo";
+        int nonExistentTodoId = 9999;
 
         // Act
 

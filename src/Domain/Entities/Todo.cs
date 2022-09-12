@@ -3,15 +3,14 @@ using TodoApp.Domain.Events;
 
 namespace TodoApp.Domain.Entities;
 
-public class Todo : AuditableEntity, IAggregateRoot<string>
+public class Todo : AuditableEntity, IAggregateRoot<int>
 {
     protected Todo()
     {
     }
 
-    public Todo(string title, string? description, TodoStatus status = TodoStatus.New)
+    public Todo(string title, string? description, TodoStatus status = TodoStatus.NotStarted)
     {
-        Id = Guid.NewGuid().ToString();
         Title = title;
         Description = description;
         Status = status;
@@ -19,7 +18,7 @@ public class Todo : AuditableEntity, IAggregateRoot<string>
         AddDomainEvent(new TodoCreated(Id));
     }
 
-    public string Id { get; private set; } = null!;
+    public int Id { get; private set; }
 
     public string Title { get; private set; } = null!;
 
@@ -56,7 +55,7 @@ public class Todo : AuditableEntity, IAggregateRoot<string>
 
         return false;
     }
-
+    
     public TodoStatus Status  { get; private set; }
 
     public bool UpdateStatus(TodoStatus status) 
@@ -69,6 +68,42 @@ public class Todo : AuditableEntity, IAggregateRoot<string>
             AddDomainEvent(new TodoUpdated(Id));
             AddDomainEvent(new TodoStatusUpdated(Id, status, oldStatus));
             
+            return true;
+        }
+
+        return false;
+    }
+
+    public double? EstimatedHours { get; private set; }
+
+    public bool UpdateEstimatedHours(double? hours)
+    {
+        var oldHours = EstimatedHours;
+        if (hours != oldHours)
+        {
+            EstimatedHours = hours;
+
+            AddDomainEvent(new TodoUpdated(Id));
+            AddDomainEvent(new TodoEstimatedHoursUpdated(Id, hours, oldHours));
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public double? RemainingHours { get; private set; }
+
+    public bool UpdateRemainingHours(double? hours)
+    {
+        var oldHours = RemainingHours;
+        if (hours != oldHours)
+        {
+            RemainingHours = hours;
+
+            AddDomainEvent(new TodoUpdated(Id));
+            AddDomainEvent(new TodoRemainingHoursUpdated(Id, hours, oldHours));
+
             return true;
         }
 

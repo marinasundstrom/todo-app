@@ -1,5 +1,5 @@
 ﻿@page "/todos/new"
-@page "/todos/{id}"
+@page "/todos/{id:int}"
 @using System.ComponentModel.DataAnnotations
 @using TodoApp
 @using Microsoft.AspNetCore.SignalR.Client
@@ -25,10 +25,15 @@ else
 {
     @if (todo is not null)
     {
-        <PageTitle>@todo.Title</PageTitle>
+        <PageTitle>@todo.Id @todo.Title</PageTitle>
 
         <EditForm EditContext="editContext" OnValidSubmit="Submit">
             <DataAnnotationsValidator />
+
+            @if(Id != null) 
+            {
+                <MudText Typo="Typo.h4" Class="mb-4">@Id - @Title</MudText>
+            }
 
             <MudTextField Label="Title" Variant="Variant.Outlined" @bind-Value="Title" For="() => Title"
                         Class="mb-4" />
@@ -42,6 +47,12 @@ else
                     <MudSelectItem Value="@status">@Enum.GetName(typeof(TodoStatusDto), status)</MudSelectItem>
                 }
             </MudSelect>
+
+            <MudNumericField Label="Estimated hours" Variant="Variant.Outlined" @bind-Value="EstimatedHours"
+                        For="() => EstimatedHours" Class="mb-4" />
+
+            <MudNumericField Label="Remaining hours" Variant="Variant.Outlined" @bind-Value="RemainingHours"
+                        For="() => RemainingHours" Class="mb-4" />
 
             <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Submit">Update</MudButton>
 
@@ -57,7 +68,7 @@ else
     bool notFound = false;
     bool error = false;
 
-    [Parameter] public string? Id { get; set; }
+    [Parameter] public int? Id { get; set; }
 
     [MaxLength(60)]
     public string Title { get; set; } = null!;
@@ -67,13 +78,21 @@ else
 
     public TodoStatusDto Status { get; set; }
 
+    public double? EstimatedHours { get; set; }
+
+    public double? RemainingHours { get; set; }
+
     async Task Submit()
     {
-        await TodosClient.UpdateTitleAsync(Id, Title);
+        await TodosClient.UpdateTitleAsync(Id.GetValueOrDefault(), Title);
 
-        await TodosClient.UpdateDescriptionAsync(Id, Description);
+        await TodosClient.UpdateDescriptionAsync(Id.GetValueOrDefault(), Description);
 
-        await TodosClient.UpdateStatusAsync(Id, Status);
+        await TodosClient.UpdateStatusAsync(Id.GetValueOrDefault(), Status);
+
+        await TodosClient.UpdateEstimatedHoursAsync(Id.GetValueOrDefault(), EstimatedHours);
+
+        await TodosClient.UpdateRemainingHoursAsync(Id.GetValueOrDefault(), RemainingHours);
     }
 
     protected override async Task OnInitializedAsync()
@@ -91,7 +110,7 @@ else
         {
             try 
             {
-                await LoadTodo(Id);
+                await LoadTodo(Id.GetValueOrDefault());
             }
             catch(ApiException<ProblemDetails> exc) 
             {
@@ -116,9 +135,11 @@ else
             .WithUrl($"https://localhost:5001/hubs/todos?itemId={Id}")
             .WithAutomaticReconnect().Build();
 
-            hubConnection.On<string, string>("TitleUpdated", OnTitleUpdated);
-            hubConnection.On<string, string?>("DescriptionUpdated", OnDescriptionUpdated);
-            hubConnection.On<string, TodoStatusDto>("StatusUpdated", OnStatusUpdated);
+            hubConnection.On<int, string>("TitleUpdated", OnTitleUpdated);
+            hubConnection.On<int, string?>("DescriptionUpdated", OnDescriptionUpdated);
+            hubConnection.On<int, TodoStatusDto>("StatusUpdated", OnStatusUpdated);
+            hubConnection.On<int, double?>("EstimatedHoursUpdated", OnEstimatedHoursUpdated);
+            hubConnection.On<int, double?>("RemainingHoursUpdated", OnRemainingHoursUpdated);
 
             hubConnection.Closed += (error) =>
             {
@@ -153,12 +174,14 @@ else
         {
             Title = "Test",
             Description = "Lorem ipsum",
-            Status = TodoStatusDto.New
+            Status = TodoStatusDto.NotStarted
         });
 
             Title = todo.Title;
             Description = todo.Description;
             Status = todo.Status;
+            EstimatedHours = todo.EstimatedHours;
+            RemainingHours = todo.RemainingHours;
 
             NavigationManager.NavigateTo($"/todos/{todo.Id}", replace: true);
     }
@@ -168,30 +191,44 @@ else
         await LoadTodo(todo!.Id);
     }
 
-    async Task LoadTodo(string id)
+    async Task LoadTodo(int id)
     {
         this.todo = await TodosClient.GetTodoByIdAsync(id);
 
         Title = todo.Title;
         Description = todo.Description;
         Status = todo.Status;
+        EstimatedHours = todo.EstimatedHours;
+        RemainingHours = todo.RemainingHours;
     }
 
-    void  OnTitleUpdated(string todoId, string title)
+    void  OnTitleUpdated(int todoId, string title)
     {
         Title = title;
         StateHasChanged();
     }
 
-    void OnDescriptionUpdated(string todoId, string? description)
+    void OnDescriptionUpdated(int todoId, string? description)
     {
         Description = description;
         StateHasChanged();
     }
 
-    void OnStatusUpdated(string todoId, TodoStatusDto status)
+    void OnStatusUpdated(int todoId, TodoStatusDto status)
     {
         Status = status;
+        StateHasChanged();
+    }
+
+    void OnEstimatedHoursUpdated(int todoId, double? hours)
+    {
+        EstimatedHours = hours;
+        StateHasChanged();
+    }
+
+    void OnRemainingHoursUpdated(int todoId, double? hours)
+    {
+        RemainingHours = hours;
         StateHasChanged();
     }
 

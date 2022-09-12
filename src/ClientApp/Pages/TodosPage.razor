@@ -17,11 +17,20 @@
 <MudTable T="TodoDto" ServerData="@(new Func<TableState, Task<TableData<TodoDto>>>(ServerReload))" Elevation="25"
           OnRowClick="(e) => NavigateTo(e.Item)" Dense="true" Hover="true" @ref="table" Class="mb-8">
     <HeaderContent>
+         <MudTh>
+            <MudTableSortLabel SortLabel="Id" T="TodoDto">Id</MudTableSortLabel>
+        </MudTh>
         <MudTh>
             <MudTableSortLabel SortLabel="Title" T="TodoDto">Title</MudTableSortLabel>
         </MudTh>
         <MudTh>
             <MudTableSortLabel SortLabel="Status" T="TodoDto">Status</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortLabel="EstimatedHours" T="TodoDto">Estimated hours</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortLabel="RemainingHours" T="TodoDto">Remaining hours</MudTableSortLabel>
         </MudTh>
         <MudTh>
             <MudTableSortLabel SortLabel="Created" T="TodoDto">Created</MudTableSortLabel>
@@ -34,8 +43,11 @@
         </MudTh>
     </HeaderContent>
     <RowTemplate>
+        <MudTd DataLabel="Id">@context.Id</MudTd>
         <MudTd DataLabel="Title">@context.Title</MudTd>
         <MudTd DataLabel="Status">@context.Status.ToString()</MudTd>
+        <MudTd DataLabel="Estimated hours">@context.EstimatedHours.ToString()</MudTd>
+        <MudTd DataLabel="Remaining hours">@context.RemainingHours.ToString()</MudTd>
         <MudTd DataLabel="Created">@context.Created.ToString("g")</MudTd>
         <MudTd DataLabel="Last modified">@context.LastModified?.ToString("g")</MudTd>
         <MudTh><MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="async () => await DeleteTodo(context.Id)"></MudIconButton></MudTh>
@@ -63,9 +75,9 @@
             .WithUrl($"https://localhost:5001/hubs/todos")
             .WithAutomaticReconnect().Build();
 
-            hubConnection.On<string>("Created", OnCreated);
-            hubConnection.On<string>("Updated", OnUpdated);
-            hubConnection.On<string>("Deleted", OnDeleted);
+            hubConnection.On<int>("Created", OnCreated);
+            hubConnection.On<int>("Updated", OnUpdated);
+            hubConnection.On<int>("Deleted", OnDeleted);
 
             //hubConnection.On<string, string>("TitleUpdated", OnTitleUpdated);
             //hubConnection.On<string, string?>("DescriptionUpdated", OnDescriptionUpdated);
@@ -111,12 +123,12 @@
         return new TableData<TodoDto>() { TotalItems = result.TotalItems, Items = result.Items };
     }
 
-    async Task<TodoDto> FetchTodo(string id)
+    async Task<TodoDto> FetchTodo(int id)
     {
         return await TodosClient.GetTodoByIdAsync(id);
     }
 
-    async Task DeleteTodo(string id)
+    async Task DeleteTodo(int id)
     {
         var result = await DialogService.ShowMessageBox("Delete todo?", "Are you sure?", "Yes", "No");
 
@@ -128,22 +140,22 @@
         }
     }
 
-    async Task OnCreated(string todoId)
+    async Task OnCreated(int todoId)
     {
         await table.ReloadServerData();
     }
 
-    async Task OnUpdated(string todoId)
+    async Task OnUpdated(int todoId)
     {
         bool hasUpdated = await UpdateItem(todoId);
     }
 
-    async Task OnDeleted(string todoId)
+    async Task OnDeleted(int todoId)
     {
         await table.ReloadServerData();
     }
 
-    /* void OnTitleUpdated(string todoId, string title)
+    /* void OnTitleUpdated(int todoId, string title)
     {
         var item = GetTodoFromTable(todoId);
 
@@ -155,7 +167,7 @@
         }
     } */
 
-    private async Task<bool> UpdateItem(string id)
+    private async Task<bool> UpdateItem(int id)
     {
         var newItem = await FetchTodo(id);
         var hasReplaced = ReplaceItemInTable(id, newItem);
@@ -165,7 +177,7 @@
         return hasReplaced;
     }
 
-    private bool ReplaceItemInTable(string id, TodoDto item)
+    private bool ReplaceItemInTable(int id, TodoDto item)
     {
         var data = GetTableData();
         var items = data!.Items.ToList();
@@ -181,7 +193,7 @@
         return false;
     }
 
-    private TodoDto? GetItemFromTable(string id)
+    private TodoDto? GetItemFromTable(int id)
     {
         var data = GetTableData();
         return data!.Items.FirstOrDefault(x => x.Id == id);

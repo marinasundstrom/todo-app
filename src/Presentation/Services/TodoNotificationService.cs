@@ -13,33 +13,43 @@ public class TodoNotificationService : ITodoNotificationService
         this.hubsContext = hubsContext;
     }
 
-    public async Task Created(string todoId)
+    public async Task Created(int todoId)
     {
         await hubsContext.Clients.All.Created(todoId);
     }
 
-    public async Task Updated(string todoId)
+    public async Task Updated(int todoId)
     {
         await hubsContext.Clients.All.Updated(todoId);
     }
 
-    public async Task Deleted(string todoId)
+    public async Task Deleted(int todoId)
     {
         await hubsContext.Clients.All.Deleted(todoId);
     }
 
-    public async Task DescriptionUpdated(string todoId, string? description)
+    public async Task DescriptionUpdated(int todoId, string? description)
     {
         await hubsContext.Clients.All.DescriptionUpdated(todoId, description);
     }
 
-    public async Task StatusUpdated(string todoId, TodoStatusDto status)
+    public async Task StatusUpdated(int todoId, TodoStatusDto status)
     {
         await hubsContext.Clients.All.StatusUpdated(todoId, status);
     }
 
-    public async Task TitleUpdated(string todoId, string title)
+    public async Task TitleUpdated(int todoId, string title)
     {
         await hubsContext.Clients.All.TitleUpdated(todoId, title);
+    }
+
+    public async Task EstimatedHoursUpdated(int todoId, double? hours)
+    {
+        await hubsContext.Clients.All.EstimatedHoursUpdated(todoId, hours);
+    }
+
+    public async Task RemainingHoursUpdated(int todoId, double? hours)
+    {
+        await hubsContext.Clients.All.RemainingHoursUpdated(todoId, hours);
     }
 }

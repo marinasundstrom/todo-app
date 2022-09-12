@@ -9,7 +9,7 @@ public class TodoTest
     [Fact]
     public void CreateTodo()
     {
-        var todo = new Todo("Foo", "Bar", TodoApp.Domain.Enums.TodoStatus.New);
+        var todo = new Todo("Foo", "Bar", TodoApp.Domain.Enums.TodoStatus.NotStarted);
 
         todo.DomainEvents.OfType<TodoCreated>().Should().ContainSingle();
     }
@@ -20,7 +20,7 @@ public class TodoTest
         // Arrange
         var oldTitle = "Foo";
 
-        var todo = new Todo(oldTitle, "Bar", TodoApp.Domain.Enums.TodoStatus.New);
+        var todo = new Todo(oldTitle, "Bar", TodoApp.Domain.Enums.TodoStatus.NotStarted);
 
         var newTitle = "Zack";
 
@@ -41,7 +41,7 @@ public class TodoTest
         // Arrange
         var oldDescription = "Bar";
 
-        var todo = new Todo("Foo", oldDescription, TodoApp.Domain.Enums.TodoStatus.New);
+        var todo = new Todo("Foo", oldDescription, TodoApp.Domain.Enums.TodoStatus.NotStarted);
 
         var newDescription = "This is a new description";
 
@@ -60,7 +60,7 @@ public class TodoTest
     public void UpdateStatus()
     {
         // Arrange
-        var oldStatus = TodoApp.Domain.Enums.TodoStatus.New;
+        var oldStatus = TodoApp.Domain.Enums.TodoStatus.NotStarted;
 
         var todo = new Todo("Foo", "Bar", oldStatus);
 

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TodoApp.Infrastructure.Persistance.Repositories;
 
-public class TodoRepository : RepositoryBase<Todo, string>, ITodoRepository
+public class TodoRepository : RepositoryBase<Todo, int>, ITodoRepository
 {
     public TodoRepository(ApplicationDbContext context) : base(context)
     {
@@ -15,7 +15,7 @@ public class TodoRepository : RepositoryBase<Todo, string>, ITodoRepository
         return dbSet.AsQueryable();
     }
 
-    public override async Task<Todo?> FindByIdAsync(string id, CancellationToken cancellationToken = default)
+    public override async Task<Todo?> FindByIdAsync(int id, CancellationToken cancellationToken = default)
     {
         return await dbSet.FirstOrDefaultAsync(x => x.Id.Equals(id), cancellationToken);
     }

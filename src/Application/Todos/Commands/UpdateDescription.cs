@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace TodoApp.Application.Todos.Commands;
 
-public record UpdateDescription(string Id, string? Description) : IRequest<Result>
+public record UpdateDescription(int Id, string? Description) : IRequest<Result>
 {
     public class Validator : AbstractValidator<UpdateDescription>
     {

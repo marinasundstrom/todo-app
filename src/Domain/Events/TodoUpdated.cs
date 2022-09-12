@@ -2,10 +2,10 @@ namespace TodoApp.Domain.Events;
 
 public class TodoUpdated : DomainEvent
 {
-    public TodoUpdated(string todoId)
+    public TodoUpdated(int todoId)
     {
         TodoId = todoId;
     }
 
-    public string TodoId { get; }
+    public int TodoId { get; }
 }

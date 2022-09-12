@@ -2,10 +2,10 @@ namespace TodoApp.Domain.Events;
 
 public class TodoDeleted : DomainEvent
 {
-    public TodoDeleted(string todoId)
+    public TodoDeleted(int todoId)
     {
         TodoId = todoId;
     }
 
-    public string TodoId { get; }
+    public int TodoId { get; }
 }

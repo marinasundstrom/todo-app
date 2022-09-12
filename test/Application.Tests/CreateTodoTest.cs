@@ -30,7 +30,7 @@ public class CreateTodoTest
 
         // Act
 
-        var createTodoCommand = new CreateTodo(title, null, Dtos.TodoStatusDto.New);
+        var createTodoCommand = new CreateTodo(title, null, Dtos.TodoStatusDto.NotStarted);
 
         var result = await commandHandler.Handle(createTodoCommand, default);
 

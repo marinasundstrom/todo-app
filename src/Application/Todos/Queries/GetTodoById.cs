@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace TodoApp.Application.Todos.Queries;
 
-public record GetTodoById(string Id) : IRequest<Result<TodoDto>>
+public record GetTodoById(int Id) : IRequest<Result<TodoDto>>
 {
     public class Validator : AbstractValidator<GetTodoById>
     {

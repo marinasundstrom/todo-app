@@ -26,26 +26,26 @@ public class TodosPageTest
                 {
                     new TodoDto
                     {
-                        Id = Guid.NewGuid().ToString(),
+                        Id = 1,
                         Title = "Item 1",
                         Description = "Description",
-                        Status = TodoStatusDto.Ongoing,
+                        Status = TodoStatusDto.InProgress,
                         Created = DateTimeOffset.Now.AddMinutes(-3)
                     },
                     new TodoDto
                     {
-                        Id = Guid.NewGuid().ToString(),
+                        Id = 2,
                         Title = "Item 2",
                         Description = "Description",
-                        Status = TodoStatusDto.Ongoing,
+                        Status = TodoStatusDto.InProgress,
                         Created = DateTimeOffset.Now.AddMinutes(-1)
                     },
                     new TodoDto
                     {
-                        Id = Guid.NewGuid().ToString(),
+                        Id = 3,
                         Title = "Item 2",
                         Description = "Description",
-                        Status = TodoStatusDto.Ongoing,
+                        Status = TodoStatusDto.InProgress,
                         Created = DateTimeOffset.Now
                     }
                 },

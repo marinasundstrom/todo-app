@@ -2,10 +2,10 @@
 
 public class TodoCreated : DomainEvent
 {
-    public TodoCreated(string todoId)
+    public TodoCreated(int todoId)
     {
         TodoId = todoId;
     }
 
-    public string TodoId { get; }
+    public int TodoId { get; }
 }

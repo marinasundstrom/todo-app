@@ -4,15 +4,19 @@ namespace TodoApp.Presentation.Hubs;
 
 public interface ITodosHubClient
 {
-    Task Created(string todoId);
+    Task Created(int todoId);
 
-    Task Updated(string todoId);
+    Task Updated(int todoId);
 
-    Task Deleted(string todoId);
+    Task Deleted(int todoId);
 
-    Task TitleUpdated(string todoId, string title);
+    Task TitleUpdated(int todoId, string title);
 
-    Task DescriptionUpdated(string todoId, string? description);
+    Task DescriptionUpdated(int todoId, string? description);
 
-    Task StatusUpdated(string todoId, TodoStatusDto status);
+    Task StatusUpdated(int todoId, TodoStatusDto status);
+
+    Task EstimatedHoursUpdated(int todoId, double? hours);
+
+    Task RemainingHoursUpdated(int todoId, double? hours);
 }

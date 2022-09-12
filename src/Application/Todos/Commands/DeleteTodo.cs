@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace TodoApp.Application.Todos.Commands;
 
-public record DeleteTodo(string Id) : IRequest<Result>
+public record DeleteTodo(int Id) : IRequest<Result>
 {
     public class Validator : AbstractValidator<DeleteTodo>
     {

@@ -1,21 +1,19 @@
-using MediatR;
+﻿using MediatR;
 using FluentValidation;
 
 namespace TodoApp.Application.Todos.Commands;
 
-public record UpdateTitle(int Id, string Title) : IRequest<Result>
+public record UpdateRemainingHours(int Id, double? Hours) : IRequest<Result>
 {
-    public class Validator : AbstractValidator<UpdateTitle>
+    public class Validator : AbstractValidator<UpdateRemainingHours>
     {
         public Validator()
         {
             RuleFor(x => x.Id).NotEmpty();
-
-            RuleFor(x => x.Title).NotEmpty().MaximumLength(60);
         }
     }
 
-    public class Handler : IRequestHandler<UpdateTitle, Result>
+    public class Handler : IRequestHandler<UpdateRemainingHours, Result>
     {
         private readonly ITodoRepository todoRepository;
         private readonly ITodoNotificationService todoNotificationService;
@@ -26,21 +24,21 @@ public record UpdateTitle(int Id, string Title) : IRequest<Result>
             this.todoNotificationService = todoNotificationService;
         }
 
-        public async Task<Result> Handle(UpdateTitle request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(UpdateRemainingHours request, CancellationToken cancellationToken)
         {
             var todo = await todoRepository.FindByIdAsync(request.Id, cancellationToken);
 
-            if(todo is null)
+            if (todo is null)
             {
                 return Result.Failure(Errors.Todos.TodoNotFound);
             }
 
-            if(todo.UpdateTitle(request.Title)) 
+            if (todo.UpdateRemainingHours(request.Hours))
             {
                 await todoRepository.SaveChangesAsync(cancellationToken);
 
                 await todoNotificationService.Updated(todo.Id);
-                await todoNotificationService.TitleUpdated(todo.Id, todo.Title);
+                await todoNotificationService.RemainingHoursUpdated(todo.Id, todo.RemainingHours);
             }
 
             return Result.Success();

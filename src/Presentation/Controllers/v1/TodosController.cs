@@ -33,7 +33,7 @@ public class TodosController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TodoDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<TodoDto>> GetTodoById(string id, CancellationToken cancellationToken)
+    public async Task<ActionResult<TodoDto>> GetTodoById(int id, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetTodoById(id), cancellationToken);
         return this.HandleResult(result);
@@ -53,7 +53,7 @@ public class TodosController : ControllerBase
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult> DeleteTodo(string id, CancellationToken cancellationToken)
+    public async Task<ActionResult> DeleteTodo(int id, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new DeleteTodo(id), cancellationToken);
         return this.HandleResult(result);
@@ -62,7 +62,7 @@ public class TodosController : ControllerBase
     [HttpPut("{id}/title")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult> UpdateTitle(string id, [FromBody] string title, CancellationToken cancellationToken)
+    public async Task<ActionResult> UpdateTitle(int id, [FromBody] string title, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new UpdateTitle(id, title), cancellationToken);
         return this.HandleResult(result);
@@ -71,7 +71,7 @@ public class TodosController : ControllerBase
     [HttpPut("{id}/description")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult> UpdateDescription(string id, [FromBody] string? description, CancellationToken cancellationToken)
+    public async Task<ActionResult> UpdateDescription(int id, [FromBody] string? description, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new UpdateDescription(id, description), cancellationToken);
         return this.HandleResult(result);
@@ -80,9 +80,27 @@ public class TodosController : ControllerBase
     [HttpPut("{id}/status")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult> UpdateStatus(string id, [FromBody] TodoStatusDto status, CancellationToken cancellationToken)
+    public async Task<ActionResult> UpdateStatus(int id, [FromBody] TodoStatusDto status, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new UpdateStatus(id, status), cancellationToken);
+        return this.HandleResult(result);
+    }
+    
+    [HttpPut("{id}/estimatedHours")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesDefaultResponseType]
+    public async Task<ActionResult> UpdateEstimatedHours(int id, [FromBody] double? hours, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new UpdateEstimatedHours(id, hours), cancellationToken);
+        return this.HandleResult(result);
+    }
+
+    [HttpPut("{id}/remainingHours")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesDefaultResponseType]
+    public async Task<ActionResult> UpdateRemainingHours(int id, [FromBody] double? hours, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new UpdateRemainingHours(id, hours), cancellationToken);
         return this.HandleResult(result);
     }
 }

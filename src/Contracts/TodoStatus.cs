@@ -2,7 +2,9 @@ namespace TodoApp.Contracts;
 
 public enum TodoStatus
 {
-    New,
-    Ongoing,
-    Completed
+    NotStarted,
+    InProgress,
+    OnHold,
+    Completed,
+    Deleted
 }

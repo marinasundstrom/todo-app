@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace TodoApp.Application.Todos.Commands;
 
-public record UpdateStatus(string Id, TodoStatusDto Status) : IRequest<Result>
+public record UpdateStatus(int Id, TodoStatusDto Status) : IRequest<Result>
 {
     public class Validator : AbstractValidator<UpdateStatus>
     {
