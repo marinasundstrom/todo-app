@@ -45,9 +45,11 @@ builder.Services.AddVersionedApiExplorer(option =>
 
 // Register the Swagger services
 
+#pragma warning disable ASP0000 // Do not call 'IServiceCollection.BuildServiceProvider' in 'ConfigureServices'
 var provider = builder.Services
     .BuildServiceProvider()
     .GetRequiredService<IApiVersionDescriptionProvider>();
+#pragma warning restore ASP0000 // Do not call 'IServiceCollection.BuildServiceProvider' in 'ConfigureServices'
 
 foreach (ApiVersionDescription description in provider.ApiVersionDescriptions)
 {
