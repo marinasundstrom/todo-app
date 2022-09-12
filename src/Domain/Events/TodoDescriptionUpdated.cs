@@ -11,6 +11,6 @@ public class TodoDescriptionUpdated : DomainEvent, INotification
     }
 
     public int TodoId { get; }
-    
+
     public string? Description { get; }
 }

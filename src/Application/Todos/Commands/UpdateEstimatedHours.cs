@@ -1,5 +1,5 @@
-﻿using MediatR;
-using FluentValidation;
+﻿using FluentValidation;
+using MediatR;
 
 namespace TodoApp.Application.Todos.Commands;
 
@@ -28,12 +28,12 @@ public record UpdateEstimatedHours(int Id, double? Hours) : IRequest<Result>
         {
             var todo = await todoRepository.FindByIdAsync(request.Id, cancellationToken);
 
-            if(todo is null)
+            if (todo is null)
             {
                 return Result.Failure(Errors.Todos.TodoNotFound);
             }
 
-            if(todo.UpdateEstimatedHours(request.Hours)) 
+            if (todo.UpdateEstimatedHours(request.Hours))
             {
                 await todoRepository.SaveChangesAsync(cancellationToken);
 

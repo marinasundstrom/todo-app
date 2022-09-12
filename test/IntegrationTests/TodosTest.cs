@@ -72,6 +72,6 @@ public partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Progr
 
         // Assert
 
-        exception.StatusCode.Should().Be((int)HttpStatusCode.NotFound); 
+        exception.StatusCode.Should().Be((int)HttpStatusCode.NotFound);
     }
 }

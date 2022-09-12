@@ -1,6 +1,6 @@
 namespace TodoApp.Domain.Enums;
 
-public enum TodoStatus 
+public enum TodoStatus
 {
     NotStarted,
     InProgress,

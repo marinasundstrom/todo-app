@@ -38,7 +38,7 @@ partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Program>>
         // Act
 
         await harness.Bus.Publish(
-            new UpdateStatus( todo.Id, (Contracts.TodoStatus)newStatus));
+            new UpdateStatus(todo.Id, (Contracts.TodoStatus)newStatus));
 
         // Assert
 

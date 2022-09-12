@@ -1,8 +1,8 @@
-﻿using TodoApp.Application;
+﻿using MassTransit;
+using TodoApp.Application;
 using TodoApp.Consumers;
 using TodoApp.Infrastructure;
 using TodoApp.Presentation;
-using MassTransit;
 
 namespace TodoApp.Web;
 

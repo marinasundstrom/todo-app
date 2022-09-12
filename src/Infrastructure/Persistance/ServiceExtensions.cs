@@ -1,8 +1,8 @@
-﻿using TodoApp.Infrastructure.Persistance.Interceptors;
-using TodoApp.Infrastructure.Persistance.Repositories;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TodoApp.Infrastructure.Persistance.Interceptors;
+using TodoApp.Infrastructure.Persistance.Repositories;
 
 namespace TodoApp.Infrastructure.Persistance
 {

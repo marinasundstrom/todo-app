@@ -1,5 +1,5 @@
-using MediatR;
 using FluentValidation;
+using MediatR;
 
 namespace TodoApp.Application.Todos.Commands;
 
@@ -30,19 +30,19 @@ public record UpdateDescription(int Id, string? Description) : IRequest<Result>
         {
             var todo = await todoRepository.FindByIdAsync(request.Id, cancellationToken);
 
-            if(todo is null)
+            if (todo is null)
             {
                 return Result.Failure(Errors.Todos.TodoNotFound);
             }
 
-            if(todo.UpdateDescription(request.Description))
+            if (todo.UpdateDescription(request.Description))
             {
                 await todoRepository.SaveChangesAsync(cancellationToken);
 
                 await todoNotificationService.Updated(todo.Id);
                 await todoNotificationService.DescriptionUpdated(todo.Id, todo.Description);
             }
-            
+
             return Result.Success();
         }
     }

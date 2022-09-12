@@ -1,7 +1,7 @@
-﻿using TodoApp.Application.Behaviors;
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using TodoApp.Application.Behaviors;
 
 namespace TodoApp.Application;
 

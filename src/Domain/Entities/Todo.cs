@@ -22,10 +22,10 @@ public class Todo : AuditableEntity, IAggregateRoot<int>
 
     public string Title { get; private set; } = null!;
 
-    public bool UpdateTitle(string title) 
+    public bool UpdateTitle(string title)
     {
         var oldTitle = Title;
-        if(title != oldTitle) 
+        if (title != oldTitle)
         {
             Title = title;
 
@@ -40,10 +40,10 @@ public class Todo : AuditableEntity, IAggregateRoot<int>
 
     public string? Description { get; private set; }
 
-    public bool UpdateDescription(string? description) 
+    public bool UpdateDescription(string? description)
     {
         var oldDescription = Description;
-        if(description != oldDescription) 
+        if (description != oldDescription)
         {
             Description = description;
 
@@ -55,19 +55,19 @@ public class Todo : AuditableEntity, IAggregateRoot<int>
 
         return false;
     }
-    
-    public TodoStatus Status  { get; private set; }
 
-    public bool UpdateStatus(TodoStatus status) 
+    public TodoStatus Status { get; private set; }
+
+    public bool UpdateStatus(TodoStatus status)
     {
         var oldStatus = Status;
-        if(status != oldStatus) 
+        if (status != oldStatus)
         {
             Status = status;
 
             AddDomainEvent(new TodoUpdated(Id));
             AddDomainEvent(new TodoStatusUpdated(Id, status, oldStatus));
-            
+
             return true;
         }
 

@@ -1,5 +1,5 @@
-﻿using TodoApp.Presentation.Hubs;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
+using TodoApp.Presentation.Hubs;
 
 namespace TodoApp.Presentation;
 

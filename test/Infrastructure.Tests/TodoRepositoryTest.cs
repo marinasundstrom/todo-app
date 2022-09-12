@@ -5,7 +5,7 @@ using TodoApp.Infrastructure.Persistance.Repositories;
 namespace TodoApp.Infrastructure;
 
 public class TodoRepositoryTest
-    :  IClassFixture<TodoFixture>
+    : IClassFixture<TodoFixture>
 {
     private readonly TodoFixture fixture;
 

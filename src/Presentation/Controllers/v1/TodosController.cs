@@ -1,13 +1,13 @@
-using TodoApp.Application;
-using TodoApp.Application.Common;
-using TodoApp.Application.Todos.Commands;
-using TodoApp.Application.Todos.Dtos;
-using TodoApp.Application.Todos.Queries;
 using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TodoApp.Application;
+using TodoApp.Application.Common;
 using TodoApp.Application.Todos;
+using TodoApp.Application.Todos.Commands;
+using TodoApp.Application.Todos.Dtos;
+using TodoApp.Application.Todos.Queries;
 
 namespace TodoApp.Presentation.Controllers;
 
@@ -85,7 +85,7 @@ public class TodosController : ControllerBase
         var result = await mediator.Send(new UpdateStatus(id, status), cancellationToken);
         return this.HandleResult(result);
     }
-    
+
     [HttpPut("{id}/estimatedHours")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesDefaultResponseType]

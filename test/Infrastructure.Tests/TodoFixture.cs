@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
+using Microsoft.EntityFrameworkCore;
 using NSubstitute;
 using TodoApp.Application.Services;
 using TodoApp.Infrastructure.Persistance;

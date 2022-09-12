@@ -1,7 +1,7 @@
-﻿using TodoApp.Presentation.Controllers;
-using Microsoft.Extensions.DependencyInjection;
-using TodoApp.Presentation.Hubs;
+﻿using Microsoft.Extensions.DependencyInjection;
 using TodoApp.Application.Services;
+using TodoApp.Presentation.Controllers;
+using TodoApp.Presentation.Hubs;
 
 namespace TodoApp.Presentation;
 

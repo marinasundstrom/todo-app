@@ -1,6 +1,6 @@
 ﻿using System.Threading;
-using TodoApp.Domain.Specifications;
 using Microsoft.EntityFrameworkCore;
+using TodoApp.Domain.Specifications;
 
 namespace TodoApp.Infrastructure.Persistance.Repositories;
 

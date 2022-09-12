@@ -1,9 +1,9 @@
 ﻿using Bunit;
-using TodoApp.Pages;
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor.Services;
 using NSubstitute;
 using TodoApp;
+using TodoApp.Pages;
 
 namespace TodoApp.Tests;
 

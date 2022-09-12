@@ -1,5 +1,5 @@
-﻿using TodoApp.Infrastructure;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
+using TodoApp.Infrastructure;
 
 namespace TodoApp.Infrastructure;
 

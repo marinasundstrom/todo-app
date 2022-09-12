@@ -32,7 +32,7 @@ public record GetTodos(TodoStatusDto? Status, int Page = 1, int PageSize = 10, s
             {
                 query = query.OrderBy(request.SortBy, request.SortDirection);
             }
-            else 
+            else
             {
                 query = query.OrderByDescending(x => x.Created);
             }

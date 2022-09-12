@@ -16,7 +16,7 @@ public class TodoStatusUpdatedEventHandler : INotificationHandler<DomainEventNot
     {
         var todo = await todoRepository.FindByIdAsync(notification.DomainEvent.TodoId, cancellationToken);
 
-        if(todo is not null) 
+        if (todo is not null)
         {
 
         }

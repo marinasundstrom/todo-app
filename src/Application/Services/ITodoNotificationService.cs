@@ -9,7 +9,7 @@ public interface ITodoNotificationService
     Task Updated(int todoId);
 
     Task Deleted(int todoId);
-    
+
     Task TitleUpdated(int todoId, string title);
 
     Task DescriptionUpdated(int todoId, string? description);

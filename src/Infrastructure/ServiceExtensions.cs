@@ -1,7 +1,7 @@
-﻿using TodoApp.Infrastructure.Persistance;
-using TodoApp.Infrastructure.Services;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TodoApp.Infrastructure.Persistance;
+using TodoApp.Infrastructure.Services;
 
 namespace TodoApp.Infrastructure
 {

@@ -1,6 +1,6 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using TodoApp.Application.Todos.Dtos;
-using FluentValidation;
 
 namespace TodoApp.Application.Todos.Queries;
 
@@ -13,7 +13,7 @@ public record GetTodoById(int Id) : IRequest<Result<TodoDto>>
             RuleFor(x => x.Id).NotEmpty();
         }
     }
-    
+
     public class Handler : IRequestHandler<GetTodoById, Result<TodoDto>>
     {
         private readonly ITodoRepository todoRepository;

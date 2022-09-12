@@ -8,18 +8,18 @@ public sealed class TodosStepDefinitions
     [Given("that you define a task to do")]
     public void GivenThatYouDefineATaskToDo()
     {
-        
+
     }
 
     [When("you post it")]
     public void WhenYouPostIt()
     {
-        
+
     }
 
     [Then("then an item should have been created")]
     public void ThenAnItemShouldHaveBeenCreated()
     {
-        
+
     }
 }
