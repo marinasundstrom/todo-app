@@ -13,6 +13,8 @@ To run this solution, Install .NET Tye and Docker.
 * SignalR
 * MassTransit
 
+The app utilizes the Transactional Outbox Pattern for dispatching Domain events that have been serialized to the database.
+
 ## Screenshots
 
 ![List](/images/screenshot.png)
