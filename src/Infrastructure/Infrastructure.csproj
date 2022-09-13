@@ -31,15 +31,4 @@
 		<ProjectReference Include="..\Domain\Domain.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <None Remove="Persistance\Migrations\" />
-	  <None Remove="Quartz.Extensions.DependencyInjection" />
-	  <None Remove="Quartz" />
-	  <None Remove="BackgroundJobs\" />
-	  <None Remove="Quartz.Extensions.Hosting" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Persistance\Migrations\" />
-	  <Folder Include="BackgroundJobs\" />
-	</ItemGroup>
 </Project>

@@ -1,16 +1,23 @@
-using System.Reflection.Metadata;
-using MassTransit.Configuration;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using NSwag;
 using NSwag.Generation.Processors.Security;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using TodoApp.Infrastructure.Persistance;
 using TodoApp.Presentation;
 using TodoApp.Web;
 using TodoApp.Web.Middleware;
+
+Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+Activity.ForceDefaultIdFormat = true;
+
+// Define some important constants to initialize tracing with
+var serviceName = "TodoApp";
+var serviceVersion = "1.0.0";
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -93,6 +100,28 @@ builder.Services.AddUniverse(builder.Configuration);
 builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 
 builder.Services.AddMassTransitForApp();
+
+
+// Configure important OpenTelemetry settings, the console exporter, and instrumentation library
+builder.Services.AddOpenTelemetryTracing(tracerProviderBuilder =>
+{
+    tracerProviderBuilder
+        .AddConsoleExporter()
+        .AddZipkinExporter(o =>
+        {
+            o.Endpoint = new Uri("http://localhost:9411/api/v2/spans");
+            o.ExportProcessorType = OpenTelemetry.ExportProcessorType.Simple;
+        })
+        .AddSource(serviceName)
+        .AddSource("MassTransit")
+        .SetResourceBuilder(
+            ResourceBuilder.CreateDefault()
+                .AddService(serviceName: serviceName, serviceVersion: serviceVersion))
+        .AddHttpClientInstrumentation()
+        .AddAspNetCoreInstrumentation()
+        .AddSqlClientInstrumentation()
+        .AddMassTransitInstrumentation();
+});
 
 var app = builder.Build();
 

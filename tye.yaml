@@ -51,4 +51,7 @@ services:
     - name: management
       port: 15672
 
-
+- name: zipkin
+  image: openzipkin/zipkin
+  bindings:
+    - port: 9411
