@@ -38,6 +38,8 @@ namespace TodoApp.Infrastructure.Persistance
         {
             // TODO: Automate this
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddScoped<ITodoRepository, TodoRepository>();
         }
     }

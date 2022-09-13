@@ -17,10 +17,12 @@ public record UpdateStatus(int Id, TodoStatusDto Status) : IRequest<Result>
     public class Handler : IRequestHandler<UpdateStatus, Result>
     {
         private readonly ITodoRepository todoRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public Handler(ITodoRepository todoRepository)
+        public Handler(ITodoRepository todoRepository, IUnitOfWork unitOfWork)
         {
             this.todoRepository = todoRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<Result> Handle(UpdateStatus request, CancellationToken cancellationToken)
@@ -33,7 +35,7 @@ public record UpdateStatus(int Id, TodoStatusDto Status) : IRequest<Result>
             }
 
             todo.UpdateStatus((Domain.Enums.TodoStatus)request.Status);
-            await todoRepository.SaveChangesAsync(cancellationToken);
+            await unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Result.Success();
         }

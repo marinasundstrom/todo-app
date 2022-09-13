@@ -1,5 +1,6 @@
 using FluentValidation;
 using MediatR;
+using TodoApp.Domain;
 
 namespace TodoApp.Application.Todos.Commands;
 
@@ -18,10 +19,12 @@ public record UpdateDescription(int Id, string? Description) : IRequest<Result>
     public class Handler : IRequestHandler<UpdateDescription, Result>
     {
         private readonly ITodoRepository todoRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public Handler(ITodoRepository todoRepository)
+        public Handler(ITodoRepository todoRepository, IUnitOfWork unitOfWork)
         {
             this.todoRepository = todoRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<Result> Handle(UpdateDescription request, CancellationToken cancellationToken)
@@ -34,7 +37,7 @@ public record UpdateDescription(int Id, string? Description) : IRequest<Result>
             }
 
             todo.UpdateDescription(request.Description);
-            await todoRepository.SaveChangesAsync(cancellationToken);
+            await unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Result.Success();
         }

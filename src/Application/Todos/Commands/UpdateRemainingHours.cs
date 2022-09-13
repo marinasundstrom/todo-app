@@ -16,10 +16,12 @@ public record UpdateRemainingHours(int Id, double? Hours) : IRequest<Result>
     public class Handler : IRequestHandler<UpdateRemainingHours, Result>
     {
         private readonly ITodoRepository todoRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public Handler(ITodoRepository todoRepository)
+        public Handler(ITodoRepository todoRepository, IUnitOfWork unitOfWork)
         {
             this.todoRepository = todoRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<Result> Handle(UpdateRemainingHours request, CancellationToken cancellationToken)
@@ -32,7 +34,7 @@ public record UpdateRemainingHours(int Id, double? Hours) : IRequest<Result>
             }
 
             todo.UpdateRemainingHours(request.Hours);
-            await todoRepository.SaveChangesAsync(cancellationToken);
+            await unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Result.Success();
         }

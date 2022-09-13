@@ -18,10 +18,12 @@ public record UpdateTitle(int Id, string Title) : IRequest<Result>
     public class Handler : IRequestHandler<UpdateTitle, Result>
     {
         private readonly ITodoRepository todoRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public Handler(ITodoRepository todoRepository)
+        public Handler(ITodoRepository todoRepository, IUnitOfWork unitOfWork)
         {
             this.todoRepository = todoRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<Result> Handle(UpdateTitle request, CancellationToken cancellationToken)
@@ -34,7 +36,7 @@ public record UpdateTitle(int Id, string Title) : IRequest<Result>
             }
 
             todo.UpdateTitle(request.Title);
-            await todoRepository.SaveChangesAsync(cancellationToken);
+            await unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Result.Success();
         }

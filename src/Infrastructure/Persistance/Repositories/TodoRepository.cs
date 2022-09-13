@@ -4,7 +4,7 @@ using TodoApp.Domain.Specifications;
 
 namespace TodoApp.Infrastructure.Persistance.Repositories;
 
-public class TodoRepository : RepositoryBase<Todo, int>, ITodoRepository
+public sealed class TodoRepository : RepositoryBase<Todo, int>, ITodoRepository
 {
     public TodoRepository(ApplicationDbContext context) : base(context)
     {

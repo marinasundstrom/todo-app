@@ -18,7 +18,8 @@ public class GetTodoTest
         var fakeDomainEventDispatcher = Substitute.For<IDomainEventDispatcher>();
 
         // TODO: Fix with EF Core Sqlite provider
-        var todoRepository = new MockTodoRepository(fakeDomainEventDispatcher);
+        var unitOfWork = new MockUnitOfWork(fakeDomainEventDispatcher);
+        var todoRepository = new MockTodoRepository(unitOfWork);
         var commandHandler = new GetTodoById.Handler(todoRepository);
 
         int nonExistentTodoId = 9999;
