@@ -18,12 +18,10 @@ public record UpdateTitle(int Id, string Title) : IRequest<Result>
     public class Handler : IRequestHandler<UpdateTitle, Result>
     {
         private readonly ITodoRepository todoRepository;
-        private readonly ITodoNotificationService todoNotificationService;
 
-        public Handler(ITodoRepository todoRepository, ITodoNotificationService todoNotificationService)
+        public Handler(ITodoRepository todoRepository)
         {
             this.todoRepository = todoRepository;
-            this.todoNotificationService = todoNotificationService;
         }
 
         public async Task<Result> Handle(UpdateTitle request, CancellationToken cancellationToken)
@@ -35,13 +33,8 @@ public record UpdateTitle(int Id, string Title) : IRequest<Result>
                 return Result.Failure(Errors.Todos.TodoNotFound);
             }
 
-            if (todo.UpdateTitle(request.Title))
-            {
-                await todoRepository.SaveChangesAsync(cancellationToken);
-
-                await todoNotificationService.Updated(todo.Id);
-                await todoNotificationService.TitleUpdated(todo.Id, todo.Title);
-            }
+            todo.UpdateTitle(request.Title);
+            await todoRepository.SaveChangesAsync(cancellationToken);
 
             return Result.Success();
         }

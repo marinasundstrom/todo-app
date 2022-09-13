@@ -27,7 +27,7 @@ namespace TodoApp.Infrastructure
                .UseSqlite($"Data Source={dbName}.db")
                .Options;
 
-            var context = new ApplicationDbContext(options, fakeDomainEventDispatcher,
+            var context = new ApplicationDbContext(options,
                 new TodoApp.Infrastructure.Persistance.Interceptors.AuditableEntitySaveChangesInterceptor(fakeCurrentUserService, fakeDateTimeService));
 
             context.Database.EnsureDeleted();

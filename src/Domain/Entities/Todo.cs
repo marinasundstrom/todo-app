@@ -14,8 +14,6 @@ public class Todo : AuditableEntity, IAggregateRoot<int>
         Title = title;
         Description = description;
         Status = status;
-
-        AddDomainEvent(new TodoCreated(Id));
     }
 
     public int Id { get; private set; }

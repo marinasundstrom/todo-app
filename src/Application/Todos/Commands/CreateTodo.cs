@@ -19,12 +19,12 @@ public record CreateTodo(string Title, string? Description, TodoStatusDto Status
     public class Handler : IRequestHandler<CreateTodo, Result<TodoDto>>
     {
         private readonly ITodoRepository todoRepository;
-        private readonly ITodoNotificationService todoNotificationService;
+        private readonly IDomainEventDispatcher domainEventDispatcher;
 
-        public Handler(ITodoRepository todoRepository, ITodoNotificationService todoNotificationService)
+        public Handler(ITodoRepository todoRepository, IDomainEventDispatcher domainEventDispatcher)
         {
             this.todoRepository = todoRepository;
-            this.todoNotificationService = todoNotificationService;
+            this.domainEventDispatcher = domainEventDispatcher;
         }
 
         public async Task<Result<TodoDto>> Handle(CreateTodo request, CancellationToken cancellationToken)
@@ -35,7 +35,7 @@ public record CreateTodo(string Title, string? Description, TodoStatusDto Status
 
             await todoRepository.SaveChangesAsync(cancellationToken);
 
-            await todoNotificationService.Created(todo.Id);
+            await domainEventDispatcher.Dispatch(new TodoCreated(todo.Id));
 
             return Result.Success(todo.ToDto());
         }

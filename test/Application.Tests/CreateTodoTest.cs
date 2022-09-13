@@ -20,7 +20,7 @@ public class CreateTodoTest
 
         // TODO: Fix with EF Core Sqlite provider
         var todoRepository = new MockTodoRepository(fakeDomainEventDispatcher);
-        var commandHandler = new CreateTodo.Handler(todoRepository, fakeTodoNotificationService);
+        var commandHandler = new CreateTodo.Handler(todoRepository, fakeDomainEventDispatcher);
 
         var todos = todoRepository.GetAll();
 

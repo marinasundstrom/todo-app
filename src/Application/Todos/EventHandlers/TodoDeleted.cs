@@ -1,19 +1,23 @@
 using MediatR;
+using TodoApp.Application.Services;
+using TodoApp.Domain.Entities;
 
 namespace TodoApp.Application.Todos.EventHandlers;
 
 public class TodoDeletedEventHandler : INotificationHandler<DomainEventNotification<TodoDeleted>>
 {
     private readonly ITodoRepository todoRepository;
+    private readonly ITodoNotificationService todoNotificationService;
 
-    public TodoDeletedEventHandler(ITodoRepository todoRepository)
+    public TodoDeletedEventHandler(ITodoRepository todoRepository, ITodoNotificationService todoNotificationService)
     {
         this.todoRepository = todoRepository;
+        this.todoNotificationService = todoNotificationService;
     }
 
-    public Task Handle(DomainEventNotification<TodoDeleted> notification, CancellationToken cancellationToken)
+    public async Task Handle(DomainEventNotification<TodoDeleted> notification, CancellationToken cancellationToken)
     {
-        return Task.CompletedTask;
+        await todoNotificationService.Deleted(notification.DomainEvent.TodoId);
     }
 }
 

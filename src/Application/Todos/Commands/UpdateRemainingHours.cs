@@ -16,12 +16,10 @@ public record UpdateRemainingHours(int Id, double? Hours) : IRequest<Result>
     public class Handler : IRequestHandler<UpdateRemainingHours, Result>
     {
         private readonly ITodoRepository todoRepository;
-        private readonly ITodoNotificationService todoNotificationService;
 
-        public Handler(ITodoRepository todoRepository, ITodoNotificationService todoNotificationService)
+        public Handler(ITodoRepository todoRepository)
         {
             this.todoRepository = todoRepository;
-            this.todoNotificationService = todoNotificationService;
         }
 
         public async Task<Result> Handle(UpdateRemainingHours request, CancellationToken cancellationToken)
@@ -33,13 +31,8 @@ public record UpdateRemainingHours(int Id, double? Hours) : IRequest<Result>
                 return Result.Failure(Errors.Todos.TodoNotFound);
             }
 
-            if (todo.UpdateRemainingHours(request.Hours))
-            {
-                await todoRepository.SaveChangesAsync(cancellationToken);
-
-                await todoNotificationService.Updated(todo.Id);
-                await todoNotificationService.RemainingHoursUpdated(todo.Id, todo.RemainingHours);
-            }
+            todo.UpdateRemainingHours(request.Hours);
+            await todoRepository.SaveChangesAsync(cancellationToken);
 
             return Result.Success();
         }

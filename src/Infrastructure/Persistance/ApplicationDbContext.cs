@@ -1,20 +1,19 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using TodoApp.Infrastructure.Persistance.Interceptors;
+using TodoApp.Infrastructure.Persistance.Outbox;
 
 namespace TodoApp.Infrastructure.Persistance
 {
     public class ApplicationDbContext : DbContext
     {
-        private IDomainEventDispatcher _domainEventDispatcher;
         private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;
 
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options,
-            IDomainEventDispatcher domainEventDispatcher,
             AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor) : base(options)
         {
-            _domainEventDispatcher = domainEventDispatcher;
             _auditableEntitySaveChangesInterceptor = auditableEntitySaveChangesInterceptor;
         }
 
@@ -67,26 +66,34 @@ namespace TodoApp.Infrastructure.Persistance
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            await DispatchEvents();
-
-            return await base.SaveChangesAsync(cancellationToken);
-        }
-
-        private async Task DispatchEvents()
-        {
             var entities = ChangeTracker
-                .Entries<Entity>()
-                .Where(e => e.Entity.DomainEvents.Any())
-                .Select(e => e.Entity);
+                            .Entries<Entity>()
+                            .Where(e => e.Entity.DomainEvents.Any())
+                            .Select(e => e.Entity);
 
             var domainEvents = entities
                 .SelectMany(e => e.DomainEvents)
                 .ToList();
 
-            entities.ToList().ForEach(e => e.ClearDomainEvents());
+            var outboxMessages = domainEvents.Select(domainEvent =>
+            {
+                return new OutboxMessage()
+                {
+                    Id = Guid.NewGuid(),
+                    OccurredOnUtc = DateTime.UtcNow,
+                    Type = domainEvent.GetType().Name,
+                    Content = JsonConvert.SerializeObject(
+                        domainEvent,
+                        new JsonSerializerSettings
+                        {
+                            TypeNameHandling = TypeNameHandling.All
+                        })
+                };
+            }).ToList();
 
-            foreach (var domainEvent in domainEvents)
-                await _domainEventDispatcher.Dispatch(domainEvent);
+            this.Set<OutboxMessage>().AddRange(outboxMessages);
+
+            return await base.SaveChangesAsync(cancellationToken);
         }
     }
 }

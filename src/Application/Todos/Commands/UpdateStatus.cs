@@ -17,12 +17,10 @@ public record UpdateStatus(int Id, TodoStatusDto Status) : IRequest<Result>
     public class Handler : IRequestHandler<UpdateStatus, Result>
     {
         private readonly ITodoRepository todoRepository;
-        private readonly ITodoNotificationService todoNotificationService;
 
-        public Handler(ITodoRepository todoRepository, ITodoNotificationService todoNotificationService)
+        public Handler(ITodoRepository todoRepository)
         {
             this.todoRepository = todoRepository;
-            this.todoNotificationService = todoNotificationService;
         }
 
         public async Task<Result> Handle(UpdateStatus request, CancellationToken cancellationToken)
@@ -34,13 +32,8 @@ public record UpdateStatus(int Id, TodoStatusDto Status) : IRequest<Result>
                 return Result.Failure(Errors.Todos.TodoNotFound);
             }
 
-            if (todo.UpdateStatus((Domain.Enums.TodoStatus)request.Status))
-            {
-                await todoRepository.SaveChangesAsync(cancellationToken);
-
-                await todoNotificationService.Updated(todo.Id);
-                await todoNotificationService.StatusUpdated(todo.Id, (TodoStatusDto)todo.Status);
-            }
+            todo.UpdateStatus((Domain.Enums.TodoStatus)request.Status);
+            await todoRepository.SaveChangesAsync(cancellationToken);
 
             return Result.Success();
         }

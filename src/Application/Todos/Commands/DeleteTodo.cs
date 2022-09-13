@@ -16,12 +16,10 @@ public record DeleteTodo(int Id) : IRequest<Result>
     public class Handler : IRequestHandler<DeleteTodo, Result>
     {
         private readonly ITodoRepository todoRepository;
-        private readonly ITodoNotificationService todoNotificationService;
 
-        public Handler(ITodoRepository todoRepository, ITodoNotificationService todoNotificationService)
+        public Handler(ITodoRepository todoRepository)
         {
             this.todoRepository = todoRepository;
-            this.todoNotificationService = todoNotificationService;
         }
 
         public async Task<Result> Handle(DeleteTodo request, CancellationToken cancellationToken)
@@ -38,8 +36,6 @@ public record DeleteTodo(int Id) : IRequest<Result>
             todo.AddDomainEvent(new TodoDeleted(todo.Id));
 
             await todoRepository.SaveChangesAsync(cancellationToken);
-
-            await todoNotificationService.Deleted(todo.Id);
 
             return Result.Success();
         }
