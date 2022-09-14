@@ -24,6 +24,7 @@ public class ProcessOutboxMessagesJob : IJob
         List<OutboxMessage> messages = await dbContext
             .Set<OutboxMessage>()
             .Where(m => m.ProcessedOnUtc == null)
+            .OrderBy(m => m.OccurredOnUtc)
             .Take(20)
             .ToListAsync(context.CancellationToken);
 
