@@ -12,6 +12,8 @@ To run this solution, Install .NET Tye and Docker.
 * Client app in Blazor and MudBlazor
 * SignalR
 * MassTransit
+* OpenTelemetry
+* Health checks
 
 The app utilizes the Transactional Outbox Pattern for dispatching Domain events that have been serialized to the database.
 
