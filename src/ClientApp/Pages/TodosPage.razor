@@ -143,16 +143,22 @@
     async Task OnCreated(int todoId)
     {
         await table.ReloadServerData();
+
+        Snackbar.Add($"Todo {todoId} was added.",  Severity.Normal);
     }
 
     async Task OnUpdated(int todoId)
     {
         bool hasUpdated = await UpdateItem(todoId);
+
+        Snackbar.Add($"Todo {todoId} was updated.",  Severity.Normal);
     }
 
     async Task OnDeleted(int todoId)
     {
         await table.ReloadServerData();
+
+        Snackbar.Add($"Todo {todoId} was deleted.",  Severity.Normal);
     }
 
     /* void OnTitleUpdated(int todoId, string title)
