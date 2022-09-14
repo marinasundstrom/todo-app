@@ -5,6 +5,5 @@ public enum TodoStatusDto
     NotStarted,
     InProgress,
     OnHold,
-    Completed,
-    Deleted
+    Completed
 }

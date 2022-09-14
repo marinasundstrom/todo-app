@@ -526,15 +526,13 @@
           "NotStarted",
           "InProgress",
           "OnHold",
-          "Completed",
-          "Deleted"
+          "Completed"
         ],
         "enum": [
           0,
           1,
           2,
-          3,
-          4
+          3
         ]
       },
       "ProblemDetails": {
