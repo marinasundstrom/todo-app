@@ -1,8 +1,11 @@
 using System.Diagnostics;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NSwag;
 using NSwag.Generation.Processors.Security;
 using OpenTelemetry.Resources;
@@ -95,12 +98,15 @@ foreach (ApiVersionDescription description in provider.ApiVersionDescriptions)
 
 builder.Services.AddSignalR();
 
+builder.Services
+    .AddHealthChecks()
+    .AddDbContextCheck<ApplicationDbContext>();
+
 builder.Services.AddUniverse(builder.Configuration);
 
 builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 
 builder.Services.AddMassTransitForApp();
-
 
 // Configure important OpenTelemetry settings, the console exporter, and instrumentation library
 builder.Services.AddOpenTelemetryTracing(tracerProviderBuilder =>
@@ -145,6 +151,12 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHealthChecks("/healthz", new HealthCheckOptions()
+{
+    Predicate = _ => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.MapHubsForApp();
 

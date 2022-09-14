@@ -55,3 +55,13 @@ services:
   image: openzipkin/zipkin
   bindings:
     - port: 9411
+
+- name: healthchecks
+  project: src/HealthChecks/HealthChecks.csproj
+  bindings:
+  - name: http
+    protocol: http
+    port: 5030
+  - name: https
+    protocol: https
+    port: 5031

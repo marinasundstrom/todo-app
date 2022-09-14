@@ -465,3 +465,6 @@ _site
 .$diagram.drawio.dtmp
 .$diagram.drawio.bkp
 .data
+*.db
+*.db-shm
+*.db-wal
