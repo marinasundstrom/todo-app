@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
 using TodoApp.Infrastructure.BackgroundJobs;
-using TodoApp.Infrastructure.Persistance;
+using TodoApp.Infrastructure.Persistence;
 using TodoApp.Infrastructure.Services;
 
 namespace TodoApp.Infrastructure
@@ -11,7 +11,7 @@ namespace TodoApp.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddPersistance(configuration);
+            services.AddPersistence(configuration);
 
             services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddScoped<IDateTime, DateTimeService>();

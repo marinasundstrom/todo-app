@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using TodoApp.Domain.Specifications;
 
-namespace TodoApp.Infrastructure.Persistance.Repositories;
+namespace TodoApp.Infrastructure.Persistence.Repositories;
 
 public sealed class TodoRepository : RepositoryBase<Todo, int>, ITodoRepository
 {

@@ -7,7 +7,7 @@ using NSwag;
 using NSwag.Generation.Processors.Security;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-using TodoApp.Infrastructure.Persistance;
+using TodoApp.Infrastructure.Persistence;
 using TodoApp.Presentation;
 using TodoApp.Web;
 using TodoApp.Web.Middleware;

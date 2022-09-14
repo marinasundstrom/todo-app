@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
 using TodoApp.Application.Services;
-using TodoApp.Infrastructure.Persistance;
+using TodoApp.Infrastructure.Persistence;
 
 namespace TodoApp.Infrastructure
 {
@@ -28,7 +28,7 @@ namespace TodoApp.Infrastructure
                .Options;
 
             var context = new ApplicationDbContext(options,
-                new TodoApp.Infrastructure.Persistance.Interceptors.AuditableEntitySaveChangesInterceptor(fakeCurrentUserService, fakeDateTimeService));
+                new TodoApp.Infrastructure.Persistence.Interceptors.AuditableEntitySaveChangesInterceptor(fakeCurrentUserService, fakeDateTimeService));
 
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();

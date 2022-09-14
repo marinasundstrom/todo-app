@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace TodoApp.Infrastructure.Persistance.Configurations;
+namespace TodoApp.Infrastructure.Persistence.Configurations;
 
 public class TodoConfiguration : IEntityTypeConfiguration<Todo>
 {

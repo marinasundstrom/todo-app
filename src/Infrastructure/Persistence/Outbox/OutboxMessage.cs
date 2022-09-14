@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TodoApp.Infrastructure.Persistance.Outbox;
+namespace TodoApp.Infrastructure.Persistence.Outbox;
 
 public class OutboxMessage
 {

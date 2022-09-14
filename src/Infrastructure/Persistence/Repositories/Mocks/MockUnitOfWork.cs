@@ -1,6 +1,6 @@
 ﻿using TodoApp.Infrastructure.Services;
 
-namespace TodoApp.Infrastructure.Persistance.Repositories.Mocks;
+namespace TodoApp.Infrastructure.Persistence.Repositories.Mocks;
 
 public sealed class MockUnitOfWork : IUnitOfWork
 {

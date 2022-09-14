@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TodoApp.Infrastructure.Persistance.Outbox;
+using TodoApp.Infrastructure.Persistence.Outbox;
 
-namespace TodoApp.Infrastructure.Persistance.Configurations;
+namespace TodoApp.Infrastructure.Persistence.Configurations;
 
 public class OutboxMessageConfiguration : IEntityTypeConfiguration<OutboxMessage>
 {

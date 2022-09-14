@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using TodoApp.Application.Services;
 using TodoApp.Domain.Events;
-using TodoApp.Infrastructure.Persistance.Repositories.Mocks;
+using TodoApp.Infrastructure.Persistence.Repositories.Mocks;
 using Xunit;
 
 namespace TodoApp.Application.Todos.Commands;

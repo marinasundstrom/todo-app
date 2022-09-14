@@ -1,4 +1,4 @@
-﻿using TodoApp.Infrastructure.Persistance;
+﻿using TodoApp.Infrastructure.Persistence;
 
 namespace TodoApp.IntegrationTests;
 

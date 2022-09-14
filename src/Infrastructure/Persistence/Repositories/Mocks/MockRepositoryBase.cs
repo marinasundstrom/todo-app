@@ -1,6 +1,6 @@
 ﻿using TodoApp.Domain.Specifications;
 
-namespace TodoApp.Infrastructure.Persistance.Repositories.Mocks;
+namespace TodoApp.Infrastructure.Persistence.Repositories.Mocks;
 
 public class MockRepositoryBase<T, TKey> : IRepository<T, TKey>, IDisposable
     where T : Entity, IAggregateRoot<TKey>

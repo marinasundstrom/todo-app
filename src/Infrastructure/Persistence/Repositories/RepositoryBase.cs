@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TodoApp.Domain.Specifications;
 
-namespace TodoApp.Infrastructure.Persistance.Repositories;
+namespace TodoApp.Infrastructure.Persistence.Repositories;
 
 public class RepositoryBase<T, TKey> : IRepository<T, TKey>
     where T : Entity, IAggregateRoot<TKey>

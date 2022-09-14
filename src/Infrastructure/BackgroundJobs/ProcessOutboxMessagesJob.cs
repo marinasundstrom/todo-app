@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Quartz;
-using TodoApp.Infrastructure.Persistance;
-using TodoApp.Infrastructure.Persistance.Outbox;
+using TodoApp.Infrastructure.Persistence;
+using TodoApp.Infrastructure.Persistence.Outbox;
 
 namespace TodoApp.Infrastructure.BackgroundJobs;
 

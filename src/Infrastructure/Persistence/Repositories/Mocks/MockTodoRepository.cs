@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TodoApp.Infrastructure.Persistance.Repositories.Mocks;
+namespace TodoApp.Infrastructure.Persistence.Repositories.Mocks;
 
 public sealed class MockTodoRepository : MockRepositoryBase<Todo, int>, ITodoRepository
 {

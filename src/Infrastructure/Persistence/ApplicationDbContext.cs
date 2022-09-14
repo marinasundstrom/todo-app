@@ -1,10 +1,10 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using TodoApp.Infrastructure.Persistance.Interceptors;
-using TodoApp.Infrastructure.Persistance.Outbox;
+using TodoApp.Infrastructure.Persistence.Interceptors;
+using TodoApp.Infrastructure.Persistence.Outbox;
 
-namespace TodoApp.Infrastructure.Persistance
+namespace TodoApp.Infrastructure.Persistence
 {
     public class ApplicationDbContext : DbContext
     {

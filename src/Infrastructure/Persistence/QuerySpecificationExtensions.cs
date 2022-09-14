@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TodoApp.Domain.Specifications;
 
-namespace TodoApp.Infrastructure.Persistance;
+namespace TodoApp.Infrastructure.Persistence;
 
 public static class QuerySpecificationExtensions
 {

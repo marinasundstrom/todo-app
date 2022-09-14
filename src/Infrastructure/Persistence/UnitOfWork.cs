@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TodoApp.Infrastructure.Persistance;
+namespace TodoApp.Infrastructure.Persistence;
 
 sealed class UnitOfWork : IUnitOfWork
 {

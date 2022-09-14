@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TodoApp.Infrastructure.Persistance.Interceptors;
-using TodoApp.Infrastructure.Persistance.Repositories;
+using TodoApp.Infrastructure.Persistence.Interceptors;
+using TodoApp.Infrastructure.Persistence.Repositories;
 
-namespace TodoApp.Infrastructure.Persistance
+namespace TodoApp.Infrastructure.Persistence
 {
     public static class ServiceExtensions
     {
-        public static IServiceCollection AddPersistance(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
             const string ConnectionStringKey = "mssql";
 

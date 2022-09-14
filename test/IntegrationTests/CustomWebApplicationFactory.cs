@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using TodoApp.Consumers;
-using TodoApp.Infrastructure.Persistance;
+using TodoApp.Infrastructure.Persistence;
 
 namespace TodoApp.IntegrationTests;
 
