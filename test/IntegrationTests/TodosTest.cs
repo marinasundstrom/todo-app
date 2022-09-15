@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Net.Http.Headers;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 
 namespace TodoApp.IntegrationTests;
@@ -18,6 +19,9 @@ public partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Progr
         // Arrange
 
         var client = _factory.CreateClient();
+
+        client.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("JWT");
 
         TodosClient todosClient = new(client);
 
@@ -58,6 +62,9 @@ public partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Progr
         // Arrange
 
         var client = _factory.CreateClient();
+
+        client.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("JWT");
 
         TodosClient todosClient = new(client);
 

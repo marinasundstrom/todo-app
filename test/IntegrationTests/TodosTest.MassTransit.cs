@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http.Headers;
 using MassTransit;
 using MassTransit.Testing;
 using TodoApp.Consumers;
@@ -19,6 +20,9 @@ partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Program>>
         await harness.Start();
 
         var client = _factory.CreateClient();
+
+        client.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("JWT");
 
         TodosClient todosClient = new(client);
 

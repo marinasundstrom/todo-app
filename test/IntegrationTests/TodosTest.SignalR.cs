@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting.Server;
+﻿using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.SignalR.Client;
 
 namespace TodoApp.IntegrationTests;
@@ -11,6 +12,9 @@ partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Program>>
         // Arrange
 
         var client = _factory.CreateClient();
+
+        client.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("JWT");
 
         var hubConnection = new HubConnectionBuilder()
             .WithUrl($"http://localhost/hubs/todos", o => o.HttpMessageHandlerFactory = _ => _factory.Server.CreateHandler())
