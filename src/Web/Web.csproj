@@ -8,7 +8,6 @@
 		<WarningsAsErrors>nullable</WarningsAsErrors>
 		<NoWarn>1701;1702;CS1591</NoWarn>
 		<AssemblyName>Web</AssemblyName>
-		<UserSecretsId>5e2732b6-eadf-4f89-8e7c-bb5e71f138ef</UserSecretsId>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -34,6 +33,8 @@
 		<PackageReference Include="OpenTelemetry.Instrumentation.MassTransit" Version="1.0.0-beta.3" />
 		<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="7.0.0-rc.1.22427.2" />
 		<PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.5" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.0-rc.1.22427.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.0-rc.1.22427.2" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -43,4 +44,8 @@
 		<ProjectReference Include="..\Presentation\Presentation.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Remove="Microsoft.AspNetCore.Authentication.Google" />
+	  <None Remove="Microsoft.AspNetCore.Authentication.JwtBearer" />
+	</ItemGroup>
 </Project>

@@ -1,5 +1,4 @@
 ﻿using MassTransit;
-using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TodoApp.Contracts;

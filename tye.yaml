@@ -65,3 +65,13 @@ services:
   - name: https
     protocol: https
     port: 5031
+
+- name: identityservice
+  project: src/IdentityService/IdentityService.csproj
+  bindings:
+  - name: http
+    protocol: http
+    port: 5040
+  - name: https
+    protocol: https
+    port: 5041

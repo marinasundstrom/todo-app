@@ -1,19 +1,25 @@
 using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.IdentityModel.Tokens;
 using NSwag;
 using NSwag.Generation.Processors.Security;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using TodoApp.Application.Services;
 using TodoApp.Infrastructure.Persistence;
 using TodoApp.Presentation;
 using TodoApp.Web;
 using TodoApp.Web.Middleware;
+using TodoApp.Web.Services;
 
 Activity.DefaultIdFormat = ActivityIdFormat.W3C;
 Activity.ForceDefaultIdFormat = true;
@@ -38,6 +44,10 @@ builder.Services.AddCors(options =>
 
 // Add services to the container.
 
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+
 builder.Services.AddApiVersioning(options =>
         {
             options.AssumeDefaultVersionWhenUnspecified = true;
@@ -51,7 +61,6 @@ builder.Services.AddVersionedApiExplorer(option =>
             option.GroupNameFormat = "VVV";
             option.SubstituteApiVersionInUrl = true;
         });
-
 
 // Register the Swagger services
 
@@ -81,16 +90,6 @@ foreach (ApiVersionDescription description in provider.ApiVersionDescriptions)
             Description = "Type into the textbox: Bearer {your JWT token}."
         });
 
-        /*
-        config.AddSecurity("ApiKey", new OpenApiSecurityScheme
-        {
-            Type = OpenApiSecuritySchemeType.ApiKey,
-            Name = "X-API-KEY",
-            In = OpenApiSecurityApiKeyLocation.Header,
-            Description = "Type into the textbox: {your API key}."
-        });
-        */
-
         config.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
         config.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("ApiKey"));
     });
@@ -101,6 +100,45 @@ builder.Services.AddSignalR();
 builder.Services
     .AddHealthChecks()
     .AddDbContextCheck<ApplicationDbContext>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+                    {
+                        options.Authority = "https://localhost:5041";
+                        options.Audience = "myapi";
+
+                        options.TokenValidationParameters = new TokenValidationParameters()
+                        {
+                            NameClaimType = "name"
+                        };
+
+                        options.Events = new JwtBearerEvents
+                        {
+                            OnTokenValidated = context =>
+                            {
+                                // Add the access_token as a claim, as we may actually need it
+                                var accessToken = context.SecurityToken as JwtSecurityToken;
+                                if (accessToken != null)
+                                {
+                                    ClaimsIdentity? identity = context?.Principal?.Identity as ClaimsIdentity;
+                                    if (identity != null)
+                                    {
+                                        identity.AddClaim(new Claim("access_token", accessToken.RawData));
+                                    }
+                                }
+
+                                return Task.CompletedTask;
+                            }
+                        };
+
+                        //options.TokenValidationParameters.ValidateAudience = false;
+
+                        //options.Audience = "openid";
+
+                        //options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
+                    });
+
+builder.Services.AddAuthorization();
 
 builder.Services.AddUniverse(builder.Configuration);
 
@@ -147,6 +185,8 @@ app.UseCors(MyAllowSpecificOrigins);
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

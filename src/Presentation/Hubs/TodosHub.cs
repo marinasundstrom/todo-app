@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 
 namespace TodoApp.Presentation.Hubs;
 
+[Authorize]
 public class TodosHub : Hub<ITodosHubClient>
 {
     public override Task OnConnectedAsync()

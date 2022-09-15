@@ -39,7 +39,7 @@ public class AuditableEntitySaveChangesInterceptor : SaveChangesInterceptor
         {
             if (entry.State == EntityState.Added)
             {
-                entry.Entity.CreatedById = _currentUserService.UserId;
+                entry.Entity.CreatedById = _currentUserService.UserId!;
                 entry.Entity.Created = _dateTime.Now;
             }
             else if (entry.State == EntityState.Modified || entry.HasChangedOwnedEntities())

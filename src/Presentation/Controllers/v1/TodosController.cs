@@ -1,10 +1,10 @@
 using MassTransit;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TodoApp.Application;
 using TodoApp.Application.Common;
-using TodoApp.Application.Todos;
 using TodoApp.Application.Todos.Commands;
 using TodoApp.Application.Todos.Dtos;
 using TodoApp.Application.Todos.Queries;
@@ -14,6 +14,7 @@ namespace TodoApp.Presentation.Controllers;
 [ApiController]
 [ApiVersion("1")]
 [Route("v{version:apiVersion}/[controller]")]
+[Authorize]
 public class TodosController : ControllerBase
 {
     private readonly IMediator mediator;

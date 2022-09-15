@@ -13,7 +13,6 @@ namespace TodoApp.Infrastructure
         {
             services.AddPersistence(configuration);
 
-            services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddScoped<IDateTime, DateTimeService>();
             services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
 

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 using TodoApp;
@@ -8,20 +9,27 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+builder.Services.AddTransient<CustomAuthorizationMessageHandler>();
 
-builder.Services.AddHttpClient<ITodosClient>((sp, https) =>
+builder.Services.AddHttpClient("WebAPI",
+        client => client.BaseAddress = new Uri("https://localhost:5001/"));
+
+builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
+    .CreateClient("WebAPI"));
+
+builder.Services.AddHttpClient<ITodosClient>(nameof(TodosClient), (sp, http) =>
 {
-    https.BaseAddress = new Uri("https://localhost:5001/");
+    http.BaseAddress = new Uri("https://localhost:5001/");
 })
-.AddTypedClient<ITodosClient>((http, sp) => new TodosClient(http));
+    .AddTypedClient<ITodosClient>((http, sp) => new TodosClient(http))
+    .AddHttpMessageHandler<CustomAuthorizationMessageHandler>();
 
 builder.Services.AddOidcAuthentication(options =>
 {
     builder.Configuration.Bind("Local", options.ProviderOptions);
 });
 
-builder.Services.AddScoped<IAccessTokenProvider, AccessTokenProvider>();
+builder.Services.AddScoped<TodoApp.Services.IAccessTokenProvider, TodoApp.Services.AccessTokenProvider>();
 
 builder.Services.AddMudServices();
 

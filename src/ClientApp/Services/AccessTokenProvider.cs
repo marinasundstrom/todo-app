@@ -13,7 +13,7 @@ public class AccessTokenProvider : IAccessTokenProvider
 
     public async Task<string?> GetAccessTokenAsync()
     {
-        var results = await _accessTokenProvider.RequestAccessToken(new AccessTokenRequestOptions() { Scopes = new[] { "WebAPIAPI" } });
+        var results = await _accessTokenProvider.RequestAccessToken(new AccessTokenRequestOptions() { Scopes = new[] { "myapi" } });
 
         if (results.TryGetToken(out var accessToken))
         {
