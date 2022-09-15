@@ -3,7 +3,7 @@
 // Add services to the container.
 builder.Services
     .AddHealthChecksUI()
-    .AddSqliteStorage("Data Source=healthchecks.db;");
+    .AddSqlServerStorage(HealthChecks.ConfigurationExtensions.GetConnectionString(builder.Configuration, "mssql", "HealthChecks")!);
 
 var app = builder.Build();
 

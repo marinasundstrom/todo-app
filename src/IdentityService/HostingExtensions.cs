@@ -16,7 +16,11 @@ internal static class HostingExtensions
     {
         builder.Services.AddRazorPages();
 
-        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+        var connectionString = IdentityService.ConfigurationExtensions.GetConnectionString(builder.Configuration, "mssql", "IdentityService")
+            ?? builder.Configuration.GetConnectionString("DefaultConnection");
+
+      var connectionString2 = IdentityService.ConfigurationExtensions.GetConnectionString(builder.Configuration, "mssql", "PersistedGrantDb")
+            ?? builder.Configuration.GetConnectionString("DefaultConnection2");
 
         var isBuilder = builder.Services
             .AddIdentityServer(options =>
@@ -34,7 +38,7 @@ internal static class HostingExtensions
             .AddConfigurationStore(options =>
             {
                 options.ConfigureDbContext = b =>
-                    b.UseSqlite(connectionString, dbOpts => dbOpts.MigrationsAssembly(typeof(Program).Assembly.FullName));
+                    b.UseSqlServer(connectionString, dbOpts => dbOpts.MigrationsAssembly(typeof(Program).Assembly.FullName));
             })
             // this is something you will want in production to reduce load on and requests to the DB
             //.AddConfigurationStoreCache()
@@ -43,7 +47,7 @@ internal static class HostingExtensions
             .AddOperationalStore(options =>
             {
                 options.ConfigureDbContext = b =>
-                    b.UseSqlite(connectionString, dbOpts => dbOpts.MigrationsAssembly(typeof(Program).Assembly.FullName));
+                    b.UseSqlServer(connectionString2, dbOpts => dbOpts.MigrationsAssembly(typeof(Program).Assembly.FullName));
 
                 // this enables automatic token cleanup. this is optional.
                 options.EnableTokenCleanup = true;

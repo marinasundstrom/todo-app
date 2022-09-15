@@ -12,10 +12,12 @@ public class SeedData
     {
         using (var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
         {
-            scope.ServiceProvider.GetService<PersistedGrantDbContext>().Database.Migrate();
+            scope.ServiceProvider.GetService<PersistedGrantDbContext>().Database.EnsureDeleted();
+            scope.ServiceProvider.GetService<PersistedGrantDbContext>().Database.EnsureCreated();
 
             var context = scope.ServiceProvider.GetService<ConfigurationDbContext>();
-            context.Database.Migrate();
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
             EnsureSeedData(context);
         }
     }
