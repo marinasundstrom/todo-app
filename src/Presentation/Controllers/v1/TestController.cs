@@ -8,11 +8,11 @@ namespace TodoApp.Presentation.Controllers;
 [ApiController]
 [ApiVersion("1")]
 [Route("v{version:apiVersion}/[controller]")]
-public class TestController : ControllerBase
+public class Test : ControllerBase
 {
     private readonly IPublishEndpoint publishEndpoint;
 
-    public TestController(IPublishEndpoint publishEndpoint)
+    public Test(IPublishEndpoint publishEndpoint)
     {
         this.publishEndpoint = publishEndpoint;
     }
