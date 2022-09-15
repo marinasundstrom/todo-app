@@ -1,9 +1,12 @@
 ﻿using Duende.IdentityServer;
+using Duende.IdentityServer.EntityFramework.DbContexts;
+using HealthChecks.UI.Client;
 using IdentityService;
 using IdentityService.Pages.Admin.ApiScopes;
 using IdentityService.Pages.Admin.Clients;
 using IdentityService.Pages.Admin.IdentityScopes;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -16,10 +19,14 @@ internal static class HostingExtensions
     {
         builder.Services.AddRazorPages();
 
+        builder.Services.AddHealthChecks()
+            .AddDbContextCheck<ConfigurationDbContext>()
+            .AddDbContextCheck<PersistedGrantDbContext>();
+
         var connectionString = IdentityService.ConfigurationExtensions.GetConnectionString(builder.Configuration, "mssql", "IdentityService")
             ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
-      var connectionString2 = IdentityService.ConfigurationExtensions.GetConnectionString(builder.Configuration, "mssql", "PersistedGrantDb")
+        var connectionString2 = IdentityService.ConfigurationExtensions.GetConnectionString(builder.Configuration, "mssql", "PersistedGrantDb")
             ?? builder.Configuration.GetConnectionString("DefaultConnection2");
 
         var isBuilder = builder.Services
@@ -109,6 +116,12 @@ internal static class HostingExtensions
 
         app.MapRazorPages()
             .RequireAuthorization();
+        
+        app.MapHealthChecks("/healthz", new HealthCheckOptions()
+        {
+            Predicate = _ => true,
+            ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+        });
 
         return app;
     }
