@@ -14,6 +14,7 @@ To run this solution, Install .NET Tye and Docker.
 * MassTransit
 * OpenTelemetry
 * Health checks
+* Identity Server
 
 The app utilizes the Transactional Outbox Pattern for dispatching Domain events that have been serialized to the database.
 
