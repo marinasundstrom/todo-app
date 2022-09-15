@@ -10,11 +10,11 @@ To run this solution, Install .NET Tye and Docker.
 * Approaches: Domain-driven design - CQRS, Event-driven
 * Tests - Architecture, Application, Domain, Integration Tests
 * Client app in Blazor and MudBlazor
-* SignalR
-* MassTransit
-* OpenTelemetry
+* SignalR: Real-time server-browser communication via WebSocket
+* MassTransit - RabbitMQ as transport
+* OpenTelemetry - Zipkin for viewing traces
 * Health checks
-* Identity Server
+* Identity Server - for identity management and auth
 
 The app utilizes the Transactional Outbox Pattern for dispatching Domain events that have been serialized to the database.
 
