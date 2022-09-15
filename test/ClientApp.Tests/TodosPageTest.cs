@@ -18,6 +18,10 @@ public class TodosPageTest
 
         ctx.Services.AddMudServices();
 
+        var fakeAccessTokenProvider = Substitute.For<TodoApp.Services.IAccessTokenProvider>();
+
+        ctx.Services.AddSingleton(fakeAccessTokenProvider);
+
         var fakeTodosClient = Substitute.For<ITodosClient>();
         fakeTodosClient.GetTodosAsync(Arg.Any<TodoStatusDto>(), null, null, null, null)
             .ReturnsForAnyArgs(t => new ItemsResultOfTodoDto()
