@@ -4,6 +4,8 @@ Clean Architecture and Domain-driven Design template.
 
 To run this solution, Install .NET Tye and Docker.
 
+Watch video [here](https://youtu.be/UW-iDps48BI)
+
 ## Contents
 
 * Architecture: Clean Architecture / Layered Architecture 
