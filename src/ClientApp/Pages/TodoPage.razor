@@ -8,6 +8,7 @@
 @inject ISnackbar Snackbar
 @inject ITodosClient TodosClient
 @inject IDialogService DialogService
+@inject Services.IAccessTokenProvider AccessTokenProvider
 
 @if(notFound) 
 {
@@ -132,7 +133,10 @@ else
         try
         {
             hubConnection = new HubConnectionBuilder()
-            .WithUrl($"https://localhost:5001/hubs/todos?itemId={Id}")
+            .WithUrl($"https://localhost:5001/hubs/todos?itemId={Id}", options =>
+                {
+                    options.AccessTokenProvider = async () => await AccessTokenProvider.GetAccessTokenAsync();
+                })
             .WithAutomaticReconnect().Build();
 
             hubConnection.On<int, string>("TitleUpdated", OnTitleUpdated);

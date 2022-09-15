@@ -7,6 +7,7 @@
 @inject ITodosClient TodosClient
 @inject NavigationManager NavigationManager
 @inject IDialogService DialogService
+@inject Services.IAccessTokenProvider AccessTokenProvider
 
 <PageTitle>Todos</PageTitle>
 
@@ -72,7 +73,10 @@
         try
         {
             hubConnection = new HubConnectionBuilder()
-            .WithUrl($"https://localhost:5001/hubs/todos")
+            .WithUrl($"https://localhost:5001/hubs/todos", options =>
+                {
+                    options.AccessTokenProvider = async () => await AccessTokenProvider.GetAccessTokenAsync();
+                })
             .WithAutomaticReconnect().Build();
 
             hubConnection.On<int>("Created", OnCreated);
