@@ -42,6 +42,29 @@ tye run
 
 Add ```--watch``` to make it recompile on changes to any project.
 
+### Seeding the databases
+Web
+
+```sh
+dotnet run -- --seed
+```
+
+IdentityService
+
+```sh
+dotnet run -- /seed
+```
+
+### Login credentials
+
+```
+Username: alice 
+Password: alice
+
+Username: bob 
+Password: bob
+```
+
 ## Adapting this for your own project
 
 In order to adapt this into your own project, you should do this:
