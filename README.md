@@ -12,6 +12,8 @@ Watch video [here](https://youtu.be/UW-iDps48BI)
 * Approaches: Domain-driven design - CQRS, Event-driven
 * Tests - Architecture, Application, Domain, Integration Tests
 * Client app in Blazor and MudBlazor
+  * Localization
+  * Theming - Dark mode
 * SignalR: Real-time server-browser communication via WebSocket
 * MassTransit - RabbitMQ as transport
 * OpenTelemetry - Zipkin for viewing traces
