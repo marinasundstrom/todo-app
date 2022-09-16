@@ -5,11 +5,12 @@
 @inject ITodosClient TodosClient
 @inject ISnackbar Snackbar
 @inject Services.IAccessTokenProvider AccessTokenProvider
+@inject IStringLocalizer<BoardPage> T
 
-<PageTitle>Board</PageTitle>
+<PageTitle>@T["Board"]</PageTitle>
 
 
-<MudText Typo="Typo.h4" Class="mb-4">Board</MudText>
+<MudText Typo="Typo.h4" Class="mb-4">@T["Board"]</MudText>
 
 @if (loaded)
 {
@@ -24,7 +25,7 @@
                             <MudList Clickable="true" Class="d-flex flex-column mud-height-full">
                                 <MudListSubheader>
                                     <MudToolBar DisableGutters="true" Dense="true">
-                                        <MudText Typo="Typo.h6"><b>@status</b></MudText>
+                                        <MudText Typo="Typo.h6"><b>@T[status.ToString()]</b></MudText>
                                         <MudSpacer />
                                         @*
                                             <MudMenu Icon="@Icons.Material.Rounded.MoreHoriz" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight" ListClass="pa-2 d-flex flex-column" PopoverClass="mud-elevation-25">

@@ -1,10 +1,8 @@
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 using TodoApp;
-using TodoApp.Services;
 using TodoApp.Theming;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -39,4 +37,10 @@ builder.Services.AddBlazoredLocalStorage();
 
 builder.Services.AddThemeServices();
 
-await builder.Build().RunAsync();
+builder.Services.AddLocalization();
+
+var app = builder.Build();
+
+await app.Services.Localize();
+
+await app.RunAsync();

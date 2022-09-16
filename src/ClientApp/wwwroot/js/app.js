@@ -1,4 +1,10 @@
-﻿window.isDarkMode = () => {
+﻿
+window.blazorCulture = {
+    get: () => window.localStorage['BlazorCulture'],
+    set: (value) => window.localStorage['BlazorCulture'] = value
+};
+
+window.isDarkMode = () => {
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         return true;
     }

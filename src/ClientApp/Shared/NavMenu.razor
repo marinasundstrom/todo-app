@@ -1,4 +1,6 @@
-﻿<MudNavMenu>
-    <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.List">Todos</MudNavLink>
-    <MudNavLink Href="/board" Icon="@Icons.Material.Filled.Task">Board</MudNavLink>
+﻿@inject IStringLocalizer<NavMenu> T
+
+<MudNavMenu>
+    <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.List">@T["Todos"]</MudNavLink>
+    <MudNavLink Href="/board" Icon="@Icons.Material.Filled.Task">@T["Board"]</MudNavLink>
 </MudNavMenu>

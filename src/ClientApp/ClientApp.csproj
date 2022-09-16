@@ -9,6 +9,10 @@
 		<RootNamespace>TodoApp</RootNamespace>
 	</PropertyGroup>
 
+	<PropertyGroup>
+        <BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
+    </PropertyGroup>
+
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.0-rc.1.22427.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.0-rc.1.22427.2" PrivateAssets="all" />
@@ -16,6 +20,7 @@
 		<PackageReference Include="MudBlazor" Version="6.0.15" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="7.0.0-rc.1.22427.2" />
 		<PackageReference Include="Blazored.LocalStorage" Version="4.3.0-preview.1" />
+		<PackageReference Include="Microsoft.Extensions.Localization" Version="7.0.0-rc.1.22427.2" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -23,7 +28,5 @@
 	    <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
 	  </ProjectReference>
 	</ItemGroup>
-	<ItemGroup>
-	  <None Remove="Microsoft.AspNetCore.Components.WebAssembly.Authentication" />
-	</ItemGroup>
+
 </Project>

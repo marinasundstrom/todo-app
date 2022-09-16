@@ -10,49 +10,50 @@
 @inject NavigationManager NavigationManager
 @inject IDialogService DialogService
 @inject Services.IAccessTokenProvider AccessTokenProvider
+@inject IStringLocalizer<TodosPage> T
 
-<PageTitle>Todos</PageTitle>
+<PageTitle>@T["Todos"]</PageTitle>
 
-<MudText Typo="Typo.h4" GutterBottom="true">Todos</MudText>
+<MudText Typo="Typo.h4" GutterBottom="true">@T["Todos"]</MudText>
 
-<MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/todos/new" Class="mb-4">Create todo</MudButton>
+<MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/todos/new" Class="mb-4">@T["CreateTodo"]</MudButton>
 
 <MudTable T="TodoDto" ServerData="@(new Func<TableState, Task<TableData<TodoDto>>>(ServerReload))" Elevation="25"
           OnRowClick="(e) => NavigateTo(e.Item)" Dense="true" Hover="true" @ref="table" Class="mb-8">
     <HeaderContent>
         <MudTh>
-            <MudTableSortLabel SortLabel="Id" T="TodoDto">Id</MudTableSortLabel>
+            <MudTableSortLabel SortLabel="Id" T="TodoDto">@T["Id"]</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortLabel="Title" T="TodoDto">Title</MudTableSortLabel>
+            <MudTableSortLabel SortLabel="Title" T="TodoDto">@T["Title"]</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortLabel="Status" T="TodoDto">Status</MudTableSortLabel>
+            <MudTableSortLabel SortLabel="Status" T="TodoDto">@T["Status"]</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortLabel="EstimatedHours" T="TodoDto">Estimated hours</MudTableSortLabel>
+            <MudTableSortLabel SortLabel="EstimatedHours" T="TodoDto">@T["EstimatedHours"]</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortLabel="RemainingHours" T="TodoDto">Remaining hours</MudTableSortLabel>
+            <MudTableSortLabel SortLabel="RemainingHours" T="TodoDto">@T["RemainingHours"]</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortLabel="Created" T="TodoDto">Created</MudTableSortLabel>
+            <MudTableSortLabel SortLabel="Created" T="TodoDto">@T["Created"]</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortLabel="LastModified" T="TodoDto">Last modified</MudTableSortLabel>
+            <MudTableSortLabel SortLabel="LastModified" T="TodoDto">@T["LastModified"]</MudTableSortLabel>
         </MudTh>
         <MudTh>
 
         </MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="Id">@context.Id</MudTd>
-        <MudTd DataLabel="Title">@context.Title</MudTd>
-        <MudTd DataLabel="Status">@context.Status.ToString()</MudTd>
-        <MudTd DataLabel="Estimated hours">@context.EstimatedHours.ToString()</MudTd>
-        <MudTd DataLabel="Remaining hours">@context.RemainingHours.ToString()</MudTd>
-        <MudTd DataLabel="Created">@context.Created.ToString("g")</MudTd>
-        <MudTd DataLabel="Last modified">@context.LastModified?.ToString("g")</MudTd>
+        <MudTd DataLabel="@T["Id"]">@context.Id</MudTd>
+        <MudTd DataLabel="@T["Title"]">@context.Title</MudTd>
+        <MudTd DataLabel="@T["Status"]">@T[context.Status.ToString()]</MudTd>
+        <MudTd DataLabel="@T["EstimatedHours"]">@context.EstimatedHours.ToString()</MudTd>
+        <MudTd DataLabel="@T["RemainingHours"]">@context.RemainingHours.ToString()</MudTd>
+        <MudTd DataLabel="@T["Created"]">@context.Created.ToString("g")</MudTd>
+        <MudTd DataLabel="@T["LastModified"]">@context.LastModified?.ToString("g")</MudTd>
         <MudTh><MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="async () => await DeleteTodo(context.Id)"></MudIconButton></MudTh>
     </RowTemplate>
     <NoRecordsContent>
