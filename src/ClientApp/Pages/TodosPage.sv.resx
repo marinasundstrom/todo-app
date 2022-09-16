@@ -31,7 +31,7 @@
         <value>Beräknade timmar</value>
     </data>
 	<data name="RemainingHours">
-        <value>Kvarstående timmar</value>
+        <value>Återstående timmar</value>
     </data>
 	<data name="Created">
         <value>Skapat</value>
@@ -50,5 +50,26 @@
     </data>
 	<data name="Completed">
         <value>Avslutat</value>
+    </data>
+    <data name="RowsPerPage">
+        <value>Rader per sida</value>
+    </data>
+    <data name="NoMatchesFound">
+        <value>Inga träffar</value>
+    </data>
+    <data name="Loading">
+        <value>Laddar...</value>
+    </data>
+    <data name="DeleteTodo">
+        <value>Radera?</value>
+    </data>
+    <data name="AreYouSure">
+        <value>Är du säker?</value>
+    </data>
+    <data name="Yes">
+        <value>Ja</value>
+    </data>
+    <data name="No">
+        <value>Nej</value>
     </data>
 </root>

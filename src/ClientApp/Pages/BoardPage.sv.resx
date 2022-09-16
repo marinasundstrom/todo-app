@@ -27,5 +27,14 @@
 	<data name="Completed">
         <value>Avslutat</value>
     </data>
+	<data name="EstimatedHours">
+        <value>Beräknad</value>
+    </data>
+	<data name="RemainingHours">
+        <value>Återstående</value>
+    </data>
+	<data name="More">
+        <value>Mer</value>
+    </data>
 </root>
 

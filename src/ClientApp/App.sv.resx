@@ -12,29 +12,16 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-	<data name="Board">
-        <value>Board</value>
+	<data name="UnauthorizedMessage">
+        <value>Du har inte behörighet till denna resurs.</value>
     </data>
-	<data name="NotStarted">
-        <value>Not started</value>
+	<data name="NotFound">
+        <value>Hittades inte</value>
     </data>
-	<data name="InProgress">
-        <value>In progress</value>
+	<data name="NotFoundMessage">
+        <value>Tyvärr. Det finns inget på denna adress.</value>
     </data>
-	<data name="OnHold">
-        <value>On hold</value>
-    </data>
-	<data name="Completed">
-        <value>Completed</value>
-    </data>
-	<data name="EstimatedHours">
-        <value>Beräknad</value>
-    </data>
-	<data name="RemainingHours">
-        <value>Återstående</value>
-    </data>
-	<data name="More">
-        <value>More</value>
+	<data name="AuthorizingMessage">
+        <value>Auktoriserar...</value>
     </data>
 </root>
-

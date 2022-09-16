@@ -12,17 +12,14 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-	<data name="Todos">
-        <value>Todos</value>
-    </data>
-    <data name="CreateTodo">
-        <value>Create todo</value>
-    </data>
 	<data name="Id">
         <value>Id</value>
     </data>
 	<data name="Title">
         <value>Title</value>
+    </data>
+    <data name="Description">
+        <value>Description</value>
     </data>
 	<data name="Status">
         <value>Status</value>
@@ -51,25 +48,7 @@
 	<data name="Completed">
         <value>Completed</value>
     </data>
-    <data name="RowsPerPage">
-        <value>Rows per page</value>
-    </data>
-    <data name="NoMatchesFound">
-        <value>No matches found</value>
-    </data>
-    <data name="Loading">
-        <value>Loading...</value>
-    </data>
-    <data name="DeleteTodo">
-        <value>Delete todo?</value>
-    </data>
-    <data name="AreYouSure">
-        <value>Are you sure?</value>
-    </data>
-    <data name="Yes">
-        <value>Yes</value>
-    </data>
-    <data name="No">
-        <value>No</value>
+    <data name="SaveChanges">
+        <value>Save changes</value>
     </data>
 </root>

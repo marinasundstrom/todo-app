@@ -55,15 +55,15 @@
                         <MudText Typo="Typo.body1" Class="mt-2">@context.Description</MudText>
                         @if (context.EstimatedHours is not null)
                         {
-                            <MudText Typo="Typo.caption" Class="mt-2">Estimated: @context.EstimatedHours hours</MudText> <br />
+                            <MudText Typo="Typo.caption" Class="mt-2">@T["EstimatedHours"]: @context.EstimatedHours hours</MudText> <br />
                         }
                         @if (context.RemainingHours is not null)
                         {
-                            <MudText Typo="Typo.caption" Class="mt-2">Remaining: @context.RemainingHours hours</MudText>
+                            <MudText Typo="Typo.caption" Class="mt-2">@T["RemainingHours"]:  @context.RemainingHours hours</MudText>
                         }
                     </MudCardContent>
                     <MudCardActions>
-                        <MudButton Variant="Variant.Text" Color="Color.Primary" Href="@($"/todos/{context.Id}")">More</MudButton>
+                        <MudButton Variant="Variant.Text" Color="Color.Primary" Href="@($"/todos/{context.Id}")">@T["More"]</MudButton>
                     </MudCardActions>
                 </MudCard>
             </ItemRenderer>

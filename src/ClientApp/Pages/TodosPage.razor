@@ -57,13 +57,13 @@
         <MudTh><MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="async () => await DeleteTodo(context.Id)"></MudIconButton></MudTh>
     </RowTemplate>
     <NoRecordsContent>
-        <MudText>No matching records found</MudText>
+        <MudText>@T["NoMatchesFound"]</MudText>
     </NoRecordsContent>
     <LoadingContent>
-        <MudText>Loading...</MudText>
+        <MudText>@T["Loading"]</MudText>
     </LoadingContent>
     <PagerContent>
-        <MudTablePager />
+        <MudTablePager RowsPerPageString="@T["RowsPerPage"]" />
     </PagerContent>
 </MudTable>
 
@@ -147,7 +147,7 @@
 
     async Task DeleteTodo(int id)
     {
-        var result = await DialogService.ShowMessageBox("Delete todo?", "Are you sure?", "Yes", "No");
+        var result = await DialogService.ShowMessageBox(T["DeleteTodo"], T["AreYouSure"], T["Yes"], T["No"]);
 
         if (result.GetValueOrDefault())
         {

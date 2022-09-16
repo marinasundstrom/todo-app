@@ -11,6 +11,7 @@
 @inject ITodosClient TodosClient
 @inject IDialogService DialogService
 @inject Services.IAccessTokenProvider AccessTokenProvider
+@inject IStringLocalizer<TodoPage> T
 
 @if (notFound)
 {
@@ -28,7 +29,7 @@ else
 {
     @if (todo is not null)
     {
-        <PageTitle>@todo.Id @todo.Title</PageTitle>
+        <PageTitle>@todo.Id - @todo.Title</PageTitle>
 
         @if (Id != null)
         {
@@ -40,26 +41,26 @@ else
             <EditForm EditContext="editContext" OnValidSubmit="Submit">
                 <DataAnnotationsValidator />
 
-                <MudTextField Label="Title" Variant="Variant.Outlined" @bind-Value="Title" For="() => Title"
+                <MudTextField Label="@T["Title"]" Variant="Variant.Outlined" @bind-Value="Title" For="() => Title"
                               Class="mb-4" />
 
-                <MudTextField Label="Description" Lines="5" Variant="Variant.Outlined" @bind-Value="Description"
+                <MudTextField Label="@T["Description"]" Lines="5" Variant="Variant.Outlined" @bind-Value="Description"
                               For="() => Description" Class="mb-4" />
 
-                <MudSelect Label="Status" @bind-Value="Status" For="() => Status" Variant="Variant.Outlined" Class="mb-4">
+                <MudSelect Label="@T["Status"]" @bind-Value="Status" For="() => Status" Variant="Variant.Outlined" Class="mb-4">
                     @foreach (var status in Enum.GetValues<TodoStatusDto>())
                     {
-                        <MudSelectItem Value="@status">@Enum.GetName(typeof(TodoStatusDto), status)</MudSelectItem>
+                        <MudSelectItem Value="@status">@T[Enum.GetName(typeof(TodoStatusDto), status)!]</MudSelectItem>
                     }
                 </MudSelect>
 
-                <MudNumericField Label="Estimated hours" Variant="Variant.Outlined" @bind-Value="EstimatedHours"
+                <MudNumericField Label="@T["EstimatedHours"]" Variant="Variant.Outlined" @bind-Value="EstimatedHours"
                                  For="() => EstimatedHours" Class="mb-4" />
 
-                <MudNumericField Label="Remaining hours" Variant="Variant.Outlined" @bind-Value="RemainingHours"
+                <MudNumericField Label="@T["RemainingHours"]" Variant="Variant.Outlined" @bind-Value="RemainingHours"
                                  For="() => RemainingHours" Class="mb-4" />
 
-                <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Submit">Update</MudButton>
+                <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Submit">@T["SaveChanges"]</MudButton>
 
             </EditForm>
         </MudPaper>
