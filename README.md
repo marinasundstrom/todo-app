@@ -30,6 +30,8 @@ The app utilizes the Transactional Outbox Pattern for dispatching Domain events 
 
 ![Board](/images/screenshot3.png)
 
+![Board (Dark mode)](/images/screenshot4.png)
+
 ## Running the project
 
 To run the app, execute this when in the solution directory:
