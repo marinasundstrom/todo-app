@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace TodoApp.Domain.Events;
 
 public sealed class TodoTitleUpdated : DomainEvent

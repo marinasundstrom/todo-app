@@ -1,6 +1,4 @@
-﻿using MediatR;
-
-namespace TodoApp.Domain.Events;
+﻿namespace TodoApp.Domain.Events;
 
 public sealed class TodoRemainingHoursUpdated : DomainEvent
 {

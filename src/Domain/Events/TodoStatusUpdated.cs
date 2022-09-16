@@ -1,5 +1,4 @@
-﻿using MediatR;
-using TodoApp.Domain.Enums;
+﻿using TodoApp.Domain.Enums;
 
 namespace TodoApp.Domain.Events;
 

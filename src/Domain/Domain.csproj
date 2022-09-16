@@ -12,7 +12,6 @@
 
 
 	<ItemGroup>
-		<PackageReference Include="MediatR" Version="10.0.1" />
 		<PackageReference Include="LinqKit" Version="1.2.2" />
 	</ItemGroup>
 
