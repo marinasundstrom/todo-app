@@ -80,9 +80,9 @@
         {
             hubConnection = new HubConnectionBuilder()
             .WithUrl($"https://localhost:5001/hubs/todos", options =>
-                {
-                    options.AccessTokenProvider = async () => await AccessTokenProvider.GetAccessTokenAsync();
-                })
+            {
+                options.AccessTokenProvider = async () => await AccessTokenProvider.GetAccessTokenAsync();
+            })
             .WithAutomaticReconnect().Build();
 
             hubConnection.On<int>("Created", OnCreated);
@@ -138,6 +138,10 @@
             dropItem.Item.Status = oldStatus;
 
             Snackbar.Add(exc.Result.Title, Severity.Error);
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
         }
         catch (Exception exc)
         {

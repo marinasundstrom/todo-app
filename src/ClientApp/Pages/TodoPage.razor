@@ -12,19 +12,19 @@
 @inject IDialogService DialogService
 @inject Services.IAccessTokenProvider AccessTokenProvider
 
-@if(notFound) 
+@if (notFound)
 {
     <PageTitle>Not found</PageTitle>
 
     <MudText Typo="Typo.h4" GutterBottom="true">Not found</MudText>
 }
-else if(error) 
+else if (error)
 {
     <PageTitle>Error</PageTitle>
 
     <MudText Typo="Typo.h4" GutterBottom="true">Error</MudText>
 }
-else 
+else
 {
     @if (todo is not null)
     {
@@ -33,16 +33,16 @@ else
         <EditForm EditContext="editContext" OnValidSubmit="Submit">
             <DataAnnotationsValidator />
 
-            @if(Id != null) 
+            @if (Id != null)
             {
                 <MudText Typo="Typo.h4" Class="mb-4">@Id - @Title</MudText>
             }
 
             <MudTextField Label="Title" Variant="Variant.Outlined" @bind-Value="Title" For="() => Title"
-                        Class="mb-4" />
+                          Class="mb-4" />
 
             <MudTextField Label="Description" Lines="5" Variant="Variant.Outlined" @bind-Value="Description"
-                        For="() => Description" Class="mb-4" />
+                          For="() => Description" Class="mb-4" />
 
             <MudSelect Label="Status" @bind-Value="Status" For="() => Status" Variant="Variant.Outlined" Class="mb-4">
                 @foreach (var status in Enum.GetValues<TodoStatusDto>())
@@ -52,10 +52,10 @@ else
             </MudSelect>
 
             <MudNumericField Label="Estimated hours" Variant="Variant.Outlined" @bind-Value="EstimatedHours"
-                        For="() => EstimatedHours" Class="mb-4" />
+                             For="() => EstimatedHours" Class="mb-4" />
 
             <MudNumericField Label="Remaining hours" Variant="Variant.Outlined" @bind-Value="RemainingHours"
-                        For="() => RemainingHours" Class="mb-4" />
+                             For="() => RemainingHours" Class="mb-4" />
 
             <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Submit">Update</MudButton>
 
@@ -87,15 +87,22 @@ else
 
     async Task Submit()
     {
-        await TodosClient.UpdateTitleAsync(Id.GetValueOrDefault(), Title);
+        try
+        {
+            await TodosClient.UpdateTitleAsync(Id.GetValueOrDefault(), Title);
 
-        await TodosClient.UpdateDescriptionAsync(Id.GetValueOrDefault(), Description);
+            await TodosClient.UpdateDescriptionAsync(Id.GetValueOrDefault(), Description);
 
-        await TodosClient.UpdateStatusAsync(Id.GetValueOrDefault(), Status);
+            await TodosClient.UpdateStatusAsync(Id.GetValueOrDefault(), Status);
 
-        await TodosClient.UpdateEstimatedHoursAsync(Id.GetValueOrDefault(), EstimatedHours);
+            await TodosClient.UpdateEstimatedHoursAsync(Id.GetValueOrDefault(), EstimatedHours);
 
-        await TodosClient.UpdateRemainingHoursAsync(Id.GetValueOrDefault(), RemainingHours);
+            await TodosClient.UpdateRemainingHoursAsync(Id.GetValueOrDefault(), RemainingHours);
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
     }
 
     protected override async Task OnInitializedAsync()
@@ -111,13 +118,13 @@ else
         }
         else
         {
-            try 
+            try
             {
                 await LoadTodo(Id.GetValueOrDefault());
             }
-            catch(ApiException<ProblemDetails> exc) 
+            catch (ApiException<ProblemDetails> exc)
             {
-                if(exc.StatusCode == (int)System.Net.HttpStatusCode.NotFound)
+                if (exc.StatusCode == (int)System.Net.HttpStatusCode.NotFound)
                 {
                     notFound = true;
                 }
@@ -126,7 +133,7 @@ else
                     error = true;
                 }
             }
-            catch(Exception) 
+            catch (Exception)
             {
                 error = true;
             }
@@ -136,9 +143,9 @@ else
         {
             hubConnection = new HubConnectionBuilder()
             .WithUrl($"https://localhost:5001/hubs/todos?itemId={Id}", options =>
-                {
-                    options.AccessTokenProvider = async () => await AccessTokenProvider.GetAccessTokenAsync();
-                })
+            {
+                options.AccessTokenProvider = async () => await AccessTokenProvider.GetAccessTokenAsync();
+            })
             .WithAutomaticReconnect().Build();
 
             hubConnection.On<int, string>("TitleUpdated", OnTitleUpdated);
@@ -183,13 +190,13 @@ else
             Status = TodoStatusDto.NotStarted
         });
 
-            Title = todo.Title;
-            Description = todo.Description;
-            Status = todo.Status;
-            EstimatedHours = todo.EstimatedHours;
-            RemainingHours = todo.RemainingHours;
+        Title = todo.Title;
+        Description = todo.Description;
+        Status = todo.Status;
+        EstimatedHours = todo.EstimatedHours;
+        RemainingHours = todo.RemainingHours;
 
-            NavigationManager.NavigateTo($"/todos/{todo.Id}", replace: true);
+        NavigationManager.NavigateTo($"/todos/{todo.Id}", replace: true);
     }
 
     async Task FetchTodo()
@@ -199,16 +206,23 @@ else
 
     async Task LoadTodo(int id)
     {
-        this.todo = await TodosClient.GetTodoByIdAsync(id);
+        try
+        {
+            this.todo = await TodosClient.GetTodoByIdAsync(id);
 
-        Title = todo.Title;
-        Description = todo.Description;
-        Status = todo.Status;
-        EstimatedHours = todo.EstimatedHours;
-        RemainingHours = todo.RemainingHours;
+            Title = todo.Title;
+            Description = todo.Description;
+            Status = todo.Status;
+            EstimatedHours = todo.EstimatedHours;
+            RemainingHours = todo.RemainingHours;
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
     }
 
-    void  OnTitleUpdated(int todoId, string title)
+    void OnTitleUpdated(int todoId, string title)
     {
         Title = title;
         StateHasChanged();
