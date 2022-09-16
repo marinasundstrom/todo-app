@@ -6,7 +6,7 @@ using TodoApp.Infrastructure.Persistence.Outbox;
 
 namespace TodoApp.Infrastructure.Persistence;
 
-public sealed class ApplicationDbContext : DbContext
+public sealed class ApplicationDbContext : DbContext, IUnitOfWork
 {
     private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;
 

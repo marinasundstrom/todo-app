@@ -18,9 +18,8 @@ public class TodoRepositoryTest
     [Fact]
     public async Task TodoShouldBeAdded()
     {
-        var context = fixture.CreateDbContext();
-        var unitOfWork = new UnitOfWork(context);
-        var todoRepository = new TodoRepository(context);
+        var unitOfWork = fixture.CreateDbContext();
+        var todoRepository = new TodoRepository(unitOfWork);
 
         var todo = new Todo("Test", "Desc");
         todoRepository.Add(todo);
@@ -36,9 +35,8 @@ public class TodoRepositoryTest
     [Fact]
     public async Task AllTodosShouldBeRetrieved()
     {
-        var context = fixture.CreateDbContext();
-        var unitOfWork = new UnitOfWork(context);
-        var todoRepository = new TodoRepository(context);
+        var unitOfWork = fixture.CreateDbContext();
+        var todoRepository = new TodoRepository(unitOfWork);
 
         var todo = new Todo("Test1", "Desc");
         todoRepository.Add(todo);

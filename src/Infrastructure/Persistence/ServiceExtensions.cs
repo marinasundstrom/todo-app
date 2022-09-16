@@ -38,7 +38,7 @@ namespace TodoApp.Infrastructure.Persistence
         {
             // TODO: Automate this
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUnitOfWork, ApplicationDbContext>();
 
             services.AddScoped<ITodoRepository, TodoRepository>();
         }
