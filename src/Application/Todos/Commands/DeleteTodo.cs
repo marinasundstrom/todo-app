@@ -3,9 +3,9 @@ using MediatR;
 
 namespace TodoApp.Application.Todos.Commands;
 
-public record DeleteTodo(int Id) : IRequest<Result>
+public sealed record DeleteTodo(int Id) : IRequest<Result>
 {
-    public class Validator : AbstractValidator<DeleteTodo>
+    public sealed class Validator : AbstractValidator<DeleteTodo>
     {
         public Validator()
         {
@@ -13,7 +13,7 @@ public record DeleteTodo(int Id) : IRequest<Result>
         }
     }
 
-    public class Handler : IRequestHandler<DeleteTodo, Result>
+    public sealed class Handler : IRequestHandler<DeleteTodo, Result>
     {
         private readonly ITodoRepository todoRepository;
         private readonly IUnitOfWork unitOfWork;

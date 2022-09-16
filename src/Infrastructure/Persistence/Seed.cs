@@ -5,7 +5,7 @@ using TodoApp.Domain.Entities;
 
 namespace TodoApp.Infrastructure.Persistence;
 
-public class Seed
+public static class Seed
 {
     public static async Task SeedData(DbContext context)
     {

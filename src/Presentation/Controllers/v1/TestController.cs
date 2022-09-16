@@ -8,7 +8,7 @@ namespace TodoApp.Presentation.Controllers;
 [ApiController]
 [ApiVersion("1")]
 [Route("v{version:apiVersion}/[controller]")]
-public class Test : ControllerBase
+public sealed class Test : ControllerBase
 {
     private readonly IPublishEndpoint publishEndpoint;
 

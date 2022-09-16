@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
 namespace TodoApp;
 
-public class CustomAuthorizationMessageHandler : AuthorizationMessageHandler
+public sealed class CustomAuthorizationMessageHandler : AuthorizationMessageHandler
 {
     public CustomAuthorizationMessageHandler(IAccessTokenProvider provider,
         NavigationManager navigationManager)

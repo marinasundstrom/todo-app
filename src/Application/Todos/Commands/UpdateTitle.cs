@@ -3,9 +3,9 @@ using MediatR;
 
 namespace TodoApp.Application.Todos.Commands;
 
-public record UpdateTitle(int Id, string Title) : IRequest<Result>
+public sealed record UpdateTitle(int Id, string Title) : IRequest<Result>
 {
-    public class Validator : AbstractValidator<UpdateTitle>
+    public sealed class Validator : AbstractValidator<UpdateTitle>
     {
         public Validator()
         {
@@ -15,7 +15,7 @@ public record UpdateTitle(int Id, string Title) : IRequest<Result>
         }
     }
 
-    public class Handler : IRequestHandler<UpdateTitle, Result>
+    public sealed class Handler : IRequestHandler<UpdateTitle, Result>
     {
         private readonly ITodoRepository todoRepository;
         private readonly IUnitOfWork unitOfWork;

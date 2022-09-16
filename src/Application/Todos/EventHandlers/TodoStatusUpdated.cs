@@ -4,7 +4,7 @@ using TodoApp.Application.Todos.Dtos;
 
 namespace TodoApp.Application.Todos.EventHandlers;
 
-public class TodoStatusUpdatedEventHandler : INotificationHandler<DomainEventNotification<TodoStatusUpdated>>
+public sealed class TodoStatusUpdatedEventHandler : INotificationHandler<DomainEventNotification<TodoStatusUpdated>>
 {
     private readonly ITodoRepository todoRepository;
     private readonly ITodoNotificationService todoNotificationService;

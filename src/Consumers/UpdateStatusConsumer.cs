@@ -4,7 +4,7 @@ using TodoApp.Contracts;
 
 namespace TodoApp.Consumers;
 
-public class UpdateStatusConsumer : IConsumer<UpdateStatus>
+public sealed class UpdateStatusConsumer : IConsumer<UpdateStatus>
 {
     private readonly IMediator mediator;
 

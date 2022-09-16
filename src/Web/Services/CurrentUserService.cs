@@ -3,7 +3,7 @@ using TodoApp.Application.Services;
 
 namespace TodoApp.Web.Services;
 
-public class CurrentUserService : ICurrentUserService
+public sealed class CurrentUserService : ICurrentUserService
 {
     private IHttpContextAccessor _httpContextAccessor;
     private string? _currentUserId;

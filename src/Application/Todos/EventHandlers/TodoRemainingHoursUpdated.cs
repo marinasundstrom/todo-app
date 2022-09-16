@@ -2,7 +2,7 @@
 
 namespace TodoApp.Application.Todos.EventHandlers;
 
-public class TodoRemainingHoursUpdatedEventHandler : INotificationHandler<DomainEventNotification<TodoRemainingHoursUpdated>>
+public sealed class TodoRemainingHoursUpdatedEventHandler : INotificationHandler<DomainEventNotification<TodoRemainingHoursUpdated>>
 {
     private readonly ITodoRepository todoRepository;
     private readonly ITodoNotificationService todoNotificationService;

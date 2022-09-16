@@ -9,7 +9,7 @@ using TodoApp.Infrastructure.Persistence.Outbox;
 namespace TodoApp.Infrastructure.BackgroundJobs;
 
 [DisallowConcurrentExecution]
-public class ProcessOutboxMessagesJob : IJob
+public sealed class ProcessOutboxMessagesJob : IJob
 {
     private readonly ApplicationDbContext dbContext;
     private readonly IDomainEventDispatcher domainEventDispatcher;

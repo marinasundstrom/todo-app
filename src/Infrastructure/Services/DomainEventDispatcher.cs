@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace TodoApp.Infrastructure.Services;
 
-class DomainEventDispatcher : IDomainEventDispatcher
+sealed class DomainEventDispatcher : IDomainEventDispatcher
 {
     private readonly ILogger<DomainEventDispatcher> _logger;
     private readonly IPublisher _mediator;

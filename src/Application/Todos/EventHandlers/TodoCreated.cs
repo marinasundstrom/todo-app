@@ -4,7 +4,7 @@ using TodoApp.Application.Services;
 
 namespace TodoApp.Application.Todos.EventHandlers;
 
-public class TodoCreatedEventHandler : INotificationHandler<DomainEventNotification<TodoCreated>>
+public sealed class TodoCreatedEventHandler : INotificationHandler<DomainEventNotification<TodoCreated>>
 {
     private readonly ITodoRepository todoRepository;
     private readonly ITodoNotificationService todoNotificationService;

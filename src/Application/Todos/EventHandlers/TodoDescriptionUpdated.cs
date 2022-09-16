@@ -3,7 +3,7 @@ using TodoApp.Application.Services;
 
 namespace TodoApp.Application.Todos.EventHandlers;
 
-public class TodoDescriptionUpdatedEventHandler : INotificationHandler<DomainEventNotification<TodoDescriptionUpdated>>
+public sealed class TodoDescriptionUpdatedEventHandler : INotificationHandler<DomainEventNotification<TodoDescriptionUpdated>>
 {
     private readonly ITodoRepository todoRepository;
     private readonly ITodoNotificationService todoNotificationService;

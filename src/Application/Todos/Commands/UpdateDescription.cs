@@ -4,9 +4,9 @@ using TodoApp.Domain;
 
 namespace TodoApp.Application.Todos.Commands;
 
-public record UpdateDescription(int Id, string? Description) : IRequest<Result>
+public sealed record UpdateDescription(int Id, string? Description) : IRequest<Result>
 {
-    public class Validator : AbstractValidator<UpdateDescription>
+    public sealed class Validator : AbstractValidator<UpdateDescription>
     {
         public Validator()
         {
@@ -16,7 +16,7 @@ public record UpdateDescription(int Id, string? Description) : IRequest<Result>
         }
     }
 
-    public class Handler : IRequestHandler<UpdateDescription, Result>
+    public sealed class Handler : IRequestHandler<UpdateDescription, Result>
     {
         private readonly ITodoRepository todoRepository;
         private readonly IUnitOfWork unitOfWork;

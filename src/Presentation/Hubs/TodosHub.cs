@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.SignalR;
 namespace TodoApp.Presentation.Hubs;
 
 [Authorize]
-public class TodosHub : Hub<ITodosHubClient>
+public sealed class TodosHub : Hub<ITodosHubClient>
 {
     public override Task OnConnectedAsync()
     {

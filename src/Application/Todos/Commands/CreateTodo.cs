@@ -4,9 +4,9 @@ using TodoApp.Application.Todos.Dtos;
 
 namespace TodoApp.Application.Todos.Commands;
 
-public record CreateTodo(string Title, string? Description, TodoStatusDto Status) : IRequest<Result<TodoDto>>
+public sealed record CreateTodo(string Title, string? Description, TodoStatusDto Status) : IRequest<Result<TodoDto>>
 {
-    public class Validator : AbstractValidator<CreateTodo>
+    public sealed class Validator : AbstractValidator<CreateTodo>
     {
         public Validator()
         {
@@ -16,7 +16,7 @@ public record CreateTodo(string Title, string? Description, TodoStatusDto Status
         }
     }
 
-    public class Handler : IRequestHandler<CreateTodo, Result<TodoDto>>
+    public sealed class Handler : IRequestHandler<CreateTodo, Result<TodoDto>>
     {
         private readonly ITodoRepository todoRepository;
         private readonly IUnitOfWork unitOfWork;

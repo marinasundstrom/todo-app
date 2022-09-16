@@ -1,6 +1,6 @@
 namespace TodoApp.Domain.Events;
 
-public class TodoUpdated : DomainEvent
+public sealed class TodoUpdated : DomainEvent
 {
     public TodoUpdated(int todoId)
     {

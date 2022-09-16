@@ -4,7 +4,7 @@ using TodoApp.Domain.Entities;
 
 namespace TodoApp.Application.Todos.EventHandlers;
 
-public class TodoDeletedEventHandler : INotificationHandler<DomainEventNotification<TodoDeleted>>
+public sealed class TodoDeletedEventHandler : INotificationHandler<DomainEventNotification<TodoDeleted>>
 {
     private readonly ITodoRepository todoRepository;
     private readonly ITodoNotificationService todoNotificationService;

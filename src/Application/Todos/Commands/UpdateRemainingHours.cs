@@ -3,9 +3,9 @@ using MediatR;
 
 namespace TodoApp.Application.Todos.Commands;
 
-public record UpdateRemainingHours(int Id, double? Hours) : IRequest<Result>
+public sealed record UpdateRemainingHours(int Id, double? Hours) : IRequest<Result>
 {
-    public class Validator : AbstractValidator<UpdateRemainingHours>
+    public sealed class Validator : AbstractValidator<UpdateRemainingHours>
     {
         public Validator()
         {
@@ -13,7 +13,7 @@ public record UpdateRemainingHours(int Id, double? Hours) : IRequest<Result>
         }
     }
 
-    public class Handler : IRequestHandler<UpdateRemainingHours, Result>
+    public sealed class Handler : IRequestHandler<UpdateRemainingHours, Result>
     {
         private readonly ITodoRepository todoRepository;
         private readonly IUnitOfWork unitOfWork;

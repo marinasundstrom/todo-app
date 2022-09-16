@@ -2,7 +2,7 @@
 
 namespace TodoApp.Domain.Events;
 
-public class TodoEstimatedHoursUpdated : DomainEvent, INotification
+public sealed class TodoEstimatedHoursUpdated : DomainEvent, INotification
 {
     public TodoEstimatedHoursUpdated(int todoId, double? hours, double? oldHours)
     {

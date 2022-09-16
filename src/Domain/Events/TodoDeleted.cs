@@ -1,6 +1,6 @@
 namespace TodoApp.Domain.Events;
 
-public class TodoDeleted : DomainEvent
+public sealed class TodoDeleted : DomainEvent
 {
     public TodoDeleted(int todoId)
     {

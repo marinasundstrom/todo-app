@@ -2,7 +2,7 @@
 
 namespace TodoApp.Application.Services;
 
-public class DomainEventNotification<TDomainEvent> : INotification where TDomainEvent : DomainEvent
+public sealed class DomainEventNotification<TDomainEvent> : INotification where TDomainEvent : DomainEvent
 {
     public DomainEventNotification(TDomainEvent domainEvent)
     {

@@ -15,7 +15,7 @@ namespace TodoApp.Presentation.Controllers;
 [ApiVersion("1")]
 [Route("v{version:apiVersion}/[controller]")]
 [Authorize]
-public class TodosController : ControllerBase
+public sealed class TodosController : ControllerBase
 {
     private readonly IMediator mediator;
 
