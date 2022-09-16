@@ -76,9 +76,9 @@
         {
             hubConnection = new HubConnectionBuilder()
             .WithUrl($"https://localhost:5001/hubs/todos", options =>
-                {
-                    options.AccessTokenProvider = async () => await AccessTokenProvider.GetAccessTokenAsync();
-                })
+            {
+                options.AccessTokenProvider = async () => await AccessTokenProvider.GetAccessTokenAsync();
+            })
             .WithAutomaticReconnect().Build();
 
             hubConnection.On<int>("Created", OnCreated);
@@ -150,9 +150,16 @@
 
         if (result.GetValueOrDefault())
         {
-            await TodosClient.DeleteTodoAsync(id);
+            try
+            {
+                await TodosClient.DeleteTodoAsync(id);
 
-            await table.ReloadServerData();
+                await table.ReloadServerData();
+            }
+            catch (AccessTokenNotAvailableException exception)
+            {
+                exception.Redirect();
+            }
         }
     }
 
