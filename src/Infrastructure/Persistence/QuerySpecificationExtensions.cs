@@ -5,7 +5,7 @@ namespace TodoApp.Infrastructure.Persistence;
 
 public static class QuerySpecificationExtensions
 {
-    public static IQueryable<T> Specify<T>(this IQueryable<T> query, ISpecification<T> spec) where T : class
+    public static IQueryable<T> Where<T>(this IQueryable<T> query, ISpecification<T> spec) where T : class
     {
         // fetch a Queryable that includes all expression-based includes
         var queryableResultWithIncludes = spec.Includes

@@ -55,9 +55,4 @@ public class MockRepositoryBase<T, TKey> : IRepository<T, TKey>, IDisposable
     {
         mockUnitOfWork.Items.Remove(item);
     }
-
-    public virtual async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        return await mockUnitOfWork.SaveChangesAsync(cancellationToken);
-    }
 }

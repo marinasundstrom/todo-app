@@ -2,7 +2,7 @@
 
 namespace TodoApp.Infrastructure.Persistence;
 
-sealed class UnitOfWork : IUnitOfWork
+public sealed class UnitOfWork : IUnitOfWork
 {
     private readonly ApplicationDbContext context;
 

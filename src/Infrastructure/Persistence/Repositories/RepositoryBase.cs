@@ -40,9 +40,4 @@ public class RepositoryBase<T, TKey> : IRepository<T, TKey>
     {
         dbSet.Remove(item);
     }
-
-    public virtual async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        return await context.SaveChangesAsync(cancellationToken);
-    }
 }
