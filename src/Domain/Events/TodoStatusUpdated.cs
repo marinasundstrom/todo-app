@@ -3,7 +3,7 @@ using TodoApp.Domain.Enums;
 
 namespace TodoApp.Domain.Events;
 
-public sealed class TodoStatusUpdated : DomainEvent, INotification
+public sealed class TodoStatusUpdated : DomainEvent
 {
     public TodoStatusUpdated(int todoId, TodoStatus newStatus, TodoStatus oldStatus)
     {

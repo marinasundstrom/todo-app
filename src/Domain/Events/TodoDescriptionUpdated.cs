@@ -2,7 +2,7 @@ using MediatR;
 
 namespace TodoApp.Domain.Events;
 
-public sealed class TodoDescriptionUpdated : DomainEvent, INotification
+public sealed class TodoDescriptionUpdated : DomainEvent
 {
     public TodoDescriptionUpdated(int todoId, string? description)
     {

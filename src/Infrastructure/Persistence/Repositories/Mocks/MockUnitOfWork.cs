@@ -26,6 +26,11 @@ public sealed class MockUnitOfWork : IUnitOfWork
 
         await DispatchEvents(events, cancellationToken);
 
+        foreach(var newItem in newItems.OfType<IHasDomainEvents>())
+        {
+            newItem.ClearDomainEvents();
+        }
+
         return 0;
     }
 
@@ -33,7 +38,6 @@ public sealed class MockUnitOfWork : IUnitOfWork
     {
         foreach (var @event in events)
         {
-            @event.IsPublished = true;
             await domainEventDispatcher.Dispatch(@event, cancellationToken);
         }
     }
@@ -44,7 +48,6 @@ public sealed class MockUnitOfWork : IUnitOfWork
             .OfType<IHasDomainEvents>()
             .Select(x => x.DomainEvents)
             .SelectMany(x => x)
-            .Where(domainEvent => !domainEvent.IsPublished)
             .ToArray();
     }
 }
