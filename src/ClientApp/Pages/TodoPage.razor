@@ -30,36 +30,39 @@ else
     {
         <PageTitle>@todo.Id @todo.Title</PageTitle>
 
-        <EditForm EditContext="editContext" OnValidSubmit="Submit">
-            <DataAnnotationsValidator />
+        @if (Id != null)
+        {
+            <MudText Typo="Typo.h4" Class="mb-4">@Id - @Title</MudText>
+        }
 
-            @if (Id != null)
-            {
-                <MudText Typo="Typo.h4" Class="mb-4">@Id - @Title</MudText>
-            }
+        <MudPaper Elevation="25" Class="pa-4">
 
-            <MudTextField Label="Title" Variant="Variant.Outlined" @bind-Value="Title" For="() => Title"
-                          Class="mb-4" />
+            <EditForm EditContext="editContext" OnValidSubmit="Submit">
+                <DataAnnotationsValidator />
 
-            <MudTextField Label="Description" Lines="5" Variant="Variant.Outlined" @bind-Value="Description"
-                          For="() => Description" Class="mb-4" />
+                <MudTextField Label="Title" Variant="Variant.Outlined" @bind-Value="Title" For="() => Title"
+                              Class="mb-4" />
 
-            <MudSelect Label="Status" @bind-Value="Status" For="() => Status" Variant="Variant.Outlined" Class="mb-4">
-                @foreach (var status in Enum.GetValues<TodoStatusDto>())
-                {
-                    <MudSelectItem Value="@status">@Enum.GetName(typeof(TodoStatusDto), status)</MudSelectItem>
-                }
-            </MudSelect>
+                <MudTextField Label="Description" Lines="5" Variant="Variant.Outlined" @bind-Value="Description"
+                              For="() => Description" Class="mb-4" />
 
-            <MudNumericField Label="Estimated hours" Variant="Variant.Outlined" @bind-Value="EstimatedHours"
-                             For="() => EstimatedHours" Class="mb-4" />
+                <MudSelect Label="Status" @bind-Value="Status" For="() => Status" Variant="Variant.Outlined" Class="mb-4">
+                    @foreach (var status in Enum.GetValues<TodoStatusDto>())
+                    {
+                        <MudSelectItem Value="@status">@Enum.GetName(typeof(TodoStatusDto), status)</MudSelectItem>
+                    }
+                </MudSelect>
 
-            <MudNumericField Label="Remaining hours" Variant="Variant.Outlined" @bind-Value="RemainingHours"
-                             For="() => RemainingHours" Class="mb-4" />
+                <MudNumericField Label="Estimated hours" Variant="Variant.Outlined" @bind-Value="EstimatedHours"
+                                 For="() => EstimatedHours" Class="mb-4" />
 
-            <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Submit">Update</MudButton>
+                <MudNumericField Label="Remaining hours" Variant="Variant.Outlined" @bind-Value="RemainingHours"
+                                 For="() => RemainingHours" Class="mb-4" />
 
-        </EditForm>
+                <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Submit">Update</MudButton>
+
+            </EditForm>
+        </MudPaper>
     }
 }
 

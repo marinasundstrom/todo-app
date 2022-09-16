@@ -11,13 +11,21 @@
 </head>
 
 <body>
-    <div id="app">Loading...</div>
+    <div id="app">
+        <div id="splashscreen" style="height:100%; width:100%; margin:0; position:fixed;">
+            <div style="display: flex; justify-content: center; align-items:center; height:100%; width:100%;">
+                <img src="logo.svg" title="logo" style="height: 150px; max-width: 650px; margin-left: 20px; margin-right: 20px;" />
+            </div>
+        </div>
+    </div>
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
+
+    <script src="js/app.js"></script>
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="_content/Microsoft.AspNetCore.Components.WebAssembly.Authentication/AuthenticationService.js"></script>
     <script src="_content/MudBlazor/MudBlazor.min.js"></script>

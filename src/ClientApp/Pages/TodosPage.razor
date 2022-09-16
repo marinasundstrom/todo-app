@@ -15,12 +15,12 @@
 
 <MudText Typo="Typo.h4" GutterBottom="true">Todos</MudText>
 
-<MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/todos/new" Class="mb-2">Create todo</MudButton>
+<MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/todos/new" Class="mb-4">Create todo</MudButton>
 
 <MudTable T="TodoDto" ServerData="@(new Func<TableState, Task<TableData<TodoDto>>>(ServerReload))" Elevation="25"
           OnRowClick="(e) => NavigateTo(e.Item)" Dense="true" Hover="true" @ref="table" Class="mb-8">
     <HeaderContent>
-         <MudTh>
+        <MudTh>
             <MudTableSortLabel SortLabel="Id" T="TodoDto">Id</MudTableSortLabel>
         </MudTh>
         <MudTh>
@@ -167,21 +167,21 @@
     {
         await table.ReloadServerData();
 
-        Snackbar.Add($"Todo {todoId} was added.",  Severity.Normal);
+        Snackbar.Add($"Todo {todoId} was added.", Severity.Normal);
     }
 
     async Task OnUpdated(int todoId)
     {
         bool hasUpdated = await UpdateItem(todoId);
 
-        Snackbar.Add($"Todo {todoId} was updated.",  Severity.Normal);
+        Snackbar.Add($"Todo {todoId} was updated.", Severity.Normal);
     }
 
     async Task OnDeleted(int todoId)
     {
         await table.ReloadServerData();
 
-        Snackbar.Add($"Todo {todoId} was deleted.",  Severity.Normal);
+        Snackbar.Add($"Todo {todoId} was deleted.", Severity.Normal);
     }
 
     /* void OnTitleUpdated(int todoId, string title)
