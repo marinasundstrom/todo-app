@@ -1,8 +1,12 @@
-﻿using System.Xml.Linq;
+﻿using System.Data.Common;
+using System.Xml.Linq;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using NSubstitute;
 using TodoApp.Application.Services;
 using TodoApp.Infrastructure.Persistence;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace TodoApp.Infrastructure
 {
@@ -11,6 +15,7 @@ namespace TodoApp.Infrastructure
         private readonly IDomainEventDispatcher fakeDomainEventDispatcher;
         private readonly ICurrentUserService fakeCurrentUserService;
         private readonly IDateTime fakeDateTimeService;
+        private SqliteConnection connection = null!;
 
         public TodoFixture()
         {
@@ -24,21 +29,28 @@ namespace TodoApp.Infrastructure
             string dbName = $"testdb";
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-               .UseSqlite($"Data Source={dbName}.db")
+               .UseSqlite(GetDbConnection())
                .Options;
 
             var context = new ApplicationDbContext(options,
                 new TodoApp.Infrastructure.Persistence.Interceptors.AuditableEntitySaveChangesInterceptor(fakeCurrentUserService, fakeDateTimeService));
 
-            context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
             return context;
         }
 
+        private DbConnection GetDbConnection()
+        {
+            connection = new SqliteConnection("DataSource=:memory:");
+            connection.Open();
+
+            return connection;
+        }
+
         public void Dispose()
         {
-
+            connection.Close();
         }
     }
 }
