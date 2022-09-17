@@ -36,5 +36,20 @@
 	<data name="More">
         <value>Mer</value>
     </data>
+	<data name="DeleteTodo">
+        <value>Ta bort "{0}"?</value>
+    </data>
+    <data name="AreYouSure">
+        <value>Är du säker?</value>
+    </data>
+    <data name="Yes">
+        <value>Ja</value>
+    </data>
+    <data name="No">
+        <value>Nej</value>
+    </data>
+	<data name="FailedToDeleteTodo">
+        <value>Kunde inte ta bort föremålet</value>
+    </data>
 </root>
 

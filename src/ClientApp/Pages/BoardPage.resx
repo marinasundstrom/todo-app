@@ -36,5 +36,20 @@
 	<data name="More">
         <value>More</value>
     </data>
+	<data name="DeleteTodo">
+        <value>Delete "{0}"?</value>
+    </data>
+    <data name="AreYouSure">
+        <value>Are you sure?</value>
+    </data>
+    <data name="Yes">
+        <value>Yes</value>
+    </data>
+    <data name="No">
+        <value>No</value>
+    </data>
+    <data name="FailedToDeleteTodo">
+        <value>Failed to delete todo</value>
+    </data>
 </root>
 

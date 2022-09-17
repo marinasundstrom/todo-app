@@ -48,12 +48,16 @@
             </ChildContent>
             <ItemRenderer>
                 <MudCard Class="ma-4 rounded-lg" Elevation="25">
+                    <MudCardHeader>
+                        <CardHeaderAvatar>
+                            <MudIcon Icon="@Icons.Material.Filled.Task"></MudIcon>
+                        </CardHeaderAvatar>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.body1">@context.Id - @context.Title</MudText>
+                            @* <MudText Typo="Typo.body2">Peninsula in Europe</MudText> *@
+                        </CardHeaderContent>
+                    </MudCardHeader>
                     <MudCardContent>
-                        <div class="d-flex">
-                            <MudIcon Icon="@Icons.Material.Filled.Task" class="mr-3"></MudIcon>
-                            <MudText>@context.Id - @context.Title</MudText>
-                        </div>
-
                         <MudText Typo="Typo.body1" Class="mt-2">@context.Description</MudText>
                         @if (context.EstimatedHours is not null)
                         {
@@ -65,7 +69,8 @@
                         }
                     </MudCardContent>
                     <MudCardActions>
-                        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="async (e) => await ShowTodo(context.Id)">@T["More"]</MudButton>
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Default"  OnClick="async (e) => await ShowTodo(context.Id)" />
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="async (e) => await DeleteTodo(context)" Color="Color.Default" />
                     </MudCardActions>
                 </MudCard>
             </ItemRenderer>
@@ -145,6 +150,30 @@
         Console.WriteLine(result.Cancelled);
 
         //NavigationManager.NavigateTo(uri, replace: true);
+    }
+
+    private async Task DeleteTodo(TodoDto item)
+    {
+        try
+        {
+            var result = await DialogService.ShowMessageBox(T["DeleteTodo", item.Title], T["AreYouSure"], T["Yes"], T["No"]);
+
+            if (result.GetValueOrDefault())
+            {
+                await TodosClient.DeleteTodoAsync(item.Id);
+            }
+
+            dropContainer.Refresh();
+            StateHasChanged();
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+        catch (Exception)
+        {
+            Snackbar.Add(T["FailedToDeleteTodo"], Severity.Error);
+        }
     }
 
     private async void ItemUpdated(MudItemDropInfo<TodoDto> dropItem)
