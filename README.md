@@ -6,6 +6,16 @@ To run this solution, Install .NET Tye and Docker.
 
 Watch video [here](https://youtu.be/UW-iDps48BI)
 
+## Why?
+
+Having a stable ground on which to build a project helps you to focus on what really matters: Features and Use Cases.
+
+Following the patterns let you worry less about technical concerns.
+
+In this particular project, you get the project structure and services you need for dispatching domain events for free. It also helps you test your code.
+
+Feel free to adopt and modify this to your own needs. Instructions below.
+
 ## Contents
 
 * Architecture: Clean Architecture / Layered Architecture 
