@@ -18,6 +18,8 @@ public class TodosPageTest
 
         ctx.Services.AddMudServices();
 
+        ctx.Services.AddLocalization();
+
         var fakeAccessTokenProvider = Substitute.For<TodoApp.Services.IAccessTokenProvider>();
 
         ctx.Services.AddSingleton(fakeAccessTokenProvider);
