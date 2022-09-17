@@ -4,6 +4,8 @@
 @using Microsoft.AspNetCore.SignalR.Client
 @inject ITodosClient TodosClient
 @inject ISnackbar Snackbar
+@inject IDialogService DialogService
+@inject NavigationManager NavigationManager
 @inject Services.IAccessTokenProvider AccessTokenProvider
 @inject IStringLocalizer<BoardPage> T
 
@@ -63,7 +65,7 @@
                         }
                     </MudCardContent>
                     <MudCardActions>
-                        <MudButton Variant="Variant.Text" Color="Color.Primary" Href="@($"/todos/{context.Id}")">@T["More"]</MudButton>
+                        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="async (e) => await ShowTodo(context.Id)">@T["More"]</MudButton>
                     </MudCardActions>
                 </MudCard>
             </ItemRenderer>
@@ -126,6 +128,23 @@
         {
             Snackbar.Add(exc.Message.ToString(), Severity.Error);
         }
+    }
+
+    async Task ShowTodo(int id)
+    {
+        var uri = NavigationManager.Uri;
+
+        DialogParameters dialogParameters = new();
+        dialogParameters.Add(nameof(TodoDialog.Id), id);
+
+        //NavigationManager.NavigateTo($"/todos/{id}", replace: true);
+
+        DialogOptions dialogOptions = new DialogOptions() { FullScreen = false, MaxWidth = MaxWidth.Large, CloseButton = true };
+        var dialogRef = DialogService.Show<TodoDialog>(string.Empty, dialogParameters, dialogOptions);
+        var result = await dialogRef.Result;
+        Console.WriteLine(result.Cancelled);
+
+        //NavigationManager.NavigateTo(uri, replace: true);
     }
 
     private async void ItemUpdated(MudItemDropInfo<TodoDto> dropItem)

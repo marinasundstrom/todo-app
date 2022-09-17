@@ -1,0 +1,243 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Authorization
+@using TodoApp
+@inject NavigationManager NavigationManager
+@inject ISnackbar Snackbar
+@inject ITodosClient TodosClient
+@inject IDialogService DialogService
+@inject Services.IAccessTokenProvider AccessTokenProvider
+@inject IStringLocalizer<TodoDialog> T
+
+@if (notFound)
+{
+    <PageTitle>Not found</PageTitle>
+
+    <MudText Typo="Typo.h4" GutterBottom="true">Not found</MudText>
+}
+else if (error)
+{
+    <PageTitle>Error</PageTitle>
+
+    <MudText Typo="Typo.h4" GutterBottom="true">Error</MudText>
+}
+else
+{
+    @if (Id is null || todo is not null)
+    {
+        @if (todo is null)
+        {
+            <PageTitle>@T["NewTodo"]</PageTitle>
+        }
+        else
+        {
+            <PageTitle>@todo?.Id - @todo?.Title</PageTitle>
+        }
+
+        <MudPaper Elevation="0" Class="pa-4">
+
+            <EditForm EditContext="editContext" OnValidSubmit="Submit">
+                <DataAnnotationsValidator />
+
+                <MudTextField Label="@T["Title"]" Variant="Variant.Outlined" @bind-Value="Title" For="() => Title"
+                              Class="mb-4" />
+
+                <MudGrid>
+                    <MudItem xs="12" md="6">
+                        <MudTextField Label="@T["Description"]" Lines="5" Variant="Variant.Outlined" @bind-Value="Description"
+                                      For="() => Description" Class="mb-4" />
+                    </MudItem>
+
+                    <MudItem xs="12" md="6">
+                        <MudSelect Label="@T["Status"]" @bind-Value="Status" For="() => Status" Variant="Variant.Outlined" Class="mb-4">
+                            @foreach (var status in Enum.GetValues<TodoStatusDto>())
+                            {
+                                <MudSelectItem Value="@status">@T[Enum.GetName(typeof(TodoStatusDto), status)!]</MudSelectItem>
+                            }
+                        </MudSelect>
+
+                        <MudGrid>
+                            <MudItem xs="12" md="6">
+                                <MudNumericField Label="@T["EstimatedHours"]" Variant="Variant.Outlined" @bind-Value="EstimatedHours"
+                                                 For="() => EstimatedHours" Class="mb-4" />
+                            </MudItem>
+
+                            <MudItem xs="12" md="6">
+                                <MudNumericField Label="@T["RemainingHours"]" Variant="Variant.Outlined" @bind-Value="RemainingHours"
+                                                 For="() => RemainingHours" Class="mb-4" />
+                            </MudItem>
+                        </MudGrid>
+                    </MudItem>
+                </MudGrid>
+
+                @if (editContext.IsModified())
+                {
+                    <MudButton ButtonType="ButtonType.Submit" Color="Color.Primary" Variant="Variant.Filled">
+                        @if (todo is null)
+                        {
+                            @T["Create"]
+                        }
+                        else
+                        {
+                            @T["SaveChanges"]
+                        }
+                    </MudButton>
+                }
+
+            </EditForm>
+        </MudPaper>
+    }
+    else
+    {
+        <div style="display: flex; justify-content: center; align-items:center; height:100%; width:100%;">
+            <MudProgressCircular Color="Color.Default" Size="Size.Large" Indeterminate="true" />
+        </div>
+    }
+}
+
+
+@code {
+    EditContext editContext = null!;
+    TodoDto? todo;
+    bool notFound = false;
+    bool error = false;
+
+    [CascadingParameter] public MudDialogInstance Instance { get; set; } = null!;
+
+    [Parameter] public int? Id { get; set; }
+
+    [MaxLength(60)]
+    public string Title { get; set; } = null!;
+
+    [MaxLength(340)]
+    public string? Description { get; set; }
+
+    public TodoStatusDto Status { get; set; }
+
+    public double? EstimatedHours { get; set; }
+
+    public double? RemainingHours { get; set; }
+
+    async Task Submit()
+    {
+        try
+        {
+            if (Id is null)
+            {
+                await CreateTodo();
+
+                editContext.MarkAsUnmodified();
+
+                return;
+            }
+
+            if (editContext.IsModified(() => Title))
+            {
+                await TodosClient.UpdateTitleAsync(Id.GetValueOrDefault(), Title);
+            }
+
+            if (editContext.IsModified(() => Description!))
+            {
+                await TodosClient.UpdateDescriptionAsync(Id.GetValueOrDefault(), Description);
+            }
+
+            if (editContext.IsModified(() => Status))
+            {
+                await TodosClient.UpdateStatusAsync(Id.GetValueOrDefault(), Status);
+            }
+
+            if (editContext.IsModified(() => EstimatedHours!))
+            {
+                await TodosClient.UpdateEstimatedHoursAsync(Id.GetValueOrDefault(), EstimatedHours);
+            }
+
+            if (editContext.IsModified(() => RemainingHours!))
+            {
+                await TodosClient.UpdateRemainingHoursAsync(Id.GetValueOrDefault(), RemainingHours);
+            }
+
+            editContext.MarkAsUnmodified();
+
+            todo = await TodosClient.GetTodoByIdAsync(Id.GetValueOrDefault());
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        editContext = new EditContext(this);
+
+        notFound = false;
+        error = false;
+
+        if (Id is not null)
+        {
+            try
+            {
+                await LoadTodo(Id.GetValueOrDefault());
+            }
+            catch (ApiException<ProblemDetails> exc)
+            {
+                if (exc.StatusCode == (int)System.Net.HttpStatusCode.NotFound)
+                {
+                    notFound = true;
+                }
+                else
+                {
+                    error = true;
+                }
+            }
+            catch (Exception)
+            {
+                error = true;
+            }
+        }
+        else
+        {
+            Instance.SetTitle(T["NewTodo"]);
+        }
+    }
+
+    async Task CreateTodo()
+    {
+        todo = await TodosClient.CreateTodoAsync(new CreateTodoRequest
+        {
+            Title = Title,
+            Description = Description,
+            Status = Status,
+            //EstimatedHours = EstimatedHours,
+            //RemainingHours = RemainingHours
+        });
+
+        Instance.SetTitle($"{todo.Id} - {todo.Title}");
+
+        //NavigationManager.NavigateTo($"/todos/{todo.Id}", replace: true);
+    }
+
+    async Task FetchTodo()
+    {
+        await LoadTodo(todo!.Id);
+    }
+
+    async Task LoadTodo(int id)
+    {
+        try
+        {
+            this.todo = await TodosClient.GetTodoByIdAsync(id);
+
+            Instance.SetTitle($"{todo.Id} - {todo.Title}");
+
+            Title = todo.Title;
+            Description = todo.Description;
+            Status = todo.Status;
+            EstimatedHours = todo.EstimatedHours;
+            RemainingHours = todo.RemainingHours;
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
+}

@@ -1,5 +1,7 @@
 ﻿@page "/"
 @page "/todos"
+@page "/todos/new"
+@page "/todos/{id:int}"
 @attribute [Authorize]
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.SignalR.Client
@@ -16,10 +18,10 @@
 
 <MudText Typo="Typo.h4" GutterBottom="true">@T["Todos"]</MudText>
 
-<MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/todos/new" Class="mb-4">@T["CreateTodo"]</MudButton>
+<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => CreateTodo()" Class="mb-4">@T["CreateTodo"]</MudButton>
 
 <MudTable T="TodoDto" ServerData="@(new Func<TableState, Task<TableData<TodoDto>>>(ServerReload))" Elevation="25"
-          OnRowClick="(e) => NavigateTo(e.Item)" Dense="true" Hover="true" @ref="table" Class="mb-8">
+          OnRowClick="async (e) => await ShowTodo(e.Item.Id)" Dense="true" Hover="true" @ref="table" Class="mb-8">
     <HeaderContent>
         <MudTh>
             <MudTableSortLabel SortLabel="Id" T="TodoDto">@T["Id"]</MudTableSortLabel>
@@ -71,6 +73,8 @@
     HubConnection hubConnection = null!;
     MudTable<TodoDto> table = null!;
 
+    [Parameter] public int? Id { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         try
@@ -115,6 +119,46 @@
         {
             Snackbar.Add(exc.Message.ToString(), Severity.Error);
         }
+
+        if (Id is not null)
+        {
+            await ShowTodo(Id.GetValueOrDefault());
+        }
+        else
+        {
+            if(NavigationManager.Uri.EndsWith("/todos/new"))
+            {
+                await CreateTodo();
+            }
+        }
+    }
+
+    async Task CreateTodo()
+    {
+        var uri = NavigationManager.Uri;
+
+        DialogOptions dialogOptions = new DialogOptions() { FullScreen = false, MaxWidth = MaxWidth.Large, CloseButton = true };
+        var dialogRef = DialogService.Show<TodoDialog>(string.Empty, dialogOptions);
+        var result = await dialogRef.Result;
+
+        NavigationManager.NavigateTo(uri, replace: true);
+    }
+
+    async Task ShowTodo(int id)
+    {
+        var uri = NavigationManager.Uri;
+
+        DialogParameters dialogParameters = new();
+        dialogParameters.Add(nameof(TodoDialog.Id), id);
+
+        //NavigationManager.NavigateTo($"/todos/{id}", replace: true);
+
+        DialogOptions dialogOptions = new DialogOptions() { FullScreen = false, MaxWidth = MaxWidth.Large, CloseButton = true };
+        var dialogRef = DialogService.Show<TodoDialog>(string.Empty, dialogParameters, dialogOptions);
+        var result = await dialogRef.Result;
+        Console.WriteLine(result.Cancelled);
+
+        //NavigationManager.NavigateTo(uri, replace: true);
     }
 
     void NavigateTo(TodoDto todo)
