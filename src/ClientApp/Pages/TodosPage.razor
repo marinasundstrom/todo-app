@@ -19,7 +19,7 @@
 <MudText Typo="Typo.h4" GutterBottom="true">@T["Todos"]</MudText>
 
 <MudTable T="TodoDto" MultiSelection="@selectMultiple" @bind-SelectedItems="selectedItems" ServerData="@(new Func<TableState, Task<TableData<TodoDto>>>(ServerReload))" Elevation="25"
-          OnRowClick="async (e) => await ShowTodo(e.Item.Id)" Dense="false" Hover="true" @ref="table" Class="mb-8">
+          OnRowClick="async (e) => await ShowTodo(e.Item.Id)" Dense="false" Hover="true" @ref="table" SortLabel="@T["SortBy"]" Class="mb-8">
     <ToolBarContent>
         <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => CreateTodo()">@T["CreateTodo"]</MudButton>
 
@@ -179,7 +179,7 @@
 
         return Task.CompletedTask;
     }
-    
+
     private async Task<TableData<TodoDto>> ServerReload(TableState state)
     {
         try
@@ -288,21 +288,21 @@
     {
         await table.ReloadServerData();
 
-        Snackbar.Add($"Todo {todoId} was added.", Severity.Normal);
+        Snackbar.Add(T["TodoCreated", todoId], Severity.Normal);
     }
 
     async Task OnUpdated(int todoId)
     {
         bool hasUpdated = await UpdateItem(todoId);
 
-        Snackbar.Add($"Todo {todoId} was updated.", Severity.Normal);
+        Snackbar.Add(T["TodoUpdated", todoId], Severity.Normal);
     }
 
     async Task OnDeleted(int todoId)
     {
         await table.ReloadServerData();
 
-        Snackbar.Add($"Todo {todoId} was deleted.", Severity.Normal);
+        Snackbar.Add(T["TodoDeleted", todoId], Severity.Normal);
     }
 
     /* void OnTitleUpdated(int todoId, string title)

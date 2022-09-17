@@ -18,6 +18,9 @@
     <data name="CreateTodo">
         <value>Create todo</value>
     </data>
+    <data name="SortBy">
+        <value>Sort by</value>
+    </data>
 	<data name="Id">
         <value>Id</value>
     </data>
@@ -83,5 +86,14 @@
     </data>
     <data name="FailedToDeleteTodos">
         <value>Failed to delete {0} todos</value>
+    </data>
+    <data name="TodoCreated">
+        <value>Todo {0} was created</value>
+    </data>
+    <data name="TodoUpdated">
+        <value>Todo {0} was updated</value>
+    </data>
+    <data name="TodoDeleted">
+        <value>Todo {0} was deleted</value>
     </data>
 </root>

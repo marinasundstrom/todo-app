@@ -18,6 +18,9 @@
     <data name="CreateTodo">
         <value>Skapa lapp</value>
     </data>
+    <data name="SortBy">
+        <value>Sortera efter</value>
+    </data>
 	<data name="Id">
         <value>Id</value>
     </data>
@@ -61,7 +64,7 @@
         <value>Laddar...</value>
     </data>
     <data name="DeleteTodo">
-        <value>Radera "{0}"?</value>
+        <value>Ta bort "{0}"?</value>
     </data>
     <data name="AreYouSure">
         <value>Är du säker?</value>
@@ -79,9 +82,18 @@
         <value>Ta bort valda</value>
     </data>
     <data name="FailedToDeleteTodo">
-        <value>Kunde inte radera föremålet</value>
+        <value>Kunde inte ta bort föremålet</value>
     </data>
     <data name="FailedToDeleteTodos">
-        <value>Kunde inte radera {0} föremål</value>
+        <value>Kunde inte ta bort {0} föremål</value>
+    </data>
+    <data name="TodoCreated">
+        <value>Todo {0} skapades</value>
+    </data>
+    <data name="TodoUpdated">
+        <value>Todo {0} uppdaterades</value>
+    </data>
+    <data name="TodoDeleted">
+        <value>Todo {0} togs bort</value>
     </data>
 </root>
