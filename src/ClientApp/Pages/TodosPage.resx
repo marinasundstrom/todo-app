@@ -61,7 +61,7 @@
         <value>Loading...</value>
     </data>
     <data name="DeleteTodo">
-        <value>Delete todo?</value>
+        <value>Delete "{0}"?</value>
     </data>
     <data name="AreYouSure">
         <value>Are you sure?</value>
@@ -71,5 +71,17 @@
     </data>
     <data name="No">
         <value>No</value>
+    </data>
+    <data name="SelectMultiple">
+        <value>Select multiple</value>
+    </data>
+    <data name="DeleteSelectedTodos">
+        <value>Delete selected</value>
+    </data>
+    <data name="FailedToDeleteTodo">
+        <value>Failed to delete todo</value>
+    </data>
+    <data name="FailedToDeleteTodos">
+        <value>Failed to delete {0} todos</value>
     </data>
 </root>

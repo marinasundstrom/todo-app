@@ -61,7 +61,7 @@
         <value>Laddar...</value>
     </data>
     <data name="DeleteTodo">
-        <value>Radera?</value>
+        <value>Radera "{0}"?</value>
     </data>
     <data name="AreYouSure">
         <value>Är du säker?</value>
@@ -71,5 +71,17 @@
     </data>
     <data name="No">
         <value>Nej</value>
+    </data>
+    <data name="SelectMultiple">
+        <value>Välj flera</value>
+    </data>
+    <data name="DeleteSelectedTodos">
+        <value>Ta bort valda</value>
+    </data>
+    <data name="FailedToDeleteTodo">
+        <value>Kunde inte radera föremålet</value>
+    </data>
+    <data name="FailedToDeleteTodos">
+        <value>Kunde inte radera {0} föremål</value>
     </data>
 </root>

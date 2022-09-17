@@ -18,10 +18,21 @@
 
 <MudText Typo="Typo.h4" GutterBottom="true">@T["Todos"]</MudText>
 
-<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => CreateTodo()" Class="mb-4">@T["CreateTodo"]</MudButton>
+<MudTable T="TodoDto" MultiSelection="@selectMultiple" @bind-SelectedItems="selectedItems" ServerData="@(new Func<TableState, Task<TableData<TodoDto>>>(ServerReload))" Elevation="25"
+          OnRowClick="async (e) => await ShowTodo(e.Item.Id)" Dense="false" Hover="true" @ref="table" Class="mb-8">
+    <ToolBarContent>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => CreateTodo()">@T["CreateTodo"]</MudButton>
 
-<MudTable T="TodoDto" ServerData="@(new Func<TableState, Task<TableData<TodoDto>>>(ServerReload))" Elevation="25"
-          OnRowClick="async (e) => await ShowTodo(e.Item.Id)" Dense="true" Hover="true" @ref="table" Class="mb-8">
+        <MudCheckBox Label="@T["SelectMultiple"]" Checked="selectMultiple" CheckedChanged="new Func<bool, Task>(OnSelectMultipleChanged)" />
+
+        @if (selectedItems.Count > 0)
+        {
+            <MudButton @onclick="DeleteSelectedItems" Variant="Variant.Filled" StartIcon="@Icons.Filled.Delete" Color="Color.Default" Class="ms-4 me-2">
+                @T["DeleteSelectedTodos"]
+            </MudButton>
+        }
+    </ToolBarContent>
+
     <HeaderContent>
         <MudTh>
             <MudTableSortLabel SortLabel="Id" T="TodoDto">@T["Id"]</MudTableSortLabel>
@@ -56,7 +67,9 @@
         <MudTd DataLabel="@T["RemainingHours"]">@context.RemainingHours.ToString()</MudTd>
         <MudTd DataLabel="@T["Created"]">@context.Created.ToString("g")</MudTd>
         <MudTd DataLabel="@T["LastModified"]">@context.LastModified?.ToString("g")</MudTd>
-        <MudTh><MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="async () => await DeleteTodo(context.Id)"></MudIconButton></MudTh>
+        <MudTh>
+            <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="async () => await DeleteTodo(context)" Disabled="selectMultiple"></MudIconButton>
+        </MudTh>
     </RowTemplate>
     <NoRecordsContent>
         <MudText>@T["NoMatchesFound"]</MudText>
@@ -72,6 +85,8 @@
 @code {
     HubConnection hubConnection = null!;
     MudTable<TodoDto> table = null!;
+    bool selectMultiple;
+    private HashSet<TodoDto> selectedItems = new HashSet<TodoDto>();
 
     [Parameter] public int? Id { get; set; }
 
@@ -126,7 +141,7 @@
         }
         else
         {
-            if(NavigationManager.Uri.EndsWith("/todos/new"))
+            if (NavigationManager.Uri.EndsWith("/todos/new"))
             {
                 await CreateTodo();
             }
@@ -146,6 +161,9 @@
 
     async Task ShowTodo(int id)
     {
+        if (selectMultiple)
+            return;
+
         var uri = NavigationManager.Uri;
 
         DialogParameters dialogParameters = new();
@@ -159,6 +177,14 @@
         Console.WriteLine(result.Cancelled);
 
         //NavigationManager.NavigateTo(uri, replace: true);
+    }
+
+    Task OnSelectMultipleChanged(bool value)
+    {
+        selectMultiple = value;
+        selectedItems.Clear();
+
+        return Task.CompletedTask;
     }
 
     void NavigateTo(TodoDto todo)
@@ -189,22 +215,84 @@
         return await TodosClient.GetTodoByIdAsync(id);
     }
 
-    async Task DeleteTodo(int id)
+    private async Task DeleteTodo(TodoDto item)
     {
-        var result = await DialogService.ShowMessageBox(T["DeleteTodo"], T["AreYouSure"], T["Yes"], T["No"]);
-
-        if (result.GetValueOrDefault())
+        try
         {
-            try
+            var result = await DialogService.ShowMessageBox(T["DeleteTodo", item.Title], T["AreYouSure"], T["Yes"], T["No"]);
+
+            if (result.GetValueOrDefault())
             {
-                await TodosClient.DeleteTodoAsync(id);
+                await DeleteTodoCore(item);
 
                 await table.ReloadServerData();
             }
-            catch (AccessTokenNotAvailableException exception)
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+        catch (Exception)
+        {
+            Snackbar.Add(T["FailedToDeleteTodo"], Severity.Error);
+        }
+    }
+
+    private async Task DeleteTodoCore(TodoDto item)
+    {
+        await TodosClient.DeleteTodoAsync(item.Id);
+
+        selectedItems.Remove(item);
+    }
+
+    private async Task DeleteSelectedItems()
+    {
+        try
+        {
+            var result = await DialogService.ShowMessageBox(T["DeleteSelectedTodos"], T["AreYouSure"], T["Yes"], T["No"]);
+
+            if (result.GetValueOrDefault())
             {
-                exception.Redirect();
+                List<TodoDto>? failedItems = null;
+
+                foreach (var item in selectedItems)
+                {
+                    try
+                    {
+                        await DeleteTodoCore(item);
+
+                        selectedItems.Remove(item);
+                    }
+                    catch (AccessTokenNotAvailableException exception)
+                    {
+                        exception.Redirect();
+                    }
+                    catch (Exception)
+                    {
+                        if (failedItems is null)
+                        {
+                            failedItems = new List<TodoDto>();
+                        }
+
+                        failedItems.Add(item);
+                    }
+                }
+
+                if (failedItems?.Any() ?? false)
+                {
+                    Snackbar.Add(T["FailedToDeleteTodos", failedItems!.Count()], Severity.Error);
+                }
+
+                selectMultiple = false;
+
+                await table.ReloadServerData();
+
+                StateHasChanged();
             }
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
         }
     }
 
