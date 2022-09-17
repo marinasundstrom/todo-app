@@ -33,58 +33,65 @@ else
             <PageTitle>@todo?.Id - @todo?.Title</PageTitle>
         }
 
-        <MudPaper Elevation="0" Class="pa-4">
+        <EditForm EditContext="editContext" OnValidSubmit="Submit">
 
-            <EditForm EditContext="editContext" OnValidSubmit="Submit">
-                <DataAnnotationsValidator />
+            <MudDialog DisableSidePadding="true">
+                <DialogContent>
+                    <MudContainer Style="max-height: 300px; overflow-y: scroll">
 
-                <MudTextField Label="@T["Title"]" Variant="Variant.Outlined" @bind-Value="Title" For="() => Title"
-                              Class="mb-4" />
+                        <DataAnnotationsValidator />
 
-                <MudGrid>
-                    <MudItem xs="12" md="6">
-                        <MudTextField Label="@T["Description"]" Lines="5" Variant="Variant.Outlined" @bind-Value="Description"
-                                      For="() => Description" Class="mb-4" />
-                    </MudItem>
-
-                    <MudItem xs="12" md="6">
-                        <MudSelect Label="@T["Status"]" @bind-Value="Status" For="() => Status" Variant="Variant.Outlined" Class="mb-4">
-                            @foreach (var status in Enum.GetValues<TodoStatusDto>())
-                            {
-                                <MudSelectItem Value="@status">@T[Enum.GetName(typeof(TodoStatusDto), status)!]</MudSelectItem>
-                            }
-                        </MudSelect>
+                        <MudTextField Label="@T["Title"]" Variant="Variant.Outlined" @bind-Value="Title" For="() => Title"
+                                      Class="mb-4" />
 
                         <MudGrid>
                             <MudItem xs="12" md="6">
-                                <MudNumericField Label="@T["EstimatedHours"]" Variant="Variant.Outlined" @bind-Value="EstimatedHours"
-                                                 For="() => EstimatedHours" Class="mb-4" />
+                                <MudTextField Label="@T["Description"]" Lines="5" Variant="Variant.Outlined" @bind-Value="Description"
+                                              For="() => Description" Class="mb-4" />
                             </MudItem>
 
                             <MudItem xs="12" md="6">
-                                <MudNumericField Label="@T["RemainingHours"]" Variant="Variant.Outlined" @bind-Value="RemainingHours"
-                                                 For="() => RemainingHours" Class="mb-4" />
+                                <MudSelect Label="@T["Status"]" @bind-Value="Status" For="() => Status" Variant="Variant.Outlined" Class="mb-4">
+                                    @foreach (var status in Enum.GetValues<TodoStatusDto>())
+                                    {
+                                        <MudSelectItem Value="@status">@T[Enum.GetName(typeof(TodoStatusDto), status)!]</MudSelectItem>
+                                    }
+                                </MudSelect>
+
+                                <MudGrid>
+                                    <MudItem xs="12" md="6">
+                                        <MudNumericField Label="@T["EstimatedHours"]" Variant="Variant.Outlined" @bind-Value="EstimatedHours"
+                                                         For="() => EstimatedHours" Class="mb-4" />
+                                    </MudItem>
+
+                                    <MudItem xs="12" md="6">
+                                        <MudNumericField Label="@T["RemainingHours"]" Variant="Variant.Outlined" @bind-Value="RemainingHours"
+                                                         For="() => RemainingHours" Class="mb-4" />
+                                    </MudItem>
+                                </MudGrid>
                             </MudItem>
                         </MudGrid>
-                    </MudItem>
-                </MudGrid>
 
-                @if (editContext.IsModified())
-                {
-                    <MudButton ButtonType="ButtonType.Submit" Color="Color.Primary" Variant="Variant.Filled">
-                        @if (todo is null)
-                        {
-                            @T["Create"]
-                        }
-                        else
-                        {
-                            @T["SaveChanges"]
-                        }
-                    </MudButton>
-                }
+                    </MudContainer>
+                </DialogContent>
+                <DialogActions>
+                    @if (editContext.IsModified())
+                    {
+                        <MudButton ButtonType="ButtonType.Submit" Color="Color.Primary" Variant="Variant.Filled">
+                            @if (todo is null)
+                            {
+                                @T["Create"]
+                            }
+                            else
+                            {
+                                @T["SaveChanges"]
+                            }
+                        </MudButton>
+                    }
+                </DialogActions>
+            </MudDialog>
 
-            </EditForm>
-        </MudPaper>
+        </EditForm>
     }
     else
     {
@@ -105,6 +112,7 @@ else
 
     [Parameter] public int? Id { get; set; }
 
+    [Required]
     [MaxLength(60)]
     public string Title { get; set; } = null!;
 
@@ -126,6 +134,8 @@ else
                 await CreateTodo();
 
                 editContext.MarkAsUnmodified();
+
+                Instance.Close();
 
                 return;
             }
@@ -212,8 +222,6 @@ else
         });
 
         Instance.SetTitle($"{todo.Id} - {todo.Title}");
-
-        //NavigationManager.NavigateTo($"/todos/{todo.Id}", replace: true);
     }
 
     async Task FetchTodo()

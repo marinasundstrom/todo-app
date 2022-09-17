@@ -164,19 +164,12 @@
         if (selectMultiple)
             return;
 
-        var uri = NavigationManager.Uri;
-
         DialogParameters dialogParameters = new();
         dialogParameters.Add(nameof(TodoDialog.Id), id);
-
-        //NavigationManager.NavigateTo($"/todos/{id}", replace: true);
 
         DialogOptions dialogOptions = new DialogOptions() { FullScreen = false, MaxWidth = MaxWidth.Large, CloseButton = true };
         var dialogRef = DialogService.Show<TodoDialog>(string.Empty, dialogParameters, dialogOptions);
         var result = await dialogRef.Result;
-        Console.WriteLine(result.Cancelled);
-
-        //NavigationManager.NavigateTo(uri, replace: true);
     }
 
     Task OnSelectMultipleChanged(bool value)
@@ -186,12 +179,7 @@
 
         return Task.CompletedTask;
     }
-
-    void NavigateTo(TodoDto todo)
-    {
-        NavigationManager.NavigateTo($"/todos/{todo.Id}");
-    }
-
+    
     private async Task<TableData<TodoDto>> ServerReload(TableState state)
     {
         try
