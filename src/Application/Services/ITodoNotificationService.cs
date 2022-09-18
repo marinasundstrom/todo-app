@@ -4,11 +4,11 @@ namespace TodoApp.Application.Services;
 
 public interface ITodoNotificationService
 {
-    Task Created(int todoId);
+    Task Created(int todoId, string title);
 
-    Task Updated(int todoId);
+    Task Updated(int todoId, string title);
 
-    Task Deleted(int todoId);
+    Task Deleted(int todoId, string title);
 
     Task TitleUpdated(int todoId, string title);
 

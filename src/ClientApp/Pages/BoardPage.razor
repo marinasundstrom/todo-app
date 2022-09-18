@@ -98,9 +98,9 @@
             })
             .WithAutomaticReconnect().Build();
 
-            hubConnection.On<int>("Created", OnCreated);
-            //hubConnection.On<int>("Updated", OnUpdated);
-            hubConnection.On<int>("Deleted", OnDeleted);
+            hubConnection.On<int, string>("Created", OnCreated);
+            //hubConnection.On<int, string>("Updated", OnUpdated);
+            hubConnection.On<int, string>("Deleted", OnDeleted);
 
             hubConnection.On<int, string>("TitleUpdated", OnTitleUpdated);
             hubConnection.On<int, string?>("DescriptionUpdated", OnDescriptionUpdated);
@@ -203,7 +203,7 @@
         }
     }
 
-    async Task OnCreated(int todoId)
+    async Task OnCreated(int todoId, string title)
     {
         var item = await TodosClient.GetTodoByIdAsync(todoId);
         todos.Add(item);
@@ -212,13 +212,13 @@
     }
 
     /*
-        async Task OnUpdated(int todoId)
+        async Task OnUpdated(int todoId, string title)
         {
 
         }
     */
 
-    void OnDeleted(int todoId)
+    void OnDeleted(int todoId, string title)
     {
         var item = todos.First(x => x.Id == todoId);
         todos.Remove(item);

@@ -101,9 +101,9 @@
             })
             .WithAutomaticReconnect().Build();
 
-            hubConnection.On<int>("Created", OnCreated);
-            hubConnection.On<int>("Updated", OnUpdated);
-            hubConnection.On<int>("Deleted", OnDeleted);
+            hubConnection.On<int, string>("Created", OnCreated);
+            hubConnection.On<int, string>("Updated", OnUpdated);
+            hubConnection.On<int, string>("Deleted", OnDeleted);
 
             //hubConnection.On<string, string>("TitleUpdated", OnTitleUpdated);
             //hubConnection.On<string, string?>("DescriptionUpdated", OnDescriptionUpdated);
@@ -284,25 +284,25 @@
         }
     }
 
-    async Task OnCreated(int todoId)
+    async Task OnCreated(int todoId, string title)
     {
         await table.ReloadServerData();
 
-        Snackbar.Add(T["TodoCreated", todoId], Severity.Normal);
+        Snackbar.Add(T["TodoCreated", todoId, title], Severity.Normal);
     }
 
-    async Task OnUpdated(int todoId)
+    async Task OnUpdated(int todoId, string title)
     {
         bool hasUpdated = await UpdateItem(todoId);
 
-        Snackbar.Add(T["TodoUpdated", todoId], Severity.Normal);
+        Snackbar.Add(T["TodoUpdated", todoId, title], Severity.Normal);
     }
 
-    async Task OnDeleted(int todoId)
+    async Task OnDeleted(int todoId, string title)
     {
         await table.ReloadServerData();
 
-        Snackbar.Add(T["TodoDeleted", todoId], Severity.Normal);
+        Snackbar.Add(T["TodoDeleted", todoId, title], Severity.Normal);
     }
 
     /* void OnTitleUpdated(int todoId, string title)

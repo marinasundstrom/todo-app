@@ -22,7 +22,7 @@ public sealed class TodoCreatedEventHandler : INotificationHandler<DomainEventNo
         if (todo is null)
             return;
 
-        await todoNotificationService.Created(todo.Id);
+        await todoNotificationService.Created(todo.Id, todo.Title);
     }
 }
 

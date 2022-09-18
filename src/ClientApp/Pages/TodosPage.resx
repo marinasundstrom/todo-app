@@ -88,12 +88,12 @@
         <value>Failed to delete {0} todos</value>
     </data>
     <data name="TodoCreated">
-        <value>Todo {0} was created</value>
+        <value>{0} - {1} was created</value>
     </data>
     <data name="TodoUpdated">
-        <value>Todo {0} was updated</value>
+        <value>{0} - {1} was updated</value>
     </data>
     <data name="TodoDeleted">
-        <value>Todo {0} was deleted</value>
+        <value>{0} - {1} was deleted</value>
     </data>
 </root>

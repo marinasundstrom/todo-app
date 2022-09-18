@@ -13,19 +13,19 @@ public class TodoNotificationService : ITodoNotificationService
         this.hubsContext = hubsContext;
     }
 
-    public async Task Created(int todoId)
+    public async Task Created(int todoId, string title)
     {
-        await hubsContext.Clients.All.Created(todoId);
+        await hubsContext.Clients.All.Created(todoId, title);
     }
 
-    public async Task Updated(int todoId)
+    public async Task Updated(int todoId, string title)
     {
-        await hubsContext.Clients.All.Updated(todoId);
+        await hubsContext.Clients.All.Updated(todoId, title);
     }
 
-    public async Task Deleted(int todoId)
+    public async Task Deleted(int todoId, string title)
     {
-        await hubsContext.Clients.All.Deleted(todoId);
+        await hubsContext.Clients.All.Deleted(todoId, title);
     }
 
     public async Task DescriptionUpdated(int todoId, string? description)

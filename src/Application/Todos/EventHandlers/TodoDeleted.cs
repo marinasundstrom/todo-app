@@ -17,7 +17,7 @@ public sealed class TodoDeletedEventHandler : INotificationHandler<DomainEventNo
 
     public async Task Handle(DomainEventNotification<TodoDeleted> notification, CancellationToken cancellationToken)
     {
-        await todoNotificationService.Deleted(notification.DomainEvent.TodoId);
+        await todoNotificationService.Deleted(notification.DomainEvent.TodoId, notification.DomainEvent.Title);
     }
 }
 

@@ -21,6 +21,6 @@ public sealed class TodoUpdatedEventHandler : INotificationHandler<DomainEventNo
         if (todo is null)
             return;
 
-        await todoNotificationService.Updated(todo.Id);
+        await todoNotificationService.Updated(todo.Id, todo.Title);
     }
 }

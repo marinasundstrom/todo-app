@@ -35,7 +35,7 @@ public sealed record DeleteTodo(int Id) : IRequest<Result>
 
             todoRepository.Remove(todo);
 
-            todo.AddDomainEvent(new TodoDeleted(todo.Id));
+            todo.AddDomainEvent(new TodoDeleted(todo.Id, todo.Title));
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
