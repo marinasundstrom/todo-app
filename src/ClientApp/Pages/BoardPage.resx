@@ -28,10 +28,10 @@
         <value>Completed</value>
     </data>
 	<data name="EstimatedHours">
-        <value>Beräknad</value>
+        <value>Estimated hours</value>
     </data>
 	<data name="RemainingHours">
-        <value>Återstående</value>
+        <value>Remaining hours</value>
     </data>
 	<data name="More">
         <value>More</value>
