@@ -697,6 +697,16 @@
           },
           "status": {
             "$ref": "#/components/schemas/TodoStatusDto"
+          },
+          "estimatedHours": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "remainingHours": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
           }
         }
       }

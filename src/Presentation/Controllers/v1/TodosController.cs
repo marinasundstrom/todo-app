@@ -45,7 +45,7 @@ public sealed class TodosController : ControllerBase
     [ProducesDefaultResponseType]
     public async Task<ActionResult<TodoDto>> CreateTodo(CreateTodoRequest request, CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(new CreateTodo(request.Title, request.Description, request.Status), cancellationToken);
+        var result = await mediator.Send(new CreateTodo(request.Title, request.Description, request.Status, request.EstimatedHours, request.RemainingHours), cancellationToken);
         return result.Handle(
             onSuccess: data => CreatedAtAction(nameof(GetTodoById), new { id = data.Id }, data),
             onError: error => Problem(detail: error.Detail, title: error.Title, type: error.Id));

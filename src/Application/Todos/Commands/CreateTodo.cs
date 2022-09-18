@@ -4,7 +4,7 @@ using TodoApp.Application.Todos.Dtos;
 
 namespace TodoApp.Application.Todos.Commands;
 
-public sealed record CreateTodo(string Title, string? Description, TodoStatusDto Status) : IRequest<Result<TodoDto>>
+public sealed record CreateTodo(string Title, string? Description, TodoStatusDto Status, double? EstimatedHours, double? RemainingHours) : IRequest<Result<TodoDto>>
 {
     public sealed class Validator : AbstractValidator<CreateTodo>
     {
@@ -32,7 +32,9 @@ public sealed record CreateTodo(string Title, string? Description, TodoStatusDto
         public async Task<Result<TodoDto>> Handle(CreateTodo request, CancellationToken cancellationToken)
         {
             var todo = new Todo(request.Title, request.Description, (Domain.Enums.TodoStatus)request.Status);
-
+            todo.UpdateEstimatedHours(request.EstimatedHours);
+            todo.UpdateRemainingHours(request.RemainingHours);
+            
             todoRepository.Add(todo);
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
