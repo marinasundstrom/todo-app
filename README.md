@@ -4,7 +4,11 @@ Clean Architecture and Domain-driven Design template.
 
 To run this solution, Install .NET Tye and Docker.
 
-Watch video [here](https://youtu.be/UW-iDps48BI)
+Watch video [here](https://youtu.be/UW-iDps48BI) (Not up to date)
+
+This template is the result of many years of research and trying. Some of the influences  are Jason Taylor's [Clean Architecture template](https://github.com/jasontaylordev/CleanArchitecture), and topics brought up by [CodeOpinion](https://www.youtube.com/channel/UC3RKA4vunFAfrfxiJhPEplw) and [Milan Jovanovic](https://www.youtube.com/c/MilanJovanovicTech). Thank you all!
+
+If you are interested, check out my earlier projects: [YourBrand](https://github.com/marinasundstrom/YourBrand).
 
 ## Why?
 
