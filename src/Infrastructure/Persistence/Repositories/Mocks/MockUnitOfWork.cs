@@ -4,9 +4,9 @@ namespace TodoApp.Infrastructure.Persistence.Repositories.Mocks;
 
 public sealed class MockUnitOfWork : IUnitOfWork
 {
-    private static List<IAggregateRoot> items = new List<IAggregateRoot>();
+    private readonly List<IAggregateRoot> items = new List<IAggregateRoot>();
     private readonly IDomainEventDispatcher domainEventDispatcher;
-    private List<IAggregateRoot> newItems = new List<IAggregateRoot>();
+    private readonly List<IAggregateRoot> newItems = new List<IAggregateRoot>();
 
     public MockUnitOfWork(IDomainEventDispatcher domainEventDispatcher)
     {

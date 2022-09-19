@@ -5,7 +5,7 @@ namespace TodoApp.Web.Services;
 
 public sealed class CurrentUserService : ICurrentUserService
 {
-    private IHttpContextAccessor _httpContextAccessor;
+    private readonly IHttpContextAccessor _httpContextAccessor;
     private string? _currentUserId;
 
     public CurrentUserService(IHttpContextAccessor httpContextAccessor)

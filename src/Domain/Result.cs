@@ -2,7 +2,7 @@
 
 public class Result
 {
-    private Error? error;
+    private readonly Error? error;
 
     private Result()
     {
