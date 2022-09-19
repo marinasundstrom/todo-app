@@ -2,6 +2,8 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
+using Polly;
+using Polly.Extensions.Http;
 using TodoApp;
 using TodoApp.Theming;
 
@@ -21,8 +23,10 @@ builder.Services.AddHttpClient<ITodosClient>(nameof(TodosClient), (sp, http) =>
 {
     http.BaseAddress = new Uri("https://localhost:5001/");
 })
-    .AddTypedClient<ITodosClient>((http, sp) => new TodosClient(http))
-    .AddHttpMessageHandler<CustomAuthorizationMessageHandler>();
+.AddTypedClient<ITodosClient>((http, sp) => new TodosClient(http))
+.AddHttpMessageHandler<CustomAuthorizationMessageHandler>()
+.SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
+.AddPolicyHandler(GetRetryPolicy());
 
 builder.Services.AddOidcAuthentication(options =>
 {
@@ -44,3 +48,12 @@ var app = builder.Build();
 await app.Services.Localize();
 
 await app.RunAsync();
+
+IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+{
+   return HttpPolicyExtensions
+        .HandleTransientHttpError()
+        .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.NotFound)
+        .WaitAndRetryAsync(6, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2,
+                                                                    retryAttempt)));
+}

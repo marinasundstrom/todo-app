@@ -21,6 +21,7 @@
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="7.0.0-rc.1.22427.2" />
 		<PackageReference Include="Blazored.LocalStorage" Version="4.3.0-preview.1" />
 		<PackageReference Include="Microsoft.Extensions.Localization" Version="7.0.0-rc.1.22427.2" />
+		<PackageReference Include="Microsoft.Extensions.Http.Polly" Version="7.0.0-rc.1.22427.2" />
 	</ItemGroup>
 
 	<ItemGroup>
