@@ -16,63 +16,70 @@
 
 @if (loaded)
 {
-    <MudPaper Elevation="25">
+    <MudPaper Elevation="25" Style="overflow-x: scroll;">
 
-        <MudDropContainer @ref="dropContainer" T="TodoDto" Items="todos" Context="context" ItemsSelector="@((item, dropzone) => item.Status == Enum.Parse<TodoStatusDto>(dropzone))" ItemDropped="ItemUpdated">
-            <ChildContent>
-                <div class="d-flex flex-wrap flex-grow-1">
-                    @foreach (var status in Enum.GetValues<TodoStatusDto>())
-                    {
-                        <MudPaper Elevation="0" Class="ma-4 flex-1 mud-background-gray rounded-lg">
-                            <MudList Clickable="true" Class="d-flex flex-column mud-height-full">
-                                <MudListSubheader>
-                                    <MudToolBar DisableGutters="true" Dense="true">
-                                        <MudText Typo="Typo.h6"><b>@T[status.ToString()]</b></MudText>
-                                        <MudSpacer />
-                                        @*
-                                            <MudMenu Icon="@Icons.Material.Rounded.MoreHoriz" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight" ListClass="pa-2 d-flex flex-column" PopoverClass="mud-elevation-25">
-                                                <MudButton Size="Size.Small" Color="Color.Error" StartIcon="@Icons.Outlined.Delete" OnClick="@( () => { })">Delete Section</MudButton>
-                                                <MudButton Size="Size.Small" Color="Color.Default" StartIcon="@Icons.Rounded.Edit">Rename Section</MudButton>
-                                            </MudMenu>
-                                        *@
-                                    </MudToolBar>
-                                </MudListSubheader>
-                                <MudDropZone T="TodoDto" Identifier="@($"{status}")" Class="d-flex flex-grow-1 flex-wrap gap-1" AllowReorder="false" />
-                            </MudList>
+    <MudDropContainer @ref="dropContainer" T="TodoDto" Items="todos" Context="context"
+        ItemsSelector="@((item, dropzone) => item.Status == Enum.Parse<TodoStatusDto>(dropzone))"
+        ItemDropped="ItemUpdated" Class="d-flex flex-row">
+        <ChildContent>
+            @foreach (var status in Enum.GetValues<TodoStatusDto>())
+                {
+                    <MudPaper Elevation="0" Class="pa-4 ma-4 d-flex flex-column mud-background-gray rounded-lg" Style="min-width: 250px;">
+                        <MudToolBar DisableGutters="true" Dense="true">
+                            <MudText Typo="Typo.h6" Class="mb-4"><b>@T[status.ToString()]</b></MudText>
+                            <MudSpacer />
                             @*
-                                <MudButton OnClick="@(() => {})" Color="Color.Inherit" StartIcon="@Icons.Filled.Add" FullWidth="true" Class="py-2" Style="background-color: inherit;">Add Task</MudButton>
+                                <MudMenu Icon="@Icons.Material.Rounded.MoreHoriz" AnchorOrigin="Origin.BottomRight"
+                                TransformOrigin="Origin.TopRight" ListClass="pa-2 d-flex flex-column"
+                                PopoverClass="mud-elevation-25">
+                                <MudButton Size="Size.Small" Color="Color.Error" StartIcon="@Icons.Outlined.Delete" OnClick="@( ()
+                                => { })">Delete Section</MudButton>
+                                <MudButton Size="Size.Small" Color="Color.Default" StartIcon="@Icons.Rounded.Edit">Rename
+                                Section</MudButton>
+                                </MudMenu>
                             *@
-                        </MudPaper>
-                    }
-                </div>
+                        </MudToolBar>
+                        <MudDropZone T="TodoDto" Identifier="@($"{status}")" Class="mud-height-full" />
+                        @*
+                            <MudButton OnClick="@(() => {})" Color="Color.Inherit" StartIcon="@Icons.Filled.Add" FullWidth="true"
+                            Class="py-2" Style="background-color: inherit;">Add Task</MudButton>
+                        *@
+                    </MudPaper>
+                }
             </ChildContent>
             <ItemRenderer>
-                <MudCard Class="ma-4 rounded-lg" Elevation="25">
-                    <MudCardHeader>
-                        <CardHeaderAvatar>
-                            <MudIcon Icon="@Icons.Material.Filled.Task"></MudIcon>
-                        </CardHeaderAvatar>
-                        <CardHeaderContent>
-                            <MudText Typo="Typo.body1">@context.Id - @context.Title</MudText>
-                            @* <MudText Typo="Typo.body2">Peninsula in Europe</MudText> *@
-                        </CardHeaderContent>
-                    </MudCardHeader>
-                    <MudCardContent>
-                        <MudText Typo="Typo.body1" Class="mt-2">@context.Description</MudText>
-                        @if (context.EstimatedHours is not null)
-                        {
-                            <MudText Typo="Typo.caption" Class="mt-2">@T["EstimatedHours"]: @context.EstimatedHours hours</MudText> <br />
-                        }
-                        @if (context.RemainingHours is not null)
-                        {
-                            <MudText Typo="Typo.caption" Class="mt-2">@T["RemainingHours"]:  @context.RemainingHours hours</MudText>
-                        }
-                    </MudCardContent>
-                    <MudCardActions>
-                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Default"  OnClick="async (e) => await ShowTodo(context.Id)" />
-                        <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="async (e) => await DeleteTodo(context)" Color="Color.Default" />
-                    </MudCardActions>
-                </MudCard>
+                <div>
+                    <MudCard Class="rounded-lg mb-4" Elevation="25" Style="width: 215.344px">
+                        <MudCardHeader>
+                            <CardHeaderAvatar>
+                                <MudIcon Icon="@Icons.Material.Filled.Task"></MudIcon>
+                            </CardHeaderAvatar>
+                            <CardHeaderContent>
+                                <MudText Typo="Typo.body1">@context.Id - @context.Title</MudText>
+                                @* <MudText Typo="Typo.body2">Peninsula in Europe</MudText> *@
+                            </CardHeaderContent>
+                        </MudCardHeader>
+                        <MudCardContent>
+                            <MudText Typo="Typo.body1" Class="mt-2">@context.Description</MudText>
+                            @if (context.EstimatedHours is not null)
+                            {
+                                <MudText Typo="Typo.caption" Class="mt-2">@T["EstimatedHours"]: @context.EstimatedHours hours
+                                </MudText> <br />
+                            }
+                            @if (context.RemainingHours is not null)
+                            {
+                                <MudText Typo="Typo.caption" Class="mt-2">@T["RemainingHours"]: @context.RemainingHours hours
+                                </MudText>
+                            }
+                        </MudCardContent>
+                        <MudCardActions>
+                            <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Default"
+                            OnClick="async (e) => await ShowTodo(context.Id)" />
+                            <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                            OnClick="async (e) => await DeleteTodo(context)" Color="Color.Default" />
+                        </MudCardActions>
+                    </MudCard>
+                </div>
             </ItemRenderer>
         </MudDropContainer>
     </MudPaper>
@@ -212,10 +219,10 @@
     }
 
     /*
-        async Task OnUpdated(int todoId, string title)
-        {
+    async Task OnUpdated(int todoId, string title)
+    {
 
-        }
+    }
     */
 
     void OnDeleted(int todoId, string title)
