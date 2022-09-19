@@ -24,7 +24,7 @@ partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Program>>
 
         int? receivedId = null;
 
-        hubConnection.On<int>("Created", (id) =>
+        hubConnection.On<int, string>("Created", (id, title) =>
         {
             receivedId = id;
             completion.Set();
