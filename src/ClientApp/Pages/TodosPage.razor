@@ -183,9 +183,10 @@
     private async Task<TableData<TodoDto>> ServerReload(TableState state)
     {
         try
-        {
-            var result = await TodosClient.GetTodosAsync(null, state.Page + 1, state.PageSize, state.SortLabel, state.SortDirection
-                == null ? null : (state.SortDirection == MudBlazor.SortDirection.Ascending ? TodoApp.SortDirection.Ascending : TodoApp.SortDirection.Descending));
+        {            
+            var result = await TodosClient.GetTodosAsync(null, state.Page + 1, state.PageSize, 
+                state.SortDirection == MudBlazor.SortDirection.None ? null : state.SortLabel, 
+                state.SortDirection == MudBlazor.SortDirection.None ? null : (state.SortDirection == MudBlazor.SortDirection.Ascending ? TodoApp.SortDirection.Ascending : TodoApp.SortDirection.Descending));
 
             return new TableData<TodoDto>() { TotalItems = result.TotalItems, Items = result.Items };
         }
