@@ -2,6 +2,7 @@
 @attribute [Authorize]
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.SignalR.Client
+@implements IAsyncDisposable
 @inject ITodosClient TodosClient
 @inject ISnackbar Snackbar
 @inject IDialogService DialogService
@@ -86,14 +87,15 @@
 }
 
 @code {
+    CancellationTokenSource cts = new ();
     MudDropContainer<TodoDto> dropContainer = null!;
     HubConnection hubConnection = null!;
-    List<TodoDto> todos = new List<TodoDto>();
+    List<TodoDto> todos = new ();
     bool loaded = false;
 
     protected override async Task OnInitializedAsync()
     {
-        todos.AddRange((await TodosClient.GetTodosAsync(null, 1, 100, null, null)).Items);
+        todos.AddRange((await TodosClient.GetTodosAsync(null, 1, 100, null, null, cts.Token)).Items);
         loaded = true;
 
         try
@@ -134,7 +136,7 @@
                 Snackbar.Add("Reconnecting");
                 return Task.CompletedTask;
             };
-            await hubConnection.StartAsync();
+            await hubConnection.StartAsync(cts.Token);
         }
         catch (Exception exc)
         {
@@ -149,14 +151,9 @@
         DialogParameters dialogParameters = new();
         dialogParameters.Add(nameof(TodoDialog.Id), id);
 
-        //NavigationManager.NavigateTo($"/todos/{id}", replace: true);
-
         DialogOptions dialogOptions = new DialogOptions() { FullScreen = false, MaxWidth = MaxWidth.Large, CloseButton = true };
         var dialogRef = DialogService.Show<TodoDialog>(string.Empty, dialogParameters, dialogOptions);
         var result = await dialogRef.Result;
-        Console.WriteLine(result.Cancelled);
-
-        //NavigationManager.NavigateTo(uri, replace: true);
     }
 
     private async Task DeleteTodo(TodoDto item)
@@ -167,7 +164,7 @@
 
             if (result.GetValueOrDefault())
             {
-                await TodosClient.DeleteTodoAsync(item.Id);
+                await TodosClient.DeleteTodoAsync(item.Id, cts.Token);
             }
 
             dropContainer.Refresh();
@@ -192,7 +189,7 @@
 
         try
         {
-            await TodosClient.UpdateStatusAsync(dropItem.Item.Id, newStatus);
+            await TodosClient.UpdateStatusAsync(dropItem.Item.Id, newStatus, cts.Token);
         }
         catch (ApiException<ProblemDetails> exc)
         {
@@ -212,7 +209,7 @@
 
     async Task OnCreated(int todoId, string title)
     {
-        var item = await TodosClient.GetTodoByIdAsync(todoId);
+        var item = await TodosClient.GetTodoByIdAsync(todoId, cts.Token);
         todos.Add(item);
         dropContainer.Refresh();
         StateHasChanged();
@@ -271,5 +268,11 @@
         item.RemainingHours = hours;
         dropContainer.Refresh();
         StateHasChanged();
+    }
+
+    public async ValueTask DisposeAsync() 
+    {
+        cts.Cancel();
+        await hubConnection.DisposeAsync();
     }
 }

@@ -83,6 +83,7 @@
 </MudTable>
 
 @code {
+    CancellationTokenSource cts = new ();
     HubConnection hubConnection = null!;
     MudTable<TodoDto> table = null!;
     bool selectMultiple;
@@ -128,7 +129,7 @@
                 Snackbar.Add("Reconnecting");
                 return Task.CompletedTask;
             };
-            await hubConnection.StartAsync();
+            await hubConnection.StartAsync(cts.Token);
         }
         catch (Exception exc)
         {
@@ -186,7 +187,7 @@
         {            
             var result = await TodosClient.GetTodosAsync(null, state.Page + 1, state.PageSize, 
                 state.SortDirection == MudBlazor.SortDirection.None ? null : state.SortLabel, 
-                state.SortDirection == MudBlazor.SortDirection.None ? null : (state.SortDirection == MudBlazor.SortDirection.Ascending ? TodoApp.SortDirection.Ascending : TodoApp.SortDirection.Descending));
+                state.SortDirection == MudBlazor.SortDirection.None ? null : (state.SortDirection == MudBlazor.SortDirection.Ascending ? TodoApp.SortDirection.Ascending : TodoApp.SortDirection.Descending), cts.Token);
 
             return new TableData<TodoDto>() { TotalItems = result.TotalItems, Items = result.Items };
         }
@@ -200,7 +201,7 @@
 
     async Task<TodoDto> FetchTodo(int id)
     {
-        return await TodosClient.GetTodoByIdAsync(id);
+        return await TodosClient.GetTodoByIdAsync(id, cts.Token);
     }
 
     private async Task DeleteTodo(TodoDto item)
@@ -228,7 +229,7 @@
 
     private async Task DeleteTodoCore(TodoDto item)
     {
-        await TodosClient.DeleteTodoAsync(item.Id);
+        await TodosClient.DeleteTodoAsync(item.Id, cts.Token);
 
         selectedItems.Remove(item);
     }
@@ -358,6 +359,7 @@
     }
     public async ValueTask DisposeAsync()
     {
+        cts.Cancel();
         await hubConnection.DisposeAsync();
     }
 }

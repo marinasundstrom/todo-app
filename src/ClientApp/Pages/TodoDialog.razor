@@ -1,6 +1,6 @@
 ﻿@using System.ComponentModel.DataAnnotations
-@using Microsoft.AspNetCore.Authorization
 @using TodoApp
+@implements IDisposable
 @inject NavigationManager NavigationManager
 @inject ISnackbar Snackbar
 @inject ITodosClient TodosClient
@@ -103,6 +103,7 @@ else
 
 
 @code {
+    CancellationTokenSource cts = new ();
     EditContext editContext = null!;
     TodoDto? todo;
     bool notFound = false;
@@ -142,32 +143,32 @@ else
 
             if (editContext.IsModified(() => Title))
             {
-                await TodosClient.UpdateTitleAsync(Id.GetValueOrDefault(), Title);
+                await TodosClient.UpdateTitleAsync(Id.GetValueOrDefault(), Title, cts.Token);
             }
 
             if (editContext.IsModified(() => Description!))
             {
-                await TodosClient.UpdateDescriptionAsync(Id.GetValueOrDefault(), Description);
+                await TodosClient.UpdateDescriptionAsync(Id.GetValueOrDefault(), Description, cts.Token);
             }
 
             if (editContext.IsModified(() => Status))
             {
-                await TodosClient.UpdateStatusAsync(Id.GetValueOrDefault(), Status);
+                await TodosClient.UpdateStatusAsync(Id.GetValueOrDefault(), Status, cts.Token);
             }
 
             if (editContext.IsModified(() => EstimatedHours!))
             {
-                await TodosClient.UpdateEstimatedHoursAsync(Id.GetValueOrDefault(), EstimatedHours);
+                await TodosClient.UpdateEstimatedHoursAsync(Id.GetValueOrDefault(), EstimatedHours, cts.Token);
             }
 
             if (editContext.IsModified(() => RemainingHours!))
             {
-                await TodosClient.UpdateRemainingHoursAsync(Id.GetValueOrDefault(), RemainingHours);
+                await TodosClient.UpdateRemainingHoursAsync(Id.GetValueOrDefault(), RemainingHours, cts.Token);
             }
 
             editContext.MarkAsUnmodified();
 
-            todo = await TodosClient.GetTodoByIdAsync(Id.GetValueOrDefault());
+            todo = await TodosClient.GetTodoByIdAsync(Id.GetValueOrDefault(), cts.Token);
         }
         catch (AccessTokenNotAvailableException exception)
         {
@@ -219,7 +220,7 @@ else
             Status = Status,
             EstimatedHours = EstimatedHours,
             RemainingHours = RemainingHours
-        });
+        }, cts.Token);
 
         Instance.SetTitle($"{todo.Id} - {todo.Title}");
     }
@@ -233,7 +234,7 @@ else
     {
         try
         {
-            this.todo = await TodosClient.GetTodoByIdAsync(id);
+            this.todo = await TodosClient.GetTodoByIdAsync(id, cts.Token);
 
             Instance.SetTitle($"{todo.Id} - {todo.Title}");
 
@@ -247,5 +248,10 @@ else
         {
             exception.Redirect();
         }
+    }
+
+    public void Dispose() 
+    {
+        cts.Cancel();
     }
 }
