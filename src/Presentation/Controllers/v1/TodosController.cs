@@ -16,7 +16,6 @@ namespace TodoApp.Presentation.Controllers;
 [ApiVersion("1")]
 [Route("v{version:apiVersion}/[controller]")]
 [Authorize]
-[EnableRateLimitingAttribute("MyControllerPolicy")]
 public sealed class TodosController : ControllerBase
 {
     private readonly IMediator mediator;
@@ -27,7 +26,9 @@ public sealed class TodosController : ControllerBase
     }
 
     [HttpGet]
+    [EnableRateLimitingAttribute("MyControllerPolicy")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ItemsResult<TodoDto>))]
+    [ProducesResponseType(StatusCodes.Status429TooManyRequests)]
     [ProducesDefaultResponseType]
     public async Task<ItemsResult<TodoDto>> GetTodos(TodoStatusDto? status, int page = 1, int pageSize = 10, string? sortBy = null, SortDirection? sortDirection = null, CancellationToken cancellationToken = default)
         => await mediator.Send(new GetTodos(status, page, pageSize, sortBy, sortDirection), cancellationToken);

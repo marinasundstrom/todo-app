@@ -169,12 +169,30 @@ builder.Services.AddOpenTelemetryTracing(tracerProviderBuilder =>
 
 builder.Services.AddRateLimiter(options =>
 {
+    options.OnRejected = (context, cancellationToken) =>
+        {
+            context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
+ 
+            // context.Lease.GetAllMetadata().ToList()
+            //    .ForEach(m => app.Logger.LogWarning($"Rate limit exceeded: {m.Key} {m.Value}"));
+ 
+            return new ValueTask();
+        };
+
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+        
     options.AddTokenBucketLimiter("MyControllerPolicy", options =>
     {
-        options.TokenLimit = 1;
+        options.TokenLimit = 5;
         options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        
+        #if DEBUG
         options.QueueLimit = 1;
-        options.ReplenishmentPeriod = TimeSpan.FromSeconds(10);
+        #else
+        options.QueueLimit = 1000;
+        #endif
+
+        options.ReplenishmentPeriod = TimeSpan.FromSeconds(5);
         options.TokensPerPeriod = 1;
     });
 });
@@ -211,6 +229,8 @@ app.MapHealthChecks("/healthz", new HealthCheckOptions()
 });
 
 app.MapHubsForApp();
+
+app.UseRateLimiter();
 
 using (var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
 {
