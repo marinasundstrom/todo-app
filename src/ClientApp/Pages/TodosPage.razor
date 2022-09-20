@@ -131,6 +131,10 @@
             };
             await hubConnection.StartAsync(cts.Token);
         }
+        catch (HttpRequestException exc)
+        {
+            Snackbar.Add(exc.Message.ToString(), Severity.Error);
+        }
         catch (Exception exc)
         {
             Snackbar.Add(exc.Message.ToString(), Severity.Error);
@@ -184,9 +188,9 @@
     private async Task<TableData<TodoDto>> ServerReload(TableState state)
     {
         try
-        {            
-            var result = await TodosClient.GetTodosAsync(null, state.Page + 1, state.PageSize, 
-                state.SortDirection == MudBlazor.SortDirection.None ? null : state.SortLabel, 
+        {
+            var result = await TodosClient.GetTodosAsync(null, state.Page + 1, state.PageSize,
+                state.SortDirection == MudBlazor.SortDirection.None ? null : state.SortLabel,
                 state.SortDirection == MudBlazor.SortDirection.None ? null : (state.SortDirection == MudBlazor.SortDirection.Ascending ? TodoApp.SortDirection.Ascending : TodoApp.SortDirection.Descending), cts.Token);
 
             return new TableData<TodoDto>() { TotalItems = result.TotalItems, Items = result.Items };
@@ -194,15 +198,13 @@
         catch (AccessTokenNotAvailableException exception)
         {
             exception.Redirect();
-
-            return null!;
         }
         catch (Exception)
         {
             Snackbar.Add(T["FailedToGetTodos"], Severity.Error);
         }
 
-        return null!;
+        return new TableData<TodoDto>() { Items = Enumerable.Empty<TodoDto>(), TotalItems = 0 };
     }
 
     async Task<TodoDto> FetchTodo(int id)

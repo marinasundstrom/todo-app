@@ -149,6 +149,10 @@
             };
             await hubConnection.StartAsync(cts.Token);
         }
+        catch (HttpRequestException exc)
+        {
+            Snackbar.Add(exc.Message.ToString(), Severity.Error);
+        }
         catch (Exception exc)
         {
             Snackbar.Add(exc.Message.ToString(), Severity.Error);
