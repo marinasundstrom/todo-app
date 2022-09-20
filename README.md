@@ -1,6 +1,8 @@
 # Todo App
 
-Clean Architecture and Domain-driven Design template. Let's you quickly build an entreprise-ready web app.
+Clean Architecture and Domain-driven Design template. 
+
+Let's you quickly build an entreprise-ready web app with focus on Use Cases first.
 
 To run this solution, Install .NET Tye and Docker.
 
@@ -30,6 +32,7 @@ Feel free to adopt and modify this to your own needs. Instructions below.
   * Theming - Dark mode
 * SignalR: Real-time server-browser communication via WebSocket
 * MassTransit - RabbitMQ as transport
+* Rate limits
 * OpenTelemetry - Zipkin for viewing traces
 * Health checks
 * Identity Server - for identity management and auth
