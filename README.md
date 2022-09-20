@@ -1,6 +1,6 @@
 # Todo App
 
-Clean Architecture and Domain-driven Design template.
+Clean Architecture and Domain-driven Design template. Let's you quickly build an entreprise-ready web app.
 
 To run this solution, Install .NET Tye and Docker.
 
