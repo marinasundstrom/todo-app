@@ -95,8 +95,19 @@
 
     protected override async Task OnInitializedAsync()
     {
-        todos.AddRange((await TodosClient.GetTodosAsync(null, 1, 100, null, null, cts.Token)).Items);
-        loaded = true;
+        try
+        {
+            todos.AddRange((await TodosClient.GetTodosAsync(null, 1, 100, null, null, cts.Token)).Items);
+            loaded = true;
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+        catch (Exception)
+        {
+            Snackbar.Add(T["FailedToGetTodos"], Severity.Error);
+        }
 
         try
         {
@@ -270,7 +281,7 @@
         StateHasChanged();
     }
 
-    public async ValueTask DisposeAsync() 
+    public async ValueTask DisposeAsync()
     {
         cts.Cancel();
         await hubConnection.DisposeAsync();

@@ -197,6 +197,12 @@
 
             return null!;
         }
+        catch (Exception)
+        {
+            Snackbar.Add(T["FailedToGetTodos"], Severity.Error);
+        }
+
+        return null!;
     }
 
     async Task<TodoDto> FetchTodo(int id)

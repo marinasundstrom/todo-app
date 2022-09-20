@@ -51,5 +51,8 @@
 	<data name="FailedToDeleteTodo">
         <value>Kunde inte ta bort föremålet</value>
     </data>
+    <data name="FailedToGetTodos">
+        <value>Misslyckades ta bort föremål</value>
+    </data>
 </root>
 

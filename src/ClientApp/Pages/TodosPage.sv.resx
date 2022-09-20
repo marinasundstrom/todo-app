@@ -96,4 +96,7 @@
     <data name="TodoDeleted">
         <value>{0} - {1} togs bort</value>
     </data>
+    <data name="FailedToGetTodos">
+        <value>Misslyckades ta bort föremål</value>
+    </data>
 </root>
