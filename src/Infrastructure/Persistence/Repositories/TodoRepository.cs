@@ -1,22 +1,45 @@
 ﻿using System.Threading;
 using Microsoft.EntityFrameworkCore;
+using TodoApp.Domain.Enums;
 using TodoApp.Domain.Specifications;
 
 namespace TodoApp.Infrastructure.Persistence.Repositories;
 
-public sealed class TodoRepository : RepositoryBase<Todo, int>, ITodoRepository
+public sealed class TodoRepository : ITodoRepository
 {
-    public TodoRepository(ApplicationDbContext context) : base(context)
+    readonly ApplicationDbContext context;
+    readonly DbSet<Todo> dbSet;
+
+    public TodoRepository(ApplicationDbContext context)
     {
+        this.context = context;
+        this.dbSet = context.Set<Todo>();
     }
 
-    public override IQueryable<Todo> GetAll()
+    public IQueryable<Todo> GetAll()
     {
+        //return dbSet.Where(new TodosWithStatus(TodoStatus.Completed).Or(new TodosWithStatus(TodoStatus.OnHold))).AsQueryable();
+
         return dbSet.AsQueryable();
     }
 
-    public override async Task<Todo?> FindByIdAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<Todo?> FindByIdAsync(int id, CancellationToken cancellationToken = default)
     {
         return await dbSet.FirstOrDefaultAsync(x => x.Id.Equals(id), cancellationToken);
+    }
+
+    public IQueryable<Todo> GetAll(ISpecification<Todo> specification)
+    {
+        return dbSet.Where(specification.Criteria);
+    }
+
+    public void Add(Todo item)
+    {
+        dbSet.Add(item);
+    }
+
+    public void Remove(Todo item)
+    {
+        dbSet.Remove(item);
     }
 }

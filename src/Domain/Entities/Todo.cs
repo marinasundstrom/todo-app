@@ -3,7 +3,7 @@ using TodoApp.Domain.Events;
 
 namespace TodoApp.Domain.Entities;
 
-public class Todo : AuditableEntity, IAggregateRoot<int>
+public class Todo : AuditableEntity, IAggregateRoot
 {
     protected Todo()
     {
