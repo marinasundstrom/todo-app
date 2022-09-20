@@ -25,7 +25,7 @@ public class TodosPageTest
         ctx.Services.AddSingleton(fakeAccessTokenProvider);
 
         var fakeTodosClient = Substitute.For<ITodosClient>();
-        fakeTodosClient.GetTodosAsync(Arg.Any<TodoStatusDto>(), null, null, null, null)
+        fakeTodosClient.GetTodosAsync(Arg.Any<TodoStatusDto>(), null, null, null, null, default)
             .ReturnsForAnyArgs(t => new ItemsResultOfTodoDto()
             {
                 Items = new[]
