@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using TodoApp.Application;
 using TodoApp.Application.Common;
 using TodoApp.Application.Todos.Commands;
@@ -15,6 +16,7 @@ namespace TodoApp.Presentation.Controllers;
 [ApiVersion("1")]
 [Route("v{version:apiVersion}/[controller]")]
 [Authorize]
+[EnableRateLimitingAttribute("MyControllerPolicy")]
 public sealed class TodosController : ControllerBase
 {
     private readonly IMediator mediator;

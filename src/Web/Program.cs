@@ -1,14 +1,15 @@
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Threading.RateLimiting;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
 using NSwag;
 using NSwag.Generation.Processors.Security;
@@ -164,6 +165,18 @@ builder.Services.AddOpenTelemetryTracing(tracerProviderBuilder =>
         .AddAspNetCoreInstrumentation()
         .AddSqlClientInstrumentation()
         .AddMassTransitInstrumentation();
+});
+
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddTokenBucketLimiter("MyControllerPolicy", options =>
+    {
+        options.TokenLimit = 1;
+        options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        options.QueueLimit = 1;
+        options.ReplenishmentPeriod = TimeSpan.FromSeconds(10);
+        options.TokensPerPeriod = 1;
+    });
 });
 
 var app = builder.Build();
