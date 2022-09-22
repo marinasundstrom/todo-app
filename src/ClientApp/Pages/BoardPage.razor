@@ -127,8 +127,8 @@
             hubConnection.On<int, string>("TitleUpdated", OnTitleUpdated);
             hubConnection.On<int, string?>("DescriptionUpdated", OnDescriptionUpdated);
             hubConnection.On<int, TodoStatusDto>("StatusUpdated", OnStatusUpdated);
-            hubConnection.On<int, double?>("EstimatedTimeUpdated", OnEstimatedHoursUpdated);
-            hubConnection.On<int, double?>("RemainingTimeUpdated", OnRemainingHoursUpdated);
+            hubConnection.On<int, double?>("EstimatedHoursUpdated", OnEstimatedHoursUpdated);
+            hubConnection.On<int, double?>("RemainingHoursUpdated", OnRemainingHoursUpdated);
 
             hubConnection.Closed += (error) =>
             {

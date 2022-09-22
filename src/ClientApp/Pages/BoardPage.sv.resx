@@ -31,7 +31,7 @@
         <value>Beräknad tid: {0}</value>
     </data>
 	<data name="RemainingTime">
-        <value>Återståend tid: {0}</value>
+        <value>Återstående tid: {0}</value>
     </data>
 	<data name="More">
         <value>Mer</value>
