@@ -27,11 +27,11 @@
 	<data name="Status">
         <value>Status</value>
     </data>
-	<data name="EstimatedHours">
-        <value>Estimated hours</value>
+	<data name="EstimatedTime">
+        <value>Estimated time</value>
     </data>
-	<data name="RemainingHours">
-        <value>Remaining hours</value>
+	<data name="RemainingTime">
+        <value>Remaining time</value>
     </data>
 	<data name="Created">
         <value>Created</value>

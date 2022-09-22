@@ -30,17 +30,17 @@
 	<data name="Status">
         <value>Status</value>
     </data>
-	<data name="EstimatedHours">
-        <value>Beräknade timmar</value>
+	<data name="EstimatedTime">
+        <value>Beräknade tid</value>
     </data>
-	<data name="RemainingHours">
-        <value>Återstående timmar</value>
+	<data name="RemainingTime">
+        <value>Återstående tid</value>
     </data>
 	<data name="Created">
         <value>Skapat</value>
     </data>
 	<data name="LastModified">
-        <value>Ändrat</value>
+        <value>Senast ändrad</value>
     </data>
 	<data name="NotStarted">
         <value>Ej påbörjat</value>
@@ -97,6 +97,6 @@
         <value>{0} - {1} togs bort</value>
     </data>
     <data name="FailedToGetTodos">
-        <value>Misslyckades ta bort föremål</value>
+        <value>Misslyckades att hämta föremål</value>
     </data>
 </root>

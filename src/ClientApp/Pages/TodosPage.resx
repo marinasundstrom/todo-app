@@ -30,11 +30,11 @@
 	<data name="Status">
         <value>Status</value>
     </data>
-	<data name="EstimatedHours">
-        <value>Estimated hours</value>
+	<data name="EstimatedTime">
+        <value>Estimated time</value>
     </data>
-	<data name="RemainingHours">
-        <value>Remaining hours</value>
+	<data name="RemainingTime">
+        <value>Remaining time</value>
     </data>
 	<data name="Created">
         <value>Created</value>
@@ -97,6 +97,6 @@
         <value>{0} - {1} was deleted</value>
     </data>
     <data name="FailedToGetTodos">
-        <value>Misslyckades ta bort föremål</value>
+        <value>Failed to retrieve todos</value>
     </data>
 </root>

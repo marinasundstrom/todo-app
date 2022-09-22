@@ -44,10 +44,10 @@
             <MudTableSortLabel SortLabel="Status" T="TodoDto">@T["Status"]</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortLabel="EstimatedHours" T="TodoDto">@T["EstimatedHours"]</MudTableSortLabel>
+            <MudTableSortLabel SortLabel="EstimatedHours" T="TodoDto">@T["EstimatedTime"]</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortLabel="RemainingHours" T="TodoDto">@T["RemainingHours"]</MudTableSortLabel>
+            <MudTableSortLabel SortLabel="RemainingHours" T="TodoDto">@T["RemainingTime"]</MudTableSortLabel>
         </MudTh>
         <MudTh>
             <MudTableSortLabel SortLabel="Created" T="TodoDto">@T["Created"]</MudTableSortLabel>
@@ -63,8 +63,8 @@
         <MudTd DataLabel="@T["Id"]">@context.Id</MudTd>
         <MudTd DataLabel="@T["Title"]">@context.Title</MudTd>
         <MudTd DataLabel="@T["Status"]">@T[context.Status.ToString()]</MudTd>
-        <MudTd DataLabel="@T["EstimatedHours"]">@context.EstimatedHours.ToString()</MudTd>
-        <MudTd DataLabel="@T["RemainingHours"]">@context.RemainingHours.ToString()</MudTd>
+        <MudTd DataLabel="@T["EstimatedTime"]">@(context.EstimatedHours is null ? null : TimeSpan.FromHours(context.EstimatedHours.GetValueOrDefault()).ToString("hh\\:mm"))</MudTd>
+        <MudTd DataLabel="@T["RemainingTime"]">@(context.RemainingHours is null ? null : TimeSpan.FromHours(context.RemainingHours.GetValueOrDefault()).ToString("hh\\:mm"))</MudTd>
         <MudTd DataLabel="@T["Created"]">@context.Created.ToString("g")</MudTd>
         <MudTd DataLabel="@T["LastModified"]">@context.LastModified?.ToString("g")</MudTd>
         <MudTh>

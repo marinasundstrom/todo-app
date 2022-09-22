@@ -27,11 +27,11 @@
 	<data name="Completed">
         <value>Avslutat</value>
     </data>
-	<data name="EstimatedHours">
-        <value>Beräknad</value>
+	<data name="EstimatedTime">
+        <value>Beräknad tid: {0}</value>
     </data>
-	<data name="RemainingHours">
-        <value>Återstående</value>
+	<data name="RemainingTime">
+        <value>Återståend tid: {0}</value>
     </data>
 	<data name="More">
         <value>Mer</value>
@@ -55,4 +55,3 @@
         <value>Misslyckades ta bort föremål</value>
     </data>
 </root>
-
