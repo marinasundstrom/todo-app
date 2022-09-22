@@ -2,6 +2,6 @@
 
 sealed class DateTimeService : IDateTime
 {
-    public DateTime Now => DateTime.Now;
+    public DateTimeOffset Now => DateTimeOffset.UtcNow;
 }
 

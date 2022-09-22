@@ -3,5 +3,5 @@
 public interface ISoftDelete
 {
     string? DeletedById { get; set; }
-    DateTime? Deleted { get; set; }
+    DateTimeOffset? Deleted { get; set; }
 }

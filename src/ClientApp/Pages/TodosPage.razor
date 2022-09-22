@@ -65,8 +65,8 @@
         <MudTd DataLabel="@T["Status"]">@T[context.Status.ToString()]</MudTd>
         <MudTd DataLabel="@T["EstimatedTime"]">@(context.EstimatedHours is null ? null : TimeSpan.FromHours(context.EstimatedHours.GetValueOrDefault()).ToString("hh\\:mm"))</MudTd>
         <MudTd DataLabel="@T["RemainingTime"]">@(context.RemainingHours is null ? null : TimeSpan.FromHours(context.RemainingHours.GetValueOrDefault()).ToString("hh\\:mm"))</MudTd>
-        <MudTd DataLabel="@T["Created"]">@context.Created.ToString("g")</MudTd>
-        <MudTd DataLabel="@T["LastModified"]">@context.LastModified?.ToString("g")</MudTd>
+        <MudTd DataLabel="@T["Created"]">@context.Created.ToLocalTime().ToString("g")</MudTd>
+        <MudTd DataLabel="@T["LastModified"]">@context.LastModified?.ToLocalTime().ToString("g")</MudTd>
         <MudTh>
             <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="async () => await DeleteTodo(context)" Disabled="selectMultiple"></MudIconButton>
         </MudTh>
