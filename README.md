@@ -1,6 +1,6 @@
 # Todo App
 
-Clean Architecture and Domain-driven Design template. 
+Reference project for Clean architecture with focus on Use Cases.
 
 Let's you quickly build an entreprise-ready web app with focus on Use Cases first.
 
@@ -24,8 +24,8 @@ Feel free to adopt and modify this to your own needs. Instructions below.
 
 ## Contents
 
-* Architecture: Clean Architecture / Layered Architecture 
-* Approaches: Domain-driven design - CQRS, Event-driven
+* Architecture: Clean Architecture / Layered Architecture / Event-driven architecture
+* CQRS
 * Tests - Architecture, Application, Domain, Integration Tests
 * Client app in Blazor and MudBlazor
   * Localization
