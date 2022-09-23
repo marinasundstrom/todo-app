@@ -24,16 +24,4 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Todos\Commands\" />
-    <None Remove="Todos\Queries\" />
-    <None Remove="Todos\EventHandlers\" />
-    <None Remove="Todos\Dtos\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Todos\Commands\" />
-    <Folder Include="Todos\Queries\" />
-    <Folder Include="Todos\EventHandlers\" />
-    <Folder Include="Todos\Dtos\" />
-  </ItemGroup>
 </Project>
