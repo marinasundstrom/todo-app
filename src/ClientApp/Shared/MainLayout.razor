@@ -49,8 +49,6 @@
 
     bool _drawerOpen = false;
     ColorScheme? _currentColorScheme;
-    Guid _subscriptionId;
-    DrawerVariant _drawerVariant = DrawerVariant.Persistent;
     bool _disableOverlay = true;
 
     protected override async Task OnInitializedAsync()
@@ -67,7 +65,7 @@
         await LocalStorage.SetItemAsync("drawerOpen", _drawerOpen);
     }
 
-    async Task DrawerToggle()
+    void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;
     }

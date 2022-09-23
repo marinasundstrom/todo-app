@@ -21,7 +21,7 @@
 <MudTable T="TodoDto" MultiSelection="@selectMultiple" @bind-SelectedItems="selectedItems" ServerData="@(new Func<TableState, Task<TableData<TodoDto>>>(ServerReload))" Elevation="25"
           OnRowClick="async (e) => await ShowTodo(e.Item.Id)" Dense="false" Hover="true" @ref="table" SortLabel="@T["SortBy"]" Class="mb-8">
     <ToolBarContent>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => CreateTodo()">@T["CreateTodo"]</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => await CreateTodo()">@T["CreateTodo"]</MudButton>
 
         <MudCheckBox Label="@T["SelectMultiple"]" Checked="selectMultiple" CheckedChanged="new Func<bool, Task>(OnSelectMultipleChanged)" />
 
