@@ -1,7 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using MediatR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
+using TodoApp.Application.Common;
 using TodoApp.Infrastructure.BackgroundJobs;
+using TodoApp.Infrastructure.Idempotence;
 using TodoApp.Infrastructure.Persistence;
 using TodoApp.Infrastructure.Services;
 
@@ -15,6 +18,8 @@ namespace TodoApp.Infrastructure
 
             services.AddScoped<IDateTime, DateTimeService>();
             services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
+
+            services.Decorate(typeof(INotificationHandler<>), typeof(IdempotentDomainEventHandler<>));
 
             services.AddQuartz(configure =>
             {

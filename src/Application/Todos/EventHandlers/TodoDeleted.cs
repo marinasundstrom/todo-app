@@ -1,10 +1,10 @@
-using MediatR;
+using TodoApp.Application.Common;
 using TodoApp.Application.Services;
 using TodoApp.Domain.Entities;
 
 namespace TodoApp.Application.Todos.EventHandlers;
 
-public sealed class TodoDeletedEventHandler : INotificationHandler<DomainEventNotification<TodoDeleted>>
+public sealed class TodoDeletedEventHandler : IDomainEventHandler<TodoDeleted>
 {
     private readonly ITodoRepository todoRepository;
     private readonly ITodoNotificationService todoNotificationService;
@@ -15,9 +15,9 @@ public sealed class TodoDeletedEventHandler : INotificationHandler<DomainEventNo
         this.todoNotificationService = todoNotificationService;
     }
 
-    public async Task Handle(DomainEventNotification<TodoDeleted> notification, CancellationToken cancellationToken)
+    public async Task Handle(TodoDeleted notification, CancellationToken cancellationToken)
     {
-        await todoNotificationService.Deleted(notification.DomainEvent.TodoId, notification.DomainEvent.Title);
+        await todoNotificationService.Deleted(notification.TodoId,notification.Title);
     }
 }
 

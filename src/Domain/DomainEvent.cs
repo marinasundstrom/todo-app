@@ -1,7 +1,8 @@
-﻿namespace TodoApp.Domain
+﻿using MediatR;
+
+namespace TodoApp.Domain;
+
+public abstract class DomainEvent : INotification
 {
-    public abstract class DomainEvent
-    {
-        public DateTimeOffset DateOccurred { get; protected set; } = DateTime.UtcNow;
-    }
+    public Guid Id { get; } = Guid.NewGuid();
 }
