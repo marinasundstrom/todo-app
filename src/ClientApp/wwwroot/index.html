@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>ClientApp</title>
     <base href="/" />
+    <link href="app.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
 </head>
@@ -13,9 +14,11 @@
 <body>
     <div id="app">
         <div id="splashscreen" style="height:100%; width:100%; margin:0; position:fixed;">
-            <div style="display: flex; justify-content: center; align-items:center; height:100%; width:100%;">
-                <img src="logo.svg" title="logo" style="height: 150px; max-width: 650px; margin-left: 20px; margin-right: 20px;" />
-            </div>
+            <svg class="loading-progress">
+                <circle r="40%" cx="50%" cy="50%" />
+                <circle r="40%" cx="50%" cy="50%" />
+            </svg>
+            <div class="loading-progress-text"></div>
         </div>
     </div>
 
