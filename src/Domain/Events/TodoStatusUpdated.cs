@@ -2,16 +2,4 @@
 
 namespace TodoApp.Domain.Events;
 
-public sealed class TodoStatusUpdated : DomainEvent
-{
-    public TodoStatusUpdated(int todoId, TodoStatus newStatus, TodoStatus oldStatus)
-    {
-        TodoId = todoId;
-        NewStatus = newStatus;
-        OldStatus = oldStatus;
-    }
-
-    public int TodoId { get; }
-    public TodoStatus NewStatus { get; }
-    public TodoStatus OldStatus { get; }
-}
+public sealed record TodoStatusUpdated(int TodoId, TodoStatus NewStatus, TodoStatus OldStatus) : DomainEvent;
