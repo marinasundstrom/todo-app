@@ -18,6 +18,11 @@ namespace TodoApp.Infrastructure.Persistence
             services.AddDbContext<ApplicationDbContext>((sp, options) =>
             {
                 options.UseSqlServer(connectionString!, o => o.EnableRetryOnFailure());
+
+                options.AddInterceptors(
+                    sp.GetRequiredService<OutboxSaveChangesInterceptor>(),
+                    sp.GetRequiredService<AuditableEntitySaveChangesInterceptor>());
+
 #if DEBUG
                 options
                     .LogTo(Console.WriteLine)
@@ -25,9 +30,8 @@ namespace TodoApp.Infrastructure.Persistence
 #endif
             });
 
-            //services.AddScoped<IApplicationContext>(sp => sp.GetRequiredService<ApplicationContext>());
-
             services.AddScoped<AuditableEntitySaveChangesInterceptor>();
+            services.AddScoped<OutboxSaveChangesInterceptor>();
 
             RegisterRepositories(services);
 

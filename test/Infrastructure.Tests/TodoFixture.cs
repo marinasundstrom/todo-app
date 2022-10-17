@@ -32,8 +32,7 @@ namespace TodoApp.Infrastructure
                .UseSqlite(GetDbConnection())
                .Options;
 
-            var context = new ApplicationDbContext(options,
-                new TodoApp.Infrastructure.Persistence.Interceptors.AuditableEntitySaveChangesInterceptor(fakeCurrentUserService, fakeDateTimeService));
+            var context = new ApplicationDbContext(options);
 
             context.Database.EnsureCreated();
 

@@ -1,27 +1,18 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using TodoApp.Infrastructure.Persistence.Interceptors;
-using TodoApp.Infrastructure.Persistence.Outbox;
 
 namespace TodoApp.Infrastructure.Persistence;
 
 public sealed class ApplicationDbContext : DbContext, IUnitOfWork
 {
-    private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;
-
     public ApplicationDbContext(
-        DbContextOptions<ApplicationDbContext> options,
-        AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor) : base(options)
-    {
-        _auditableEntitySaveChangesInterceptor = auditableEntitySaveChangesInterceptor;
-    }
+        DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);
 
-        optionsBuilder.AddInterceptors(_auditableEntitySaveChangesInterceptor);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -63,36 +54,4 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork
     public DbSet<Todo> Todos { get; set; }
 
 #nullable restore
-
-    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        var entities = ChangeTracker
-                        .Entries<Entity>()
-                        .Where(e => e.Entity.DomainEvents.Any())
-                        .Select(e => e.Entity);
-
-        var domainEvents = entities
-            .SelectMany(e => e.DomainEvents)
-            .ToList();
-
-        var outboxMessages = domainEvents.Select(domainEvent =>
-        {
-            return new OutboxMessage()
-            {
-                Id = domainEvent.Id,
-                OccurredOnUtc = DateTime.UtcNow,
-                Type = domainEvent.GetType().Name,
-                Content = JsonConvert.SerializeObject(
-                    domainEvent,
-                    new JsonSerializerSettings
-                    {
-                        TypeNameHandling = TypeNameHandling.All
-                    })
-            };
-        }).ToList();
-
-        this.Set<OutboxMessage>().AddRange(outboxMessages);
-
-        return await base.SaveChangesAsync(cancellationToken);
-    }
 }
