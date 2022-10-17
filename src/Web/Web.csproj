@@ -17,7 +17,7 @@
 	<PropertyGroup Condition=" '$(RunConfiguration)' == 'Web' " />
 	<ItemGroup>
 		<PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
-		<PackageReference Include="MassTransit.RabbitMQ" Version="8.0.7-develop.587" />
+		<PackageReference Include="MassTransit.RabbitMQ" Version="8.0.8-develop.614" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0-rc.2.*">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
