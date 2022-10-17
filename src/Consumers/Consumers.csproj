@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="MassTransit" Version="8.0.7-develop.587" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0-rc.1.22426.10" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0-rc.2.*" />
   </ItemGroup>
 
   <ItemGroup>
