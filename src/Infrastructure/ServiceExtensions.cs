@@ -8,36 +8,35 @@ using TodoApp.Infrastructure.Idempotence;
 using TodoApp.Infrastructure.Persistence;
 using TodoApp.Infrastructure.Services;
 
-namespace TodoApp.Infrastructure
+namespace TodoApp.Infrastructure;
+
+public static class ServiceExtensions
 {
-    public static class ServiceExtensions
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        services.AddPersistence(configuration);
+
+        services.AddScoped<IDateTime, DateTimeService>();
+        services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
+
+        services.Decorate(typeof(INotificationHandler<>), typeof(IdempotentDomainEventHandler<>));
+
+        services.AddQuartz(configure =>
         {
-            services.AddPersistence(configuration);
+            var jobKey = new JobKey(nameof(ProcessOutboxMessagesJob));
 
-            services.AddScoped<IDateTime, DateTimeService>();
-            services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
+            configure
+                .AddJob<ProcessOutboxMessagesJob>(jobKey)
+                .AddTrigger(trigger => trigger.ForJob(jobKey)
+                    .WithSimpleSchedule(schedule => schedule
+                        .WithIntervalInSeconds(10)
+                        .RepeatForever()));
 
-            services.Decorate(typeof(INotificationHandler<>), typeof(IdempotentDomainEventHandler<>));
+            configure.UseMicrosoftDependencyInjectionJobFactory();
+        });
 
-            services.AddQuartz(configure =>
-            {
-                var jobKey = new JobKey(nameof(ProcessOutboxMessagesJob));
+        services.AddQuartzHostedService();
 
-                configure
-                    .AddJob<ProcessOutboxMessagesJob>(jobKey)
-                    .AddTrigger(trigger => trigger.ForJob(jobKey)
-                        .WithSimpleSchedule(schedule => schedule
-                            .WithIntervalInSeconds(10)
-                            .RepeatForever()));
-
-                configure.UseMicrosoftDependencyInjectionJobFactory();
-            });
-
-            services.AddQuartzHostedService();
-
-            return services;
-        }
+        return services;
     }
 }

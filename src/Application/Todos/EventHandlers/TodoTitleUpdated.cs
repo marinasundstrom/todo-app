@@ -18,7 +18,7 @@ public sealed class TodoTitleUpdatedEventHandler : IDomainEventHandler<TodoTitle
 
     public async Task Handle(TodoTitleUpdated notification, CancellationToken cancellationToken)
     {
-        var todo = await todoRepository.FindByIdAsync( notification.TodoId, cancellationToken);
+        var todo = await todoRepository.FindByIdAsync(notification.TodoId, cancellationToken);
 
         if (todo is null)
             return;

@@ -34,7 +34,7 @@ public sealed record CreateTodo(string Title, string? Description, TodoStatusDto
             var todo = new Todo(request.Title, request.Description, (Domain.Enums.TodoStatus)request.Status);
             todo.UpdateEstimatedHours(request.EstimatedHours);
             todo.UpdateRemainingHours(request.RemainingHours);
-            
+
             todoRepository.Add(todo);
 
             await unitOfWork.SaveChangesAsync(cancellationToken);

@@ -52,7 +52,7 @@ await app.RunAsync();
 
 IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
 {
-   return HttpPolicyExtensions
-        .HandleTransientHttpError()
-        .WaitAndRetryAsync(Backoff.DecorrelatedJitterBackoffV2(medianFirstRetryDelay: TimeSpan.FromSeconds(1), retryCount: 5));
+    return HttpPolicyExtensions
+         .HandleTransientHttpError()
+         .WaitAndRetryAsync(Backoff.DecorrelatedJitterBackoffV2(medianFirstRetryDelay: TimeSpan.FromSeconds(1), retryCount: 5));
 }

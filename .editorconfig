@@ -47,3 +47,8 @@ csharp_preferred_modifier_order = public,private,readonly:suggestion
 
 #prefer fields not to be prefaced with this. or Me. in Visual Basic
 dotnet_style_qualification_for_field = false:suggestion
+
+#Style - namespaces
+
+#prefer file scoped namespaces
+csharp_style_namespace_declarations = file_scoped:warning

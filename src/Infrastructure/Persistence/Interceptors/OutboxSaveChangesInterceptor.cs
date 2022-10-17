@@ -1,6 +1,6 @@
-using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Newtonsoft.Json;
 using TodoApp.Infrastructure.Persistence.Outbox;
 
 namespace TodoApp.Infrastructure.Persistence.Interceptors;
@@ -11,7 +11,7 @@ public sealed class OutboxSaveChangesInterceptor : SaveChangesInterceptor
     {
         var context = eventData.Context;
 
-        if (context is null) 
+        if (context is null)
         {
             return await base.SavingChangesAsync(eventData, result, cancellationToken);
         }

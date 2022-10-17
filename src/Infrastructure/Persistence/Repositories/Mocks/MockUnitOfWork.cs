@@ -26,7 +26,7 @@ public sealed class MockUnitOfWork : IUnitOfWork
 
         await DispatchEvents(events, cancellationToken);
 
-        foreach(var newItem in newItems.OfType<IHasDomainEvents>())
+        foreach (var newItem in newItems.OfType<IHasDomainEvents>())
         {
             newItem.ClearDomainEvents();
         }

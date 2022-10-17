@@ -116,7 +116,7 @@ internal static class HostingExtensions
 
         app.MapRazorPages()
             .RequireAuthorization();
-        
+
         app.MapHealthChecks("/healthz", new HealthCheckOptions()
         {
             Predicate = _ => true,

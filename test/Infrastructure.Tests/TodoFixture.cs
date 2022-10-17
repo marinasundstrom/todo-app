@@ -8,48 +8,47 @@ using TodoApp.Application.Services;
 using TodoApp.Infrastructure.Persistence;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
-namespace TodoApp.Infrastructure
+namespace TodoApp.Infrastructure;
+
+public class TodoFixture : IDisposable
 {
-    public class TodoFixture : IDisposable
+    private readonly IDomainEventDispatcher fakeDomainEventDispatcher;
+    private readonly ICurrentUserService fakeCurrentUserService;
+    private readonly IDateTime fakeDateTimeService;
+    private SqliteConnection connection = null!;
+
+    public TodoFixture()
     {
-        private readonly IDomainEventDispatcher fakeDomainEventDispatcher;
-        private readonly ICurrentUserService fakeCurrentUserService;
-        private readonly IDateTime fakeDateTimeService;
-        private SqliteConnection connection = null!;
+        fakeDomainEventDispatcher = Substitute.For<IDomainEventDispatcher>();
+        fakeCurrentUserService = Substitute.For<ICurrentUserService>();
+        fakeDateTimeService = Substitute.For<IDateTime>();
+    }
 
-        public TodoFixture()
-        {
-            fakeDomainEventDispatcher = Substitute.For<IDomainEventDispatcher>();
-            fakeCurrentUserService = Substitute.For<ICurrentUserService>();
-            fakeDateTimeService = Substitute.For<IDateTime>();
-        }
+    public ApplicationDbContext CreateDbContext()
+    {
+        string dbName = $"testdb";
 
-        public ApplicationDbContext CreateDbContext()
-        {
-            string dbName = $"testdb";
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+           .UseSqlite(GetDbConnection())
+           .Options;
 
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-               .UseSqlite(GetDbConnection())
-               .Options;
+        var context = new ApplicationDbContext(options);
 
-            var context = new ApplicationDbContext(options);
+        context.Database.EnsureCreated();
 
-            context.Database.EnsureCreated();
+        return context;
+    }
 
-            return context;
-        }
+    private DbConnection GetDbConnection()
+    {
+        connection = new SqliteConnection("DataSource=:memory:");
+        connection.Open();
 
-        private DbConnection GetDbConnection()
-        {
-            connection = new SqliteConnection("DataSource=:memory:");
-            connection.Open();
+        return connection;
+    }
 
-            return connection;
-        }
-
-        public void Dispose()
-        {
-            connection.Close();
-        }
+    public void Dispose()
+    {
+        connection.Close();
     }
 }

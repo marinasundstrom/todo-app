@@ -9,6 +9,6 @@ public sealed class TodoDeleted : DomainEvent
     }
 
     public int TodoId { get; }
-    
+
     public string Title { get; }
 }
