@@ -1,7 +1,6 @@
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @inject NavigationManager Navigation
-@inject SignOutSessionStateManager SignOutManager
 @inject IDialogService DialogService
 @inject IStringLocalizer<LoginDisplay> T
 
@@ -36,8 +35,7 @@
             return;
         }
 
-        await SignOutManager.SetSignOutState();
-        Navigation.NavigateTo("authentication/logout");
+        Navigation.NavigateToLogout("authentication/logout");
     }
 
     private string GetInitials(string name)
