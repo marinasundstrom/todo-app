@@ -33,7 +33,6 @@ public sealed record CreateTodo(string Title, string? Description, TodoStatusDto
         public async Task<Result<TodoDto>> Handle(CreateTodo request, CancellationToken cancellationToken)
         {
             var todo = new Todo(request.Title, request.Description, (Domain.Enums.TodoStatus)request.Status);
-            todo.AssignedToId = request.AssignedTo;
 
             todo.UpdateEstimatedHours(request.EstimatedHours);
             todo.UpdateRemainingHours(request.RemainingHours);
@@ -41,6 +40,15 @@ public sealed record CreateTodo(string Title, string? Description, TodoStatusDto
             todoRepository.Add(todo);
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
+
+            if (request.AssignedTo is not null)
+            {
+                todo.UpdateAssignedTo(request.AssignedTo);
+
+                await unitOfWork.SaveChangesAsync(cancellationToken);
+
+                todo.ClearDomainEvents();
+            }
 
             await domainEventDispatcher.Dispatch(new TodoCreated(todo.Id), cancellationToken);
 

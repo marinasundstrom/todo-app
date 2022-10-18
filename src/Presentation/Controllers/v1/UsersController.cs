@@ -46,7 +46,7 @@ public sealed class UsersController : ControllerBase
     [ProducesDefaultResponseType]
     public async Task<ActionResult<UserInfoDto>> CreateUser(CreateUserDto request, CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(new CreateUser(request.Name), cancellationToken);
+        var result = await mediator.Send(new CreateUser(request.Name, request.Email), cancellationToken);
         return this.HandleResult(result);
     }
 }

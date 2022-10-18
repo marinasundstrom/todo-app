@@ -3,13 +3,15 @@ using MediatR;
 
 namespace TodoApp.Application.Users;
 
-public record CreateUser(string Name) : IRequest<Result<UserInfoDto>>
+public record CreateUser(string Name, string Email) : IRequest<Result<UserInfoDto>>
 {
     public class Validator : AbstractValidator<CreateUser>
     {
         public Validator()
         {
             RuleFor(x => x.Name).NotEmpty().MaximumLength(60);
+
+            RuleFor(x => x.Name).NotEmpty().EmailAddress();
         }
     }
 
@@ -28,7 +30,7 @@ public record CreateUser(string Name) : IRequest<Result<UserInfoDto>>
 
         public async Task<Result<UserInfoDto>> Handle(CreateUser request, CancellationToken cancellationToken)
         {
-            userRepository.Add(new User(currentUserService.UserId!, request.Name, string.Empty));
+            userRepository.Add(new User(currentUserService.UserId!, request.Name, request.Email));
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 

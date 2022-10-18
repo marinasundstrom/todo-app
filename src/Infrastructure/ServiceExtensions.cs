@@ -18,6 +18,7 @@ public static class ServiceExtensions
 
         services.AddScoped<IDateTime, DateTimeService>();
         services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
+        services.AddScoped<IEmailService, EmailService>();
 
         services.Decorate(typeof(INotificationHandler<>), typeof(IdempotentDomainEventHandler<>));
 

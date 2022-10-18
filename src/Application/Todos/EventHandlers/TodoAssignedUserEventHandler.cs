@@ -1,15 +1,18 @@
 using TodoApp.Application.Common;
+using TodoApp.Application.Services;
 
 namespace TodoApp.Application.Todos.EventHandlers;
 
 public sealed class TodoAssignedUserEventHandler : IDomainEventHandler<TodoAssignedUserUpdated>
 {
     private readonly ITodoRepository todoRepository;
+    private readonly IEmailService emailService;
     private readonly ITodoNotificationService todoNotificationService;
 
-    public TodoAssignedUserEventHandler(ITodoRepository todoRepository, ITodoNotificationService todoNotificationService)
+    public TodoAssignedUserEventHandler(ITodoRepository todoRepository, IEmailService emailService, ITodoNotificationService todoNotificationService)
     {
         this.todoRepository = todoRepository;
+        this.emailService = emailService;
         this.todoNotificationService = todoNotificationService;
     }
 
@@ -20,6 +23,12 @@ public sealed class TodoAssignedUserEventHandler : IDomainEventHandler<TodoAssig
         if (todo is null)
             return;
 
-        //await todoNotificationService.StatusUpdated(todo.Id, (TodoStatusDto)todo.Status);
+        if (todo.AssignedToId is not null && todo.LastModifiedById != todo.AssignedToId)
+        {
+            await emailService.SendEmail(
+                todo.AssignedTo!.Email,
+                $"You were assigned to \"{todo.Title}\" [{todo.Id}].",
+                $"{todo.LastModifiedBy!.Name} assigned {todo.AssignedTo.Name} to \"{todo.Title}\" [{todo.Id}].");
+        }
     }
 }
