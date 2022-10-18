@@ -38,7 +38,6 @@ public record GetTodos(TodoStatusDto? Status, int Page = 1, int PageSize = 10, s
             }
 
             var todos = await query
-                .OrderBy(i => i.Id)
                 .Include(i => i.CreatedBy)
                 .Include(i => i.LastModifiedBy)
                 .AsSplitQuery()
