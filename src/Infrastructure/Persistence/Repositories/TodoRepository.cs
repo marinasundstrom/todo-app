@@ -24,6 +24,7 @@ public sealed class TodoRepository : ITodoRepository
     public async Task<Todo?> FindByIdAsync(int id, CancellationToken cancellationToken = default)
     {
         return await dbSet
+            .Include(i => i.AssignedTo)
             .Include(i => i.CreatedBy)
             .Include(i => i.LastModifiedBy)
             .FirstOrDefaultAsync(x => x.Id.Equals(id), cancellationToken);
@@ -32,6 +33,7 @@ public sealed class TodoRepository : ITodoRepository
     public IQueryable<Todo> GetAll(ISpecification<Todo> specification)
     {
         return dbSet
+            .Include(i => i.AssignedTo)
             .Include(i => i.CreatedBy)
             .Include(i => i.LastModifiedBy)
             .Where(specification.Criteria);

@@ -43,6 +43,7 @@ public record GetTodos(TodoStatusDto? Status, string? AssignedTo, int Page = 1, 
             }
 
             var todos = await query
+                .Include(i => i.AssignedTo)
                 .Include(i => i.CreatedBy)
                 .Include(i => i.LastModifiedBy)
                 .AsSplitQuery()
