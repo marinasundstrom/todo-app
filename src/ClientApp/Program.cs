@@ -29,6 +29,15 @@ builder.Services.AddHttpClient<ITodosClient>(nameof(TodosClient), (sp, http) =>
 .SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
 .AddPolicyHandler(GetRetryPolicy());
 
+builder.Services.AddHttpClient<IUsersClient>(nameof(UsersClient), (sp, http) =>
+{
+    http.BaseAddress = new Uri("https://localhost:5001/");
+})
+.AddTypedClient<IUsersClient>((http, sp) => new UsersClient(http))
+.AddHttpMessageHandler<CustomAuthorizationMessageHandler>();
+//.SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
+//.AddPolicyHandler(GetRetryPolicy());
+
 builder.Services.AddOidcAuthentication(options =>
 {
     builder.Configuration.Bind("Local", options.ProviderOptions);

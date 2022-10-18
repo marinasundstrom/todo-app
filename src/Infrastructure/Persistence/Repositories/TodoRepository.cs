@@ -1,6 +1,4 @@
-﻿using System.Threading;
-using Microsoft.EntityFrameworkCore;
-using TodoApp.Domain.Enums;
+﻿using Microsoft.EntityFrameworkCore;
 using TodoApp.Domain.Specifications;
 
 namespace TodoApp.Infrastructure.Persistence.Repositories;
@@ -25,12 +23,18 @@ public sealed class TodoRepository : ITodoRepository
 
     public async Task<Todo?> FindByIdAsync(int id, CancellationToken cancellationToken = default)
     {
-        return await dbSet.FirstOrDefaultAsync(x => x.Id.Equals(id), cancellationToken);
+        return await dbSet
+            .Include(i => i.CreatedBy)
+            .Include(i => i.LastModifiedBy)
+            .FirstOrDefaultAsync(x => x.Id.Equals(id), cancellationToken);
     }
 
     public IQueryable<Todo> GetAll(ISpecification<Todo> specification)
     {
-        return dbSet.Where(specification.Criteria);
+        return dbSet
+            .Include(i => i.CreatedBy)
+            .Include(i => i.LastModifiedBy)
+            .Where(specification.Criteria);
     }
 
     public void Add(Todo item)

@@ -53,8 +53,15 @@
             <MudTableSortLabel SortLabel="Created" T="TodoDto">@T["Created"]</MudTableSortLabel>
         </MudTh>
         <MudTh>
+            <MudTableSortLabel SortLabel="CreatedBy" T="TodoDto">@T["CreatedBy"]</MudTableSortLabel>
+        </MudTh>       
+        <MudTh>
             <MudTableSortLabel SortLabel="LastModified" T="TodoDto">@T["LastModified"]</MudTableSortLabel>
         </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortLabel="LastModifiedBy" T="TodoDto">@T["LastModifiedBy"]</MudTableSortLabel>
+        </MudTh>
+        
         <MudTh>
 
         </MudTh>
@@ -66,7 +73,9 @@
         <MudTd DataLabel="@T["EstimatedTime"]">@(context.EstimatedHours is null ? null : TimeSpan.FromHours(context.EstimatedHours.GetValueOrDefault()).ToString("hh\\:mm"))</MudTd>
         <MudTd DataLabel="@T["RemainingTime"]">@(context.RemainingHours is null ? null : TimeSpan.FromHours(context.RemainingHours.GetValueOrDefault()).ToString("hh\\:mm"))</MudTd>
         <MudTd DataLabel="@T["Created"]">@context.Created.ToLocalTime().ToString("g")</MudTd>
+        <MudTd DataLabel="@T["CreatedBy"]">@context.CreatedBy.Name</MudTd>     
         <MudTd DataLabel="@T["LastModified"]">@context.LastModified?.ToLocalTime().ToString("g")</MudTd>
+        <MudTd DataLabel="@T["LastModifiedBy"]">@context.LastModifiedBy?.Name</MudTd>
         <MudTh>
             <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="async () => await DeleteTodo(context)" Disabled="selectMultiple"></MudIconButton>
         </MudTh>

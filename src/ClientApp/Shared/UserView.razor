@@ -1,0 +1,43 @@
+@using System.Net
+@inject IUsersClient UsersClient
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<App> T
+
+@if(initialized) 
+{
+    @ChildContent
+}
+
+@code {
+    bool initialized = false;
+    UserInfoDto? userInfo;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try 
+        {
+            userInfo = await UsersClient.GetUserInfoAsync();
+            
+            initialized = true;
+        }
+        catch(ApiException e) when (e.StatusCode == (int)HttpStatusCode.NotFound)
+        {
+            NavigationManager.NavigateTo("/welcome");
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+        catch(Exception e)
+        {
+            throw;
+        }
+        finally 
+        {
+            initialized = true;
+        }
+    }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; } = null!;
+}

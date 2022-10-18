@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using TodoApp.Application.Todos.Dtos;
 
 namespace TodoApp.Application.Todos.Commands;
@@ -39,9 +40,15 @@ public sealed record CreateTodo(string Title, string? Description, TodoStatusDto
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            await domainEventDispatcher.Dispatch(new TodoCreated(todo.Id));
+            await domainEventDispatcher.Dispatch(new TodoCreated(todo.Id), cancellationToken);
 
-            return Result.Success(todo.ToDto());
+            todo = await todoRepository.GetAll()
+                .OrderBy(i => i.Id)
+                .Include(i => i.CreatedBy)
+                .Include(i => i.LastModifiedBy)
+                .LastAsync(cancellationToken);
+
+            return Result.Success(todo!.ToDto());
         }
     }
 }

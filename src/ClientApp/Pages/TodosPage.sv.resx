@@ -37,10 +37,16 @@
         <value>Återstående tid</value>
     </data>
 	<data name="Created">
-        <value>Skapat</value>
+        <value>Skapad</value>
     </data>
-	<data name="LastModified">
+    <data name="CreatedBy">
+        <value>Skapad av</value>
+    </data>
+    <data name="LastModified">
         <value>Senast ändrad</value>
+    </data>
+    <data name="LastModifiedBy">
+        <value>Senast ändrad av</value>
     </data>
 	<data name="NotStarted">
         <value>Ej påbörjat</value>

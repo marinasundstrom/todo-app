@@ -39,8 +39,14 @@
 	<data name="Created">
         <value>Created</value>
     </data>
+    <data name="CreatedBy">
+        <value>Created by</value>
+    </data>
 	<data name="LastModified">
         <value>Last modified</value>
+    </data>
+    <data name="LastModifiedBy">
+        <value>Last modified by</value>
     </data>
 	<data name="NotStarted">
         <value>Not started</value>

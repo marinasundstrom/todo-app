@@ -1,6 +1,5 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using TodoApp.Infrastructure.Persistence.Interceptors;
 
 namespace TodoApp.Infrastructure.Persistence;
 
@@ -12,7 +11,6 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);
-
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -52,6 +50,8 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork
 #nullable disable
 
     public DbSet<Todo> Todos { get; set; }
+
+    public DbSet<User> Users { get; set; }
 
 #nullable restore
 }
