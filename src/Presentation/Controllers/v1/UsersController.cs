@@ -2,6 +2,11 @@ using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
+using TodoApp.Application;
+using TodoApp.Application.Common;
+using TodoApp.Application.Todos.Dtos;
+using TodoApp.Application.Todos.Queries;
 using TodoApp.Application.Users;
 
 namespace TodoApp.Presentation.Controllers;
@@ -17,6 +22,13 @@ public sealed class UsersController : ControllerBase
     {
         this.mediator = mediator;
     }
+
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ItemsResult<UserDto>))]
+    [ProducesResponseType(StatusCodes.Status429TooManyRequests)]
+    [ProducesDefaultResponseType]
+    public async Task<ItemsResult<UserDto>> GetUsers(int page = 1, int pageSize = 10, string? searchTerm = null, string? sortBy = null, SortDirection? sortDirection = null, CancellationToken cancellationToken = default)
+        => await mediator.Send(new GetUsers(page, pageSize, searchTerm, sortBy, sortDirection), cancellationToken);
 
     [HttpGet("UserInfo")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserInfoDto))]

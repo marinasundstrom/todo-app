@@ -48,7 +48,7 @@ public sealed class TodosController : ControllerBase
     [ProducesDefaultResponseType]
     public async Task<ActionResult<TodoDto>> CreateTodo(CreateTodoRequest request, CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(new CreateTodo(request.Title, request.Description, request.Status, request.EstimatedHours, request.RemainingHours), cancellationToken);
+        var result = await mediator.Send(new CreateTodo(request.Title, request.Description, request.Status, request.AssignedTo, request.EstimatedHours, request.RemainingHours), cancellationToken);
         return result.Handle(
             onSuccess: data => CreatedAtAction(nameof(GetTodoById), new { id = data.Id }, data),
             onError: error => Problem(detail: error.Detail, title: error.Title, type: error.Id));
@@ -87,6 +87,15 @@ public sealed class TodosController : ControllerBase
     public async Task<ActionResult> UpdateStatus(int id, [FromBody] TodoStatusDto status, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new UpdateStatus(id, status), cancellationToken);
+        return this.HandleResult(result);
+    }
+
+    [HttpPut("{id}/assignedUser")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesDefaultResponseType]
+    public async Task<ActionResult> UpdateAssignedUser(int id, [FromBody] string? userId, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new UpdateAssignedUser(id, userId), cancellationToken);
         return this.HandleResult(result);
     }
 

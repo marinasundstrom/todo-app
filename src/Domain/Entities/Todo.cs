@@ -5,6 +5,8 @@ namespace TodoApp.Domain.Entities;
 
 public class Todo : AuditableEntity, IAggregateRoot
 {
+    string? assignedToId;
+
     protected Todo()
     {
     }
@@ -70,6 +72,20 @@ public class Todo : AuditableEntity, IAggregateRoot
         }
 
         return false;
+    }
+
+    public User? AssignedTo { get; set; }
+
+    public string? AssignedToId
+    {
+        get => assignedToId;
+
+        set
+        {
+            var oldAssignedToId = assignedToId;
+            assignedToId = value;
+            AddDomainEvent(new TodoAssignedUserUpdated(Id, assignedToId, oldAssignedToId));
+        }
     }
 
     public double? EstimatedHours { get; private set; }

@@ -459,6 +459,57 @@
         ]
       }
     },
+    "/v1/Todos/{id}/assignedUser": {
+      "put": {
+        "tags": [
+          "Todos"
+        ],
+        "operationId": "Todos_UpdateAssignedUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "userId",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
     "/v1/Todos/{id}/estimatedHours": {
       "put": {
         "tags": [
@@ -563,12 +614,119 @@
         ]
       }
     },
-    "/v1/Users/UserInfo": {
+    "/v1/Users": {
       "get": {
         "tags": [
           "Users"
         ],
-        "operationId": "Users_GetUserInfo",
+        "operationId": "Users_GetUsers",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            },
+            "x-position": 1
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            },
+            "x-position": 2
+          },
+          {
+            "name": "searchTerm",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 3
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 4
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "schema": {
+              "oneOf": [
+                {
+                  "nullable": true,
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/SortDirection"
+                    }
+                  ]
+                }
+              ]
+            },
+            "x-position": 5
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemsResultOfUserDto"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "Users_CreateUser",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
         "responses": {
           "200": {
             "description": "",
@@ -603,24 +761,12 @@
         }
       }
     },
-    "/v1/Users": {
-      "post": {
+    "/v1/Users/UserInfo": {
+      "get": {
         "tags": [
           "Users"
         ],
-        "operationId": "Users_CreateUser",
-        "requestBody": {
-          "x-name": "request",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateUserDto"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
+        "operationId": "Users_GetUserInfo",
         "responses": {
           "200": {
             "description": "",
@@ -734,6 +880,17 @@
             "type": "string",
             "nullable": true
           },
+          "status": {
+            "$ref": "#/components/schemas/TodoStatusDto"
+          },
+          "assignedTo": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/UserDto"
+              }
+            ]
+          },
           "estimatedHours": {
             "type": "number",
             "format": "double",
@@ -743,9 +900,6 @@
             "type": "number",
             "format": "double",
             "nullable": true
-          },
-          "status": {
-            "$ref": "#/components/schemas/TodoStatusDto"
           },
           "created": {
             "type": "string",
@@ -823,6 +977,10 @@
           "status": {
             "$ref": "#/components/schemas/TodoStatusDto"
           },
+          "assignedTo": {
+            "type": "string",
+            "nullable": true
+          },
           "estimatedHours": {
             "type": "number",
             "format": "double",
@@ -832,6 +990,22 @@
             "type": "number",
             "format": "double",
             "nullable": true
+          }
+        }
+      },
+      "ItemsResultOfUserDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserDto"
+            }
+          },
+          "totalItems": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },

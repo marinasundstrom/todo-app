@@ -44,6 +44,9 @@
             <MudTableSortLabel SortLabel="Status" T="TodoDto">@T["Status"]</MudTableSortLabel>
         </MudTh>
         <MudTh>
+            <MudTableSortLabel SortLabel="AssignedTo" T="TodoDto">@T["AssignedTo"]</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
             <MudTableSortLabel SortLabel="EstimatedHours" T="TodoDto">@T["EstimatedTime"]</MudTableSortLabel>
         </MudTh>
         <MudTh>
@@ -70,6 +73,7 @@
         <MudTd DataLabel="@T["Id"]">@context.Id</MudTd>
         <MudTd DataLabel="@T["Title"]">@context.Title</MudTd>
         <MudTd DataLabel="@T["Status"]">@T[context.Status.ToString()]</MudTd>
+        <MudTd DataLabel="@T["AssignedTo"]">@context.AssignedTo?.Name</MudTd>
         <MudTd DataLabel="@T["EstimatedTime"]">@(context.EstimatedHours is null ? null : TimeSpan.FromHours(context.EstimatedHours.GetValueOrDefault()).ToString("hh\\:mm"))</MudTd>
         <MudTd DataLabel="@T["RemainingTime"]">@(context.RemainingHours is null ? null : TimeSpan.FromHours(context.RemainingHours.GetValueOrDefault()).ToString("hh\\:mm"))</MudTd>
         <MudTd DataLabel="@T["Created"]">@context.Created.ToLocalTime().ToString("g")</MudTd>

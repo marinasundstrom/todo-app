@@ -5,7 +5,7 @@ namespace TodoApp.Application;
 
 public static class Mappings
 {
-    public static TodoDto ToDto(this Todo todo) => new TodoDto(todo.Id, todo.Title, todo.Description, todo.EstimatedHours, todo.RemainingHours, (TodoStatusDto)todo.Status, todo.Created, todo.CreatedBy.ToDto(), todo.LastModified, todo.LastModifiedBy?.ToDto());
+    public static TodoDto ToDto(this Todo todo) => new TodoDto(todo.Id, todo.Title, todo.Description, (TodoStatusDto)todo.Status, todo.AssignedTo?.ToDto(), todo.EstimatedHours, todo.RemainingHours, todo.Created, todo.CreatedBy.ToDto(), todo.LastModified, todo.LastModifiedBy?.ToDto());
 
     public static UserDto ToDto(this User user) => new UserDto(user.Id, user.Name);
 

@@ -29,7 +29,7 @@ public sealed class OutboxSaveChangesInterceptor : SaveChangesInterceptor
         {
             return new OutboxMessage()
             {
-                Id = domainEvent.Id,
+                Id = Guid.NewGuid(),
                 OccurredOnUtc = DateTime.UtcNow,
                 Type = domainEvent.GetType().Name,
                 Content = JsonConvert.SerializeObject(

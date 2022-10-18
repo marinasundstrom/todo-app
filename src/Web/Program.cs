@@ -187,7 +187,7 @@ builder.Services.AddRateLimiter(options =>
         options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
 
 #if DEBUG
-        options.QueueLimit = 1;
+        options.QueueLimit = 10;
 #else
         options.QueueLimit = 1000;
 #endif

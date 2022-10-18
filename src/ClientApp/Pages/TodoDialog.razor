@@ -70,6 +70,11 @@ else
                                     </MudItem>
                                 </MudGrid>
                             </MudItem>
+
+                            <MudItem xs="12" md="6">
+                                <UserSelector Label="@T["AssignedTo"]" Variant="Variant.Outlined" @bind-Value="AssignedTo"
+                                              For="() => AssignedTo" Class="mb-4" />
+                            </MudItem>
                         </MudGrid>
 
                     </MudContainer>
@@ -120,6 +125,8 @@ else
     [MaxLength(340)]
     public string? Description { get; set; }
 
+    public UserDto? AssignedTo { get; set; }
+
     public TodoStatusDto Status { get; set; }
 
     public double? EstimatedHours { get; set; }
@@ -154,6 +161,11 @@ else
             if (editContext.IsModified(() => Status))
             {
                 await TodosClient.UpdateStatusAsync(Id.GetValueOrDefault(), Status, cts.Token);
+            }
+
+            if (editContext.IsModified(() => AssignedTo!))
+            {
+                await TodosClient.UpdateAssignedUserAsync(Id.GetValueOrDefault(), AssignedTo?.Id, cts.Token);
             }
 
             if (editContext.IsModified(() => EstimatedHours!))
@@ -218,6 +230,7 @@ else
             Title = Title,
             Description = Description,
             Status = Status,
+            AssignedTo = AssignedTo?.Id,
             EstimatedHours = EstimatedHours,
             RemainingHours = RemainingHours
         }, cts.Token);
@@ -241,6 +254,7 @@ else
             Title = todo.Title;
             Description = todo.Description;
             Status = todo.Status;
+            AssignedTo = todo.AssignedTo;
             EstimatedHours = todo.EstimatedHours;
             RemainingHours = todo.RemainingHours;
         }
@@ -250,7 +264,7 @@ else
         }
     }
 
-    public void Dispose() 
+    public void Dispose()
     {
         cts.Cancel();
     }
