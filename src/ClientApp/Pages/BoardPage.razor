@@ -57,11 +57,13 @@
                             </CardHeaderAvatar>
                             <CardHeaderContent>
                                 <MudText Typo="Typo.body1">@context.Id - @context.Title</MudText>
-                                @* <MudText Typo="Typo.body2">Peninsula in Europe</MudText> *@
+                                @if(context.AssignedTo is not null) 
+                                {
+                                    <MudText Typo="Typo.body2">@context.AssignedTo?.Name</MudText>
+                                }
                             </CardHeaderContent>
                         </MudCardHeader>
                         <MudCardContent>
-                            @*<MudText Typo="Typo.body1" Class="mt-2">@context.Description</MudText>*@
                             @if (context.EstimatedHours is not null)
                             {
                                 <MudText Typo="Typo.caption" Class="mt-2">
