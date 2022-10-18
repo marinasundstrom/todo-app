@@ -6,7 +6,7 @@ using TodoApp.Domain.Enums;
 
 namespace TodoApp.Application.Todos.Queries;
 
-public record GetTodos(TodoStatusDto? Status, int Page = 1, int PageSize = 10, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<ItemsResult<TodoDto>>
+public record GetTodos(TodoStatusDto? Status, string? AssignedTo, int Page = 1, int PageSize = 10, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<ItemsResult<TodoDto>>
 {
     public class Handler : IRequestHandler<GetTodos, ItemsResult<TodoDto>>
     {
@@ -24,6 +24,11 @@ public record GetTodos(TodoStatusDto? Status, int Page = 1, int PageSize = 10, s
             if (request.Status is not null)
             {
                 query = query.Where(x => x.Status == (TodoStatus)request.Status);
+            }
+
+            if (request.AssignedTo is not null)
+            {
+                query = query.Where(x => x.AssignedToId == request.AssignedTo);
             }
 
             var totalCount = await query.CountAsync(cancellationToken);

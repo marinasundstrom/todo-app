@@ -31,6 +31,22 @@
                 @T["DeleteSelectedTodos"]
             </MudButton>
         }
+
+        <MudSpacer />
+
+        <MudSelect T="TodoStatusDto?" Label="@T["Status"]" Dense="true" Value="Status" ValueChanged="OnStatusChanged" For="() => Status" Immediate="true" Variant="Variant.Outlined">
+                    <MudSelectItem Value="@((TodoStatusDto?)null)">@T["AllStatuses"]</MudSelectItem>
+
+                    @foreach (var status in Enum.GetValues<TodoStatusDto>())
+                    {
+                        <MudSelectItem Value="@((TodoStatusDto?)status)">@T[Enum.GetName(typeof(TodoStatusDto), status)!]</MudSelectItem>
+                    }
+        </MudSelect>
+
+        <MudSpacer />
+
+        <UserSelector Label="@T["AssignedTo"]" Variant="Variant.Outlined" Value="AssignedTo" ValueChanged="OnAssignedToChanged"
+                                              For="() => AssignedTo" />
     </ToolBarContent>
 
     <HeaderContent>
@@ -103,6 +119,10 @@
     private HashSet<TodoDto> selectedItems = new HashSet<TodoDto>();
 
     [Parameter] public int? Id { get; set; }
+
+    public TodoStatusDto? Status { get; set; }
+
+    public UserDto? AssignedTo { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -202,7 +222,7 @@
     {
         try
         {
-            var result = await TodosClient.GetTodosAsync(null, state.Page + 1, state.PageSize,
+            var result = await TodosClient.GetTodosAsync(Status, AssignedTo?.Id, state.Page + 1, state.PageSize,
                 state.SortDirection == MudBlazor.SortDirection.None ? null : state.SortLabel,
                 state.SortDirection == MudBlazor.SortDirection.None ? null : (state.SortDirection == MudBlazor.SortDirection.Ascending ? TodoApp.SortDirection.Ascending : TodoApp.SortDirection.Descending), cts.Token);
 
@@ -382,5 +402,17 @@
     {
         cts.Cancel();
         await hubConnection.DisposeAsync();
+    }
+
+    private async Task OnAssignedToChanged(UserDto? user)
+    {
+        AssignedTo = user;
+        await table.ReloadServerData();
+    }
+
+    private async Task OnStatusChanged(TodoStatusDto? status)
+    {
+        Status = status;
+        await table.ReloadServerData();
     }
 }

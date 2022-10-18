@@ -99,7 +99,7 @@
     {
         try
         {
-            todos.AddRange((await TodosClient.GetTodosAsync(null, 1, 100, null, null, cts.Token)).Items);
+            todos.AddRange((await TodosClient.GetTodosAsync(null, null, 1, 100, null, null, cts.Token)).Items);
             loaded = true;
         }
         catch (AccessTokenNotAvailableException exception)

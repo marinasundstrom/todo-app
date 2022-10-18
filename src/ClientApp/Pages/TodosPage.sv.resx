@@ -30,7 +30,10 @@
 	<data name="Status">
         <value>Status</value>
     </data>
-      <data name="AssignedTo">
+    <data name="AllStatuses">
+        <value>Alla status</value>
+    </data>
+    <data name="AssignedTo">
         <value>Tilldelad</value>
     </data>
 	<data name="EstimatedTime">
