@@ -6,7 +6,7 @@
 @if(initialized) 
 {
     <CascadingValue Value="this" Name="UserView">
-        <CascadingValue Value="userInfo" Name="UserInfo">
+        <CascadingValue Value="UserInfo" Name="UserInfo">
             @ChildContent
         </CascadingValue>
     </CascadingValue>
@@ -14,16 +14,18 @@
 
 @code {
     bool initialized = false;
-    UserInfoDto? userInfo;
 
     [Parameter]
-    public RenderFragment ChildContent { get; set; } = null!;
+    public UserInfoDto? UserInfo { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         try 
         {
-            userInfo = await UsersClient.GetUserInfoAsync();
+            UserInfo = await UsersClient.GetUserInfoAsync();
             
             initialized = true;
         }
@@ -49,7 +51,7 @@
     {
         // TODO: Investigate why this does not propagate changes to LoginDisplay.
 
-        userInfo = await UsersClient.GetUserInfoAsync();
+        UserInfo = await UsersClient.GetUserInfoAsync();
 
         StateHasChanged();
     }

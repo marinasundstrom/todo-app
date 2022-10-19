@@ -8,7 +8,7 @@
     <Authorized>
         <MudMenu Dense="true" Color="Color.Inherit" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopCenter" PopoverClass="docs-layout-menu-shadow" ListClass="pa-2 docs-menu-list" LockScroll="true">
             <ActivatorContent>
-                <MudAvatar Size="Size.Small" Class="me-3">@GetInitials(UserInfo?.Name)</MudAvatar>
+                <MudAvatar Size="Size.Small" Class="me-3">@GetInitials(UserView?.UserInfo?.Name)</MudAvatar>
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="BeginSignOut">
@@ -26,6 +26,9 @@
 </AuthorizeView>
 
 @code {
+    [CascadingParameter(Name = "UserView")]
+    public UserView? UserView { get; set; } = null!;
+
     [CascadingParameter(Name = "UserInfo")]
     public UserInfoDto? UserInfo { get; set; } = null!;
 

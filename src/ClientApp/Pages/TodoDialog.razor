@@ -10,13 +10,13 @@
 
 @if (notFound)
 {
-    <PageTitle>Not found</PageTitle>
+    <AppPageTitle>Not found</AppPageTitle>
 
     <MudText Typo="Typo.h4" GutterBottom="true">Not found</MudText>
 }
 else if (error)
 {
-    <PageTitle>Error</PageTitle>
+    <AppPageTitle>Error</AppPageTitle>
 
     <MudText Typo="Typo.h4" GutterBottom="true">Error</MudText>
 }
@@ -26,11 +26,11 @@ else
     {
         @if (todo is null)
         {
-            <PageTitle>@T["NewTodo"]</PageTitle>
+            <AppPageTitle>@T["NewTodo"]</AppPageTitle>
         }
         else
         {
-            <PageTitle>@todo?.Id - @todo?.Title</PageTitle>
+            <AppPageTitle>@todo?.Id - @todo?.Title</AppPageTitle>
         }
 
         <EditForm EditContext="editContext" OnValidSubmit="Submit">
