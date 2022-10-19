@@ -5,12 +5,19 @@
 
 @if(initialized) 
 {
-    @ChildContent
+    <CascadingValue Value="this" Name="UserView">
+        <CascadingValue Value="userInfo" Name="UserInfo">
+            @ChildContent
+        </CascadingValue>
+    </CascadingValue>
 }
 
 @code {
     bool initialized = false;
     UserInfoDto? userInfo;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -38,6 +45,12 @@
         }
     }
 
-    [Parameter]
-    public RenderFragment ChildContent { get; set; } = null!;
+    public async Task ReloadUserInfo() 
+    {
+        // TODO: Investigate why this does not propagate changes to LoginDisplay.
+
+        userInfo = await UsersClient.GetUserInfoAsync();
+
+        StateHasChanged();
+    }
 }

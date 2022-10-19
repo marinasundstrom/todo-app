@@ -1,6 +1,3 @@
 namespace TodoApp.Application.Users;
 
-public sealed class UserInfoDto
-{
-
-}
+public sealed record UserInfoDto(string Id, string Name);

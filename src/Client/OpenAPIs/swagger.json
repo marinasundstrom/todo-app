@@ -1020,7 +1020,15 @@
       },
       "UserInfoDto": {
         "type": "object",
-        "additionalProperties": false
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
       },
       "CreateUserDto": {
         "type": "object",

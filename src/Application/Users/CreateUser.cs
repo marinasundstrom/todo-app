@@ -11,7 +11,7 @@ public record CreateUser(string Name, string Email) : IRequest<Result<UserInfoDt
         {
             RuleFor(x => x.Name).NotEmpty().MaximumLength(60);
 
-            RuleFor(x => x.Name).NotEmpty().EmailAddress();
+            RuleFor(x => x.Email).NotEmpty().EmailAddress();
         }
     }
 
@@ -30,11 +30,20 @@ public record CreateUser(string Name, string Email) : IRequest<Result<UserInfoDt
 
         public async Task<Result<UserInfoDto>> Handle(CreateUser request, CancellationToken cancellationToken)
         {
-            userRepository.Add(new User(currentUserService.UserId!, request.Name, request.Email));
+            string userId = currentUserService.UserId!;
+
+            userRepository.Add(new User(userId, request.Name, request.Email));
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return Result.Success<UserInfoDto>(new UserInfoDto());
+            var user = await userRepository.FindByIdAsync(userId, cancellationToken);
+
+            if (user is null)
+            {
+                return Result.Failure<UserInfoDto>(Errors.Users.UserNotFound);
+            }
+
+            return Result.Success(user.ToDto2());
         }
     }
 }

@@ -9,5 +9,5 @@ public static class Mappings
 
     public static UserDto ToDto(this User user) => new UserDto(user.Id, user.Name);
 
-    public static UserInfoDto ToDto2(this User user) => new UserInfoDto();
+    public static UserInfoDto ToDto2(this User user) => new UserInfoDto(user.Id, user.Name);
 }

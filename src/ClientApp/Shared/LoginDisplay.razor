@@ -8,7 +8,7 @@
     <Authorized>
         <MudMenu Dense="true" Color="Color.Inherit" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopCenter" PopoverClass="docs-layout-menu-shadow" ListClass="pa-2 docs-menu-list" LockScroll="true">
             <ActivatorContent>
-                <MudAvatar Size="Size.Small" Class="me-3">@GetInitials(context.User.Identity!.Name!)</MudAvatar>
+                <MudAvatar Size="Size.Small" Class="me-3">@GetInitials(UserInfo?.Name)</MudAvatar>
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="BeginSignOut">
@@ -26,6 +26,9 @@
 </AuthorizeView>
 
 @code {
+    [CascadingParameter(Name = "UserInfo")]
+    public UserInfoDto? UserInfo { get; set; } = null!;
+
     private async Task BeginSignOut(MouseEventArgs args)
     {
         var result = await DialogService.ShowMessageBox(T["LogOut"], T["AreYouSure"], T["Yes"], T["No"]);
@@ -38,8 +41,10 @@
         Navigation.NavigateToLogout("authentication/logout");
     }
 
-    private string GetInitials(string name)
+    private string GetInitials(string? name)
     {
+        if(name is null) return string.Empty;
+
         return new string(name.Split(' ').Select(part => part.First()).ToArray());
     }
 }
