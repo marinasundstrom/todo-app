@@ -50,6 +50,16 @@ services:
       protocol: rabbitmq
     - name: management
       port: 15672
+  
+- name: redis
+  image: redis
+  bindings:
+    - port: 6379
+      connectionString: "${host}:${port}"
+
+- name: redis-cli
+  image: redis
+  args: "redis-cli -h redis MONITOR"
 
 - name: zipkin
   image: openzipkin/zipkin

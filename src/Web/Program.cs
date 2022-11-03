@@ -101,6 +101,12 @@ builder.Services
     .AddHealthChecks()
     .AddDbContextCheck<ApplicationDbContext>();
 
+builder.Services.AddMemoryCache();
+
+builder.Services.AddStackExchangeRedisCache(o =>
+        {
+            o.Configuration = builder.Configuration.GetConnectionString("redis");
+        });
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
                     {
