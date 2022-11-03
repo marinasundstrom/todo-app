@@ -4,18 +4,18 @@ namespace TodoApp.Infrastructure.Persistence.Repositories.Mocks;
 
 public sealed class MockUnitOfWork : IUnitOfWork
 {
-    private readonly List<IAggregateRoot> items = new List<IAggregateRoot>();
+    private readonly List<object> items = new List<object>();
     private readonly IDomainEventDispatcher domainEventDispatcher;
-    private readonly List<IAggregateRoot> newItems = new List<IAggregateRoot>();
+    private readonly List<object> newItems = new List<object>();
 
     public MockUnitOfWork(IDomainEventDispatcher domainEventDispatcher)
     {
         this.domainEventDispatcher = domainEventDispatcher;
     }
 
-    public List<IAggregateRoot> Items => items;
+    public List<object> Items => items;
 
-    public List<IAggregateRoot> NewItems => newItems;
+    public List<object> NewItems => newItems;
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

@@ -17,7 +17,7 @@ public sealed class OutboxSaveChangesInterceptor : SaveChangesInterceptor
         }
 
         var entities = context.ChangeTracker
-                        .Entries<Entity>()
+                        .Entries<IHasDomainEvents>()
                         .Where(e => e.Entity.DomainEvents.Any())
                         .Select(e => e.Entity);
 

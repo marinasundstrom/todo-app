@@ -30,13 +30,12 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork
         //       Causing the entity not to be included in the result if Deleted is not null.
         //       There are other better ways to approach non-destructive "deletion".
 
-        var entityBaseType = typeof(Entity);
         var softDeleteInterface = typeof(ISoftDelete);
         var deletedProperty = softDeleteInterface.GetProperty(nameof(ISoftDelete.Deleted));
 
         foreach (var entityType in softDeleteInterface.Assembly
             .GetTypes()
-            .Where(candidateEntityType => entityBaseType.IsAssignableFrom(candidateEntityType))
+            .Where(candidateEntityType => candidateEntityType != typeof(ISoftDelete))
             .Where(candidateEntityType => softDeleteInterface.IsAssignableFrom(candidateEntityType)))
         {
             var param = Expression.Parameter(entityType, "entity");
