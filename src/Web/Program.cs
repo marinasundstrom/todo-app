@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Microsoft.IdentityModel.Logging;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading.RateLimiting;
@@ -21,6 +22,7 @@ using TodoApp.Presentation;
 using TodoApp.Web;
 using TodoApp.Web.Middleware;
 using TodoApp.Web.Services;
+using StackExchange.Redis;
 
 Activity.DefaultIdFormat = ActivityIdFormat.W3C;
 Activity.ForceDefaultIdFormat = true;
@@ -107,6 +109,11 @@ builder.Services.AddStackExchangeRedisCache(o =>
         {
             o.Configuration = builder.Configuration.GetConnectionString("redis");
         });
+
+#if DEBUG
+        IdentityModelEventSource.ShowPII = true;
+#endif
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
                     {

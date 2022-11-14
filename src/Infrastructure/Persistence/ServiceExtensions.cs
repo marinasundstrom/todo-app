@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TodoApp.Infrastructure.Idempotence;
 using TodoApp.Infrastructure.Persistence.Interceptors;
 using TodoApp.Infrastructure.Persistence.Repositories;
 
@@ -46,5 +48,7 @@ public static class ServiceExtensions
 
         services.AddScoped<ITodoRepository, TodoRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+
+        //services.Decorate<ITodoRepository, CachedTodoRepository>();
     }
 }
