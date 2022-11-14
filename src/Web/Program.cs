@@ -159,6 +159,34 @@ builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 
 builder.Services.AddMassTransitForApp();
 
+IConnectionMultiplexer? connection = null;
+
+var connectionString = builder.Configuration.GetConnectionString("redis");
+var c = ConfigurationOptions.Parse(connectionString, true);
+
+connection = ConnectionMultiplexer.Connect(c);
+
+
+builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+{
+    /*
+    var connectionString = builder.Configuration.GetConnectionString("redis");
+    var configuration = ConfigurationOptions.Parse(connectionString, true);
+    return connection = ConnectionMultiplexer.Connect(configuration); */
+
+    return connection;
+});
+
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    //o.Configuration = builder.Configuration.GetConnectionString("redis");
+    options.ConnectionMultiplexerFactory = () =>
+    {
+        return Task.FromResult(connection!);
+    };
+});
+
 // Configure important OpenTelemetry settings, the console exporter, and instrumentation library
 builder.Services.AddOpenTelemetryTracing(tracerProviderBuilder =>
 {
@@ -177,7 +205,13 @@ builder.Services.AddOpenTelemetryTracing(tracerProviderBuilder =>
         .AddHttpClientInstrumentation()
         .AddAspNetCoreInstrumentation()
         .AddSqlClientInstrumentation()
-        .AddMassTransitInstrumentation();
+        .AddMassTransitInstrumentation()
+        .Configure((provider, b) =>
+        {
+            var connection = provider.GetRequiredService<IConnectionMultiplexer>();
+
+            b.AddRedisInstrumentation(connection);
+        });
 });
 
 builder.Services.AddRateLimiter(options =>
