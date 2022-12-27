@@ -96,6 +96,8 @@ foreach (ApiVersionDescription description in provider.ApiVersionDescriptions)
         });
 
         config.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+
+        config.SchemaNameGenerator = new CustomSchemaNameGenerator();
     });
 }
 

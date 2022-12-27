@@ -22,8 +22,8 @@ public sealed class Test : ControllerBase
     [HttpPut("{id}/status")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesDefaultResponseType]
-    public async Task UpdateStatus(int id, [FromBody] TodoStatus status, CancellationToken cancellationToken)
+    public async Task UpdateStatus(int id, [FromBody] Application.Todos.Dtos.TodoStatusDto status, CancellationToken cancellationToken)
     {
-        await publishEndpoint.Publish(new UpdateStatus(id, status), cancellationToken);
+        await publishEndpoint.Publish(new UpdateStatus(id, (TodoStatus)status), cancellationToken);
     }
 }

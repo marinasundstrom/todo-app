@@ -1,5 +1,5 @@
 {
-  "x-generator": "NSwag v13.17.0.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))",
+  "x-generator": "NSwag v13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))",
   "openapi": "3.0.0",
   "info": {
     "title": "Todo API",
@@ -72,7 +72,7 @@
               "nullable": true,
               "oneOf": [
                 {
-                  "$ref": "#/components/schemas/TodoStatusDto"
+                  "$ref": "#/components/schemas/TodoStatus"
                 }
               ]
             },
@@ -140,7 +140,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ItemsResultOfTodoDto"
+                  "$ref": "#/components/schemas/ItemsResultOfTodo"
                 }
               }
             }
@@ -195,7 +195,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TodoDto"
+                  "$ref": "#/components/schemas/Todo"
                 }
               }
             }
@@ -242,7 +242,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TodoDto"
+                  "$ref": "#/components/schemas/Todo"
                 }
               }
             }
@@ -439,7 +439,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TodoStatusDto"
+                "$ref": "#/components/schemas/TodoStatus"
               }
             }
           },
@@ -692,7 +692,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ItemsResultOfUserDto"
+                  "$ref": "#/components/schemas/ItemsResultOfUser"
                 }
               }
             }
@@ -729,7 +729,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateUserDto"
+                "$ref": "#/components/schemas/CreateUser"
               }
             }
           },
@@ -742,7 +742,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserInfoDto"
+                  "$ref": "#/components/schemas/UserInfo"
                 }
               }
             }
@@ -782,7 +782,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserInfoDto"
+                  "$ref": "#/components/schemas/UserInfo"
                 }
               }
             }
@@ -858,14 +858,14 @@
           3
         ]
       },
-      "ItemsResultOfTodoDto": {
+      "ItemsResultOfTodo": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "items": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TodoDto"
+              "$ref": "#/components/schemas/Todo"
             }
           },
           "totalItems": {
@@ -874,7 +874,7 @@
           }
         }
       },
-      "TodoDto": {
+      "Todo": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -890,13 +890,13 @@
             "nullable": true
           },
           "status": {
-            "$ref": "#/components/schemas/TodoStatusDto"
+            "$ref": "#/components/schemas/TodoStatus"
           },
           "assignedTo": {
             "nullable": true,
             "oneOf": [
               {
-                "$ref": "#/components/schemas/UserDto"
+                "$ref": "#/components/schemas/User"
               }
             ]
           },
@@ -915,7 +915,7 @@
             "format": "date-time"
           },
           "createdBy": {
-            "$ref": "#/components/schemas/UserDto"
+            "$ref": "#/components/schemas/User"
           },
           "lastModified": {
             "type": "string",
@@ -926,29 +926,13 @@
             "nullable": true,
             "oneOf": [
               {
-                "$ref": "#/components/schemas/UserDto"
+                "$ref": "#/components/schemas/User"
               }
             ]
           }
         }
       },
-      "TodoStatusDto": {
-        "type": "integer",
-        "description": "",
-        "x-enumNames": [
-          "NotStarted",
-          "InProgress",
-          "OnHold",
-          "Completed"
-        ],
-        "enum": [
-          0,
-          1,
-          2,
-          3
-        ]
-      },
-      "UserDto": {
+      "User": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -984,7 +968,7 @@
             "nullable": true
           },
           "status": {
-            "$ref": "#/components/schemas/TodoStatusDto"
+            "$ref": "#/components/schemas/TodoStatus"
           },
           "assignedTo": {
             "type": "string",
@@ -1002,14 +986,14 @@
           }
         }
       },
-      "ItemsResultOfUserDto": {
+      "ItemsResultOfUser": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "items": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/UserDto"
+              "$ref": "#/components/schemas/User"
             }
           },
           "totalItems": {
@@ -1018,7 +1002,7 @@
           }
         }
       },
-      "UserInfoDto": {
+      "UserInfo": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -1030,7 +1014,7 @@
           }
         }
       },
-      "CreateUserDto": {
+      "CreateUser": {
         "type": "object",
         "additionalProperties": false,
         "properties": {

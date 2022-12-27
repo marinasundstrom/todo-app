@@ -30,7 +30,7 @@
     public UserView? UserView { get; set; } = null!;
 
     [CascadingParameter(Name = "UserInfo")]
-    public UserInfoDto? UserInfo { get; set; } = null!;
+    public UserInfo? UserInfo { get; set; } = null!;
 
     private async Task BeginSignOut(MouseEventArgs args)
     {

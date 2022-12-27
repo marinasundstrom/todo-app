@@ -34,7 +34,7 @@ public sealed record UpdateStatus(int Id, TodoStatusDto Status) : IRequest<Resul
                 return Result.Failure(Errors.Todos.TodoNotFound);
             }
 
-            todo.UpdateStatus((Domain.Enums.TodoStatus)request.Status);
+            todo.UpdateStatus((TodoStatus)request.Status);
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Result.Success();

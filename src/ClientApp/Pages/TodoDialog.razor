@@ -52,9 +52,9 @@ else
 
                             <MudItem xs="12" md="6">
                                 <MudSelect Label="@T["Status"]" @bind-Value="Status" For="() => Status" Immediate="true" Variant="Variant.Outlined" Class="mb-4">
-                                    @foreach (var status in Enum.GetValues<TodoStatusDto>())
+                                    @foreach (var status in Enum.GetValues<TodoStatus>())
                                     {
-                                        <MudSelectItem Value="@status">@T[Enum.GetName(typeof(TodoStatusDto), status)!]</MudSelectItem>
+                                        <MudSelectItem Value="@status">@T[Enum.GetName(typeof(TodoStatus), status)!]</MudSelectItem>
                                     }
                                 </MudSelect>
 
@@ -110,7 +110,7 @@ else
 @code {
     CancellationTokenSource cts = new ();
     EditContext editContext = null!;
-    TodoDto? todo;
+    Todo? todo;
     bool notFound = false;
     bool error = false;
 
@@ -125,9 +125,9 @@ else
     [MaxLength(340)]
     public string? Description { get; set; }
 
-    public UserDto? AssignedTo { get; set; }
+    public User? AssignedTo { get; set; }
 
-    public TodoStatusDto Status { get; set; }
+    public TodoStatus Status { get; set; }
 
     public double? EstimatedHours { get; set; }
 

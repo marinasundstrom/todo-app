@@ -18,7 +18,7 @@
 
 <MudText Typo="Typo.h4" GutterBottom="true">@T["Todos"]</MudText>
 
-<MudTable T="TodoDto" MultiSelection="@selectMultiple" @bind-SelectedItems="selectedItems" ServerData="@(new Func<TableState, Task<TableData<TodoDto>>>(ServerReload))" Elevation="25"
+<MudTable T="Todo" MultiSelection="@selectMultiple" @bind-SelectedItems="selectedItems" ServerData="@(new Func<TableState, Task<TableData<Todo>>>(ServerReload))" Elevation="25"
           OnRowClick="async (e) => await ShowTodo(e.Item.Id)" Dense="false" Hover="true" @ref="table" SortLabel="@T["SortBy"]" Class="mb-8">
     <ToolBarContent>
         <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => await CreateTodo()">@T["CreateTodo"]</MudButton>
@@ -34,12 +34,12 @@
 
         <MudSpacer />
 
-        <MudSelect T="TodoStatusDto?" Label="@T["Status"]" Dense="true" Value="Status" ValueChanged="OnStatusChanged" For="() => Status" Immediate="true" Variant="Variant.Outlined">
-                    <MudSelectItem Value="@((TodoStatusDto?)null)">@T["AllStatuses"]</MudSelectItem>
+        <MudSelect T="TodoStatus?" Label="@T["Status"]" Dense="true" Value="Status" ValueChanged="OnStatusChanged" For="() => Status" Immediate="true" Variant="Variant.Outlined">
+                    <MudSelectItem Value="@((TodoStatus?)null)">@T["AllStatuses"]</MudSelectItem>
 
-                    @foreach (var status in Enum.GetValues<TodoStatusDto>())
+                    @foreach (var status in Enum.GetValues<TodoStatus>())
                     {
-                        <MudSelectItem Value="@((TodoStatusDto?)status)">@T[Enum.GetName(typeof(TodoStatusDto), status)!]</MudSelectItem>
+                        <MudSelectItem Value="@((TodoStatus?)status)">@T[Enum.GetName(typeof(TodoStatus), status)!]</MudSelectItem>
                     }
         </MudSelect>
 
@@ -51,34 +51,34 @@
 
     <HeaderContent>
         <MudTh>
-            <MudTableSortLabel SortLabel="Id" T="TodoDto">@T["Id"]</MudTableSortLabel>
+            <MudTableSortLabel SortLabel="Id" T="Todo">@T["Id"]</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortLabel="Title" T="TodoDto">@T["Title"]</MudTableSortLabel>
+            <MudTableSortLabel SortLabel="Title" T="Todo">@T["Title"]</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortLabel="Status" T="TodoDto">@T["Status"]</MudTableSortLabel>
+            <MudTableSortLabel SortLabel="Status" T="Todo">@T["Status"]</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortLabel="AssignedTo" T="TodoDto">@T["AssignedTo"]</MudTableSortLabel>
+            <MudTableSortLabel SortLabel="AssignedTo" T="Todo">@T["AssignedTo"]</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortLabel="EstimatedHours" T="TodoDto">@T["EstimatedTime"]</MudTableSortLabel>
+            <MudTableSortLabel SortLabel="EstimatedHours" T="Todo">@T["EstimatedTime"]</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortLabel="RemainingHours" T="TodoDto">@T["RemainingTime"]</MudTableSortLabel>
+            <MudTableSortLabel SortLabel="RemainingHours" T="Todo">@T["RemainingTime"]</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortLabel="Created" T="TodoDto">@T["Created"]</MudTableSortLabel>
+            <MudTableSortLabel SortLabel="Created" T="Todo">@T["Created"]</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortLabel="CreatedBy" T="TodoDto">@T["CreatedBy"]</MudTableSortLabel>
+            <MudTableSortLabel SortLabel="CreatedBy" T="Todo">@T["CreatedBy"]</MudTableSortLabel>
         </MudTh>       
         <MudTh>
-            <MudTableSortLabel SortLabel="LastModified" T="TodoDto">@T["LastModified"]</MudTableSortLabel>
+            <MudTableSortLabel SortLabel="LastModified" T="Todo">@T["LastModified"]</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortLabel="LastModifiedBy" T="TodoDto">@T["LastModifiedBy"]</MudTableSortLabel>
+            <MudTableSortLabel SortLabel="LastModifiedBy" T="Todo">@T["LastModifiedBy"]</MudTableSortLabel>
         </MudTh>
         
         <MudTh>
@@ -114,15 +114,15 @@
 @code {
     CancellationTokenSource cts = new ();
     HubConnection hubConnection = null!;
-    MudTable<TodoDto> table = null!;
+    MudTable<Todo> table = null!;
     bool selectMultiple;
-    private HashSet<TodoDto> selectedItems = new HashSet<TodoDto>();
+    private HashSet<Todo> selectedItems = new HashSet<Todo>();
 
     [Parameter] public int? Id { get; set; }
 
-    public TodoStatusDto? Status { get; set; }
+    public TodoStatus? Status { get; set; }
 
-    public UserDto? AssignedTo { get; set; }
+    public User? AssignedTo { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -141,7 +141,7 @@
 
             //hubConnection.On<string, string>("TitleUpdated", OnTitleUpdated);
             //hubConnection.On<string, string?>("DescriptionUpdated", OnDescriptionUpdated);
-            //hubConnection.On<string, TodoStatusDto>("StatusUpdated", OnStatusUpdated);
+            //hubConnection.On<string, TodoStatus>("StatusUpdated", OnStatusUpdated);
 
             hubConnection.Closed += (error) =>
             {
@@ -218,7 +218,7 @@
         return Task.CompletedTask;
     }
 
-    private async Task<TableData<TodoDto>> ServerReload(TableState state)
+    private async Task<TableData<Todo>> ServerReload(TableState state)
     {
         try
         {
@@ -226,7 +226,7 @@
                 state.SortDirection == MudBlazor.SortDirection.None ? null : state.SortLabel,
                 state.SortDirection == MudBlazor.SortDirection.None ? null : (state.SortDirection == MudBlazor.SortDirection.Ascending ? TodoApp.SortDirection.Ascending : TodoApp.SortDirection.Descending), cts.Token);
 
-            return new TableData<TodoDto>() { TotalItems = result.TotalItems, Items = result.Items };
+            return new TableData<Todo>() { TotalItems = result.TotalItems, Items = result.Items };
         }
         catch (AccessTokenNotAvailableException exception)
         {
@@ -237,15 +237,15 @@
             Snackbar.Add(T["FailedToGetTodos"], Severity.Error);
         }
 
-        return new TableData<TodoDto>() { Items = Enumerable.Empty<TodoDto>(), TotalItems = 0 };
+        return new TableData<Todo>() { Items = Enumerable.Empty<Todo>(), TotalItems = 0 };
     }
 
-    async Task<TodoDto> FetchTodo(int id)
+    async Task<Todo> FetchTodo(int id)
     {
         return await TodosClient.GetTodoByIdAsync(id, cts.Token);
     }
 
-    private async Task DeleteTodo(TodoDto item)
+    private async Task DeleteTodo(Todo item)
     {
         try
         {
@@ -268,7 +268,7 @@
         }
     }
 
-    private async Task DeleteTodoCore(TodoDto item)
+    private async Task DeleteTodoCore(Todo item)
     {
         await TodosClient.DeleteTodoAsync(item.Id, cts.Token);
 
@@ -283,7 +283,7 @@
 
             if (result.GetValueOrDefault())
             {
-                List<TodoDto>? failedItems = null;
+                List<Todo>? failedItems = null;
 
                 foreach (var item in selectedItems)
                 {
@@ -301,7 +301,7 @@
                     {
                         if (failedItems is null)
                         {
-                            failedItems = new List<TodoDto>();
+                            failedItems = new List<Todo>();
                         }
 
                         failedItems.Add(item);
@@ -369,7 +369,7 @@
         return hasReplaced;
     }
 
-    private bool ReplaceItemInTable(int id, TodoDto item)
+    private bool ReplaceItemInTable(int id, Todo item)
     {
         var data = GetTableData();
         var items = data!.Items.ToList();
@@ -385,15 +385,15 @@
         return false;
     }
 
-    private TodoDto? GetItemFromTable(int id)
+    private Todo? GetItemFromTable(int id)
     {
         var data = GetTableData();
         return data!.Items.FirstOrDefault(x => x.Id == id);
     }
 
-    private TableData<TodoDto>? GetTableData()
+    private TableData<Todo>? GetTableData()
     {
-        return (TableData<TodoDto>?)table?.GetType()?
+        return (TableData<Todo>?)table?.GetType()?
         .GetField("_server_data", System.Reflection.BindingFlags.NonPublic |
         System.Reflection.BindingFlags.Instance)?
         .GetValue(table);
@@ -404,13 +404,13 @@
         await hubConnection.DisposeAsync();
     }
 
-    private async Task OnAssignedToChanged(UserDto? user)
+    private async Task OnAssignedToChanged(User? user)
     {
         AssignedTo = user;
         await table.ReloadServerData();
     }
 
-    private async Task OnStatusChanged(TodoStatusDto? status)
+    private async Task OnStatusChanged(TodoStatus? status)
     {
         Status = status;
         await table.ReloadServerData();

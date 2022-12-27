@@ -19,11 +19,11 @@
 {
     <MudPaper Elevation="25" Style="overflow-x: scroll;">
 
-    <MudDropContainer @ref="dropContainer" T="TodoDto" Items="todos" Context="context"
-        ItemsSelector="@((item, dropzone) => item.Status == Enum.Parse<TodoStatusDto>(dropzone))"
+    <MudDropContainer @ref="dropContainer" T="Todo" Items="todos" Context="context"
+        ItemsSelector="@((item, dropzone) => item.Status == Enum.Parse<TodoStatus>(dropzone))"
         ItemDropped="ItemUpdated" Class="d-flex flex-row">
         <ChildContent>
-            @foreach (var status in Enum.GetValues<TodoStatusDto>())
+            @foreach (var status in Enum.GetValues<TodoStatus>())
                 {
                     <MudPaper Elevation="0" Class="pa-4 ma-4 d-flex flex-column mud-background-gray rounded-lg" Style="min-width: 250px;">
                         <MudToolBar DisableGutters="true" Dense="true">
@@ -40,7 +40,7 @@
                                 </MudMenu>
                             *@
                         </MudToolBar>
-                        <MudDropZone T="TodoDto" Identifier="@($"{status}")" Class="mud-height-full" />
+                        <MudDropZone T="Todo" Identifier="@($"{status}")" Class="mud-height-full" />
                         @*
                             <MudButton OnClick="@(() => {})" Color="Color.Inherit" StartIcon="@Icons.Filled.Add" FullWidth="true"
                             Class="py-2" Style="background-color: inherit;">Add Task</MudButton>
@@ -92,9 +92,9 @@
 
 @code {
     CancellationTokenSource cts = new ();
-    MudDropContainer<TodoDto> dropContainer = null!;
+    MudDropContainer<Todo> dropContainer = null!;
     HubConnection hubConnection = null!;
-    List<TodoDto> todos = new ();
+    List<Todo> todos = new ();
     bool loaded = false;
 
     protected override async Task OnInitializedAsync()
@@ -128,7 +128,7 @@
 
             hubConnection.On<int, string>("TitleUpdated", OnTitleUpdated);
             hubConnection.On<int, string?>("DescriptionUpdated", OnDescriptionUpdated);
-            hubConnection.On<int, TodoStatusDto>("StatusUpdated", OnStatusUpdated);
+            hubConnection.On<int, TodoStatus>("StatusUpdated", OnStatusUpdated);
             hubConnection.On<int, double?>("EstimatedHoursUpdated", OnEstimatedHoursUpdated);
             hubConnection.On<int, double?>("RemainingHoursUpdated", OnRemainingHoursUpdated);
 
@@ -175,7 +175,7 @@
         var result = await dialogRef.Result;
     }
 
-    private async Task DeleteTodo(TodoDto item)
+    private async Task DeleteTodo(Todo item)
     {
         try
         {
@@ -199,9 +199,9 @@
         }
     }
 
-    private async void ItemUpdated(MudItemDropInfo<TodoDto> dropItem)
+    private async void ItemUpdated(MudItemDropInfo<Todo> dropItem)
     {
-        var newStatus = Enum.Parse<TodoStatusDto>(dropItem.DropzoneIdentifier);
+        var newStatus = Enum.Parse<TodoStatus>(dropItem.DropzoneIdentifier);
 
         var oldStatus = dropItem.Item.Status;
         dropItem.Item.Status = newStatus;
@@ -265,7 +265,7 @@
         StateHasChanged();
     }
 
-    void OnStatusUpdated(int todoId, TodoStatusDto status)
+    void OnStatusUpdated(int todoId, TodoStatus status)
     {
         var item = todos.First(x => x.Id == todoId);
         item.Status = status;
