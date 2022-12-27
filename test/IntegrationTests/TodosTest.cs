@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestPlatform.TestHost;
 
 namespace TodoApp.IntegrationTests;
 
-public partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Program>>
+public partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Program>>, IAsyncLifetime
 {
     private readonly CustomWebApplicationFactory<Program> _factory;
 
@@ -22,18 +22,6 @@ public partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Progr
 
         client.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue("JWT");
-
-        try
-        {
-            UsersClient usersClient = new(client);
-
-            var user = await usersClient.CreateUserAsync(new CreateUser()
-            {
-                Name = "Test",
-                Email = "test@email.com"
-            });
-        }
-        catch { }
 
         TodosClient todosClient = new(client);
 
@@ -68,11 +56,13 @@ public partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Progr
         todo2.LastModified.Should().Be(todo.LastModified);
     }
 
-    [Fact]
-    public async Task NonExistentIdShouldReturnNotFound()
+    public Task DisposeAsync()
     {
-        // Arrange
+        return Task.CompletedTask;
+    }
 
+    public async Task InitializeAsync()
+    {
         var client = _factory.CreateClient();
 
         client.DefaultRequestHeaders.Authorization =
@@ -89,6 +79,17 @@ public partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Progr
             });
         }
         catch { }
+    }
+
+    [Fact]
+    public async Task NonExistentIdShouldReturnNotFound()
+    {
+        // Arrange
+
+        var client = _factory.CreateClient();
+
+        client.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("JWT");
 
         TodosClient todosClient = new(client);
 

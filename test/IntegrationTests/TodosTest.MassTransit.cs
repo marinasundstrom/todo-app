@@ -24,18 +24,6 @@ partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Program>>
         client.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue("JWT");
 
-        try
-        {
-            UsersClient usersClient = new(client);
-
-            var user = await usersClient.CreateUserAsync(new CreateUser()
-            {
-                Name = "Test",
-                Email = "test@email.com"
-            });
-        }
-        catch { }
-
         TodosClient todosClient = new(client);
 
         string title = "Foo Bar";
