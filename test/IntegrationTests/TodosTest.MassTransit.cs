@@ -28,9 +28,9 @@ partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Program>>
 
         string title = "Foo Bar";
         string description = "Lorem ipsum";
-        TodoStatusDto status = TodoStatusDto.InProgress;
+        Contracts.TodoStatus status = Contracts.TodoStatus.InProgress;
 
-        var newStatus = TodoStatusDto.Completed;
+        var newStatus = Contracts.TodoStatus.Completed;
 
         var todo = await todosClient.CreateTodoAsync(new CreateTodoRequest()
         {

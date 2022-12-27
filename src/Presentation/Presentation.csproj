@@ -18,7 +18,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="MassTransit.Abstractions" Version="8.0.8-develop.614" />
+	  <PackageReference Include="MassTransit.Abstractions" Version="8.0.10-develop.730" />
 	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
 	  <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.5.1" />
 	</ItemGroup>
