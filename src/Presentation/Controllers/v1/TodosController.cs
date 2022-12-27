@@ -1,4 +1,3 @@
-using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -26,10 +25,10 @@ public sealed class TodosController : ControllerBase
     }
 
     [HttpGet]
-    [EnableRateLimitingAttribute("MyControllerPolicy")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ItemsResult<TodoDto>))]
     [ProducesResponseType(StatusCodes.Status429TooManyRequests)]
     [ProducesDefaultResponseType]
+    [EnableRateLimiting("fixed")]
     public async Task<ItemsResult<TodoDto>> GetTodos(TodoStatusDto? status, string? assignedTo, int page = 1, int pageSize = 10, string? sortBy = null, SortDirection? sortDirection = null, CancellationToken cancellationToken = default)
         => await mediator.Send(new GetTodos(status, assignedTo, page, pageSize, sortBy, sortDirection), cancellationToken);
 
