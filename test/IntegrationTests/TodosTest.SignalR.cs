@@ -36,7 +36,7 @@ partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Program>>
 
         string title = "Foo Bar";
         string description = "Lorem ipsum";
-        TodoStatusDto status = TodoStatusDto.InProgress;
+        TodoStatus status = TodoStatus.InProgress;
 
         // Act
 

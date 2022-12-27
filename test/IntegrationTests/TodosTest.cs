@@ -14,7 +14,7 @@ public partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Progr
     }
 
     [Fact]
-    public async Task CreatedTodoShouldBeRetrievedByItsId()
+    public async Task CreatedoShouldBeRetrievedByItsId()
     {
         // Arrange
 
@@ -27,7 +27,7 @@ public partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Progr
 
         string title = "Foo Bar";
         string description = "Lorem ipsum";
-        TodoStatusDto status = TodoStatusDto.InProgress;
+        TodoStatus status = TodoStatus.InProgress;
 
         // Act
 

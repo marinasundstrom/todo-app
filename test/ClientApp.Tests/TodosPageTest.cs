@@ -25,33 +25,33 @@ public class TodosPageTest
         ctx.Services.AddSingleton(fakeAccessTokenProvider);
 
         var fakeTodosClient = Substitute.For<ITodosClient>();
-        fakeTodosClient.GetTodosAsync(Arg.Any<TodoStatusDto>(), null, null, null, null, default)
-            .ReturnsForAnyArgs(t => new ItemsResultOfTodoDto()
+        fakeTodosClient.GetTodosAsync(Arg.Any<TodoStatus>(), null, null, null, null, default)
+            .ReturnsForAnyArgs(t => new ItemsResultOfTodo()
             {
                 Items = new[]
                 {
-                    new TodoDto
+                    new Todo
                     {
                         Id = 1,
                         Title = "Item 1",
                         Description = "Description",
-                        Status = TodoStatusDto.InProgress,
+                        Status = TodoStatus.InProgress,
                         Created = DateTimeOffset.Now.AddMinutes(-3)
                     },
-                    new TodoDto
+                    new Todo
                     {
                         Id = 2,
                         Title = "Item 2",
                         Description = "Description",
-                        Status = TodoStatusDto.InProgress,
+                        Status = TodoStatus.InProgress,
                         Created = DateTimeOffset.Now.AddMinutes(-1)
                     },
-                    new TodoDto
+                    new Todo
                     {
                         Id = 3,
                         Title = "Item 2",
                         Description = "Description",
-                        Status = TodoStatusDto.InProgress,
+                        Status = TodoStatus.InProgress,
                         Created = DateTimeOffset.Now
                     }
                 },

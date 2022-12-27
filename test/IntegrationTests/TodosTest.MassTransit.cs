@@ -36,7 +36,7 @@ partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Program>>
         {
             Title = title,
             Description = description,
-            Status = status
+            Status = (TodoStatus)status
         });
 
         // Act
@@ -50,7 +50,7 @@ partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Program>>
 
         var todo2 = await todosClient.GetTodoByIdAsync(todo.Id);
 
-        todo2.Status.Should().Be(newStatus);
+        todo2.Status.Should().Be((TodoStatus)newStatus);
     }
 }
 
