@@ -11,7 +11,7 @@ public class User : AggregateRoot<string>, IAuditable
 #nullable restore
 
     public User(string id, string name, string email)
-        :base(id)
+        : base(id)
     {
         Name = name;
         Email = email;

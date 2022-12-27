@@ -6,7 +6,8 @@ namespace Microsoft.Extensions.Caching.Distributed;
 
 public static class DistributedCacheExtensions
 {
-    private static JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions {
+    private static JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
+    {
         ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve
     };
 
@@ -34,7 +35,7 @@ public static class DistributedCacheExtensions
         var result = await distributedCache.GetAsync<T>(key, cancellationToken);
         if (result is null)
         {
-            DistributedCacheEntryOptions options = new ();
+            DistributedCacheEntryOptions options = new();
 
             result = await factory(options);
 

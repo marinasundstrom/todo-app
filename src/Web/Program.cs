@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using Microsoft.IdentityModel.Logging;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading.RateLimiting;
@@ -11,20 +10,21 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.FeatureManagement;
+using Microsoft.FeatureManagement.FeatureFilters;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using NSwag;
 using NSwag.Generation.Processors.Security;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using StackExchange.Redis;
 using TodoApp.Application.Services;
 using TodoApp.Infrastructure.Persistence;
 using TodoApp.Presentation;
 using TodoApp.Web;
 using TodoApp.Web.Middleware;
 using TodoApp.Web.Services;
-using StackExchange.Redis;
-using Microsoft.FeatureManagement.FeatureFilters;
-using Microsoft.FeatureManagement;
 
 Activity.DefaultIdFormat = ActivityIdFormat.W3C;
 Activity.ForceDefaultIdFormat = true;
@@ -115,7 +115,7 @@ builder.Services.AddStackExchangeRedisCache(o =>
         });
 
 #if DEBUG
-        IdentityModelEventSource.ShowPII = true;
+IdentityModelEventSource.ShowPII = true;
 #endif
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
