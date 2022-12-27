@@ -1,6 +1,7 @@
 ﻿using MassTransit;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.FeatureManagement.Mvc;
 using TodoApp.Contracts;
 
 namespace TodoApp.Presentation.Controllers;
@@ -17,6 +18,7 @@ public sealed class Test : ControllerBase
         this.publishEndpoint = publishEndpoint;
     }
 
+    [FeatureGate("FeatureA")]
     [HttpPut("{id}/status")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesDefaultResponseType]

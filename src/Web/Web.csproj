@@ -38,6 +38,7 @@
 		<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Options" Version="7.0.0" />
+		<PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.5.1" />
 	</ItemGroup>
 
 	<ItemGroup>

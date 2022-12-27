@@ -23,6 +23,8 @@ using TodoApp.Web;
 using TodoApp.Web.Middleware;
 using TodoApp.Web.Services;
 using StackExchange.Redis;
+using Microsoft.FeatureManagement.FeatureFilters;
+using Microsoft.FeatureManagement;
 
 Activity.DefaultIdFormat = ActivityIdFormat.W3C;
 Activity.ForceDefaultIdFormat = true;
@@ -152,6 +154,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     });
 
 builder.Services.AddAuthorization();
+
+builder.Services.AddFeatureManagement()
+                .AddFeatureFilter<PercentageFilter>()
+                .AddFeatureFilter<TimeWindowFilter>();
 
 builder.Services.AddUniverse(builder.Configuration);
 
