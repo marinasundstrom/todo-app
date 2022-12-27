@@ -1,9 +1,15 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using NSubstitute;
 using TodoApp.Application.Services;
 using TodoApp.Application.Todos.Dtos;
 using TodoApp.Domain.Events;
+using TodoApp.Infrastructure.Persistence;
+using TodoApp.Infrastructure.Persistence.Interceptors;
+using TodoApp.Infrastructure.Persistence.Repositories;
 using TodoApp.Infrastructure.Persistence.Repositories.Mocks;
 using Xunit;
 
@@ -16,42 +22,65 @@ public class CreateTodoTest
     {
         // Arrange
 
+        var fakeCurrentUserService = Substitute.For<ICurrentUserService>();
+        fakeCurrentUserService.UserId.Returns("foo");
+
+        var fakeDateTimeService = Substitute.For<IDateTime>();
+        fakeDateTimeService.Now.Returns(DateTime.UtcNow);
+
         var fakeDomainEventDispatcher = Substitute.For<IDomainEventDispatcher>();
         var fakeTodoNotificationService = Substitute.For<ITodoNotificationService>();
 
-        // TODO: Fix with EF Core Sqlite provider
-        var unitOfWork = new MockUnitOfWork(fakeDomainEventDispatcher);
-        var todoRepository = new MockTodoRepository(unitOfWork);
-        var commandHandler = new CreateTodo.Handler(todoRepository, unitOfWork, fakeDomainEventDispatcher);
+        using (var connection = new SqliteConnection("Data Source=:memory:"))
+        {
+            connection.Open();
 
-        var todos = todoRepository.GetAll();
+            var dbContextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .AddInterceptors(new AuditableEntitySaveChangesInterceptor(fakeCurrentUserService, fakeDateTimeService), new OutboxSaveChangesInterceptor())
+                .UseSqlite(connection)
+                .Options;
 
-        var initialTodoCount = todos.Count();
+            using var unitOfWork = new ApplicationDbContext(dbContextOptions);
 
-        string title = "test";
+            await unitOfWork.Database.EnsureCreatedAsync();
 
-        // Act
+            unitOfWork.Users.Add(new Domain.Entities.User("foo", "Test Tesston", "test@foo.com"));
 
-        var createTodoCommand = new CreateTodo(title, null, TodoStatusDto.NotStarted, string.Empty, 0, 0);
+            await unitOfWork.SaveChangesAsync();
 
-        var result = await commandHandler.Handle(createTodoCommand, default);
+            var todoRepository = new TodoRepository(unitOfWork);
 
-        // Assert
+            var commandHandler = new CreateTodo.Handler(todoRepository, unitOfWork, fakeDomainEventDispatcher);
 
-        Assert.True(result.IsSuccess);
+            var todos = todoRepository.GetAll();
 
-        var todo = result.GetValue();
+            var initialTodoCount = todos.Count();
 
-        todos = todoRepository.GetAll();
+            string title = "test";
 
-        var newTodoCount = todos.Count();
+            // Act
 
-        newTodoCount.Should().BeGreaterThan(initialTodoCount);
+            var createTodoCommand = new CreateTodo(title, null, TodoStatusDto.NotStarted, null, 0, 0);
 
-        // Has Domain Event been published ?
+            var result = await commandHandler.Handle(createTodoCommand, default);
 
-        await fakeDomainEventDispatcher
-            .Received(1)
-            .Dispatch(Arg.Is<TodoCreated>(d => d.TodoId == todo.Id));
+            // Assert
+
+            Assert.True(result.IsSuccess);
+
+            var todo = result.GetValue();
+
+            todos = todoRepository.GetAll();
+
+            var newTodoCount = todos.Count();
+
+            newTodoCount.Should().BeGreaterThan(initialTodoCount);
+
+            // Has Domain Event been published ?
+
+            await fakeDomainEventDispatcher
+                .Received(1)
+                .Dispatch(Arg.Is<TodoCreated>(d => d.TodoId == todo.Id));
+        }
     }
 }

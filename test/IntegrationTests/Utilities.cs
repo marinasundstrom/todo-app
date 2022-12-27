@@ -4,8 +4,10 @@ namespace TodoApp.IntegrationTests;
 
 internal class Utilities
 {
-    public static Task InitializeDbForTests(ApplicationDbContext db)
+    public static async Task InitializeDbForTests(ApplicationDbContext db)
     {
-        return Task.CompletedTask;
+        //db.Users.Add(new Domain.Entities.User("1234", "Test Testsson", "test@email.com"));
+
+        await db.SaveChangesAsync();
     }
 }

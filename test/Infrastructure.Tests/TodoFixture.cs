@@ -5,30 +5,32 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using NSubstitute;
 using TodoApp.Application.Services;
+using TodoApp.Domain;
 using TodoApp.Infrastructure.Persistence;
+using TodoApp.Infrastructure.Persistence.Interceptors;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace TodoApp.Infrastructure;
 
 public class TodoFixture : IDisposable
 {
-    private readonly IDomainEventDispatcher fakeDomainEventDispatcher;
     private readonly ICurrentUserService fakeCurrentUserService;
     private readonly IDateTime fakeDateTimeService;
     private SqliteConnection connection = null!;
 
     public TodoFixture()
     {
-        fakeDomainEventDispatcher = Substitute.For<IDomainEventDispatcher>();
         fakeCurrentUserService = Substitute.For<ICurrentUserService>();
+        fakeCurrentUserService.UserId.Returns("foo");
+
         fakeDateTimeService = Substitute.For<IDateTime>();
+        fakeDateTimeService.Now.Returns(DateTime.UtcNow);
     }
 
     public ApplicationDbContext CreateDbContext()
     {
-        string dbName = $"testdb";
-
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+           .AddInterceptors(new AuditableEntitySaveChangesInterceptor(fakeCurrentUserService, fakeDateTimeService), new OutboxSaveChangesInterceptor())
            .UseSqlite(GetDbConnection())
            .Options;
 

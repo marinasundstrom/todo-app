@@ -10,7 +10,7 @@ public static class CachingExtensions
 
         IConnectionMultiplexer? connection = null;
 
-        var connectionString = configuration.GetConnectionString("redis");
+        var connectionString = configuration.GetConnectionString("redis") ?? "localhost";
         var c = ConfigurationOptions.Parse(connectionString, true);
 
         connection = ConnectionMultiplexer.Connect(c);

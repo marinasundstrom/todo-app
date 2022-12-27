@@ -1,16 +1,30 @@
-﻿using MassTransit;
+﻿using DotNet.Testcontainers.Builders;
+using DotNet.Testcontainers.Containers;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using TodoApp.Consumers;
 using TodoApp.Infrastructure.Persistence;
+using TodoApp.Infrastructure.Persistence.Interceptors;
 
 namespace TodoApp.IntegrationTests;
 
-public class CustomWebApplicationFactory<TStartup>
-    : WebApplicationFactory<TStartup> where TStartup : class
+public sealed class CustomWebApplicationFactory<TStartup>
+    : WebApplicationFactory<TStartup>, IAsyncLifetime where TStartup : class
 {
+    static readonly TestcontainersContainer testContainer =
+        new TestcontainersBuilder<TestcontainersContainer>()
+        .WithImage("redis:latest")
+        .WithPortBinding(6379, 6379)
+        .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(6379))
+        .Build();
+
+    public async Task InitializeAsync()
+    {
+        await testContainer.StartAsync();
+    }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
@@ -29,9 +43,19 @@ public class CustomWebApplicationFactory<TStartup>
 
             services.Remove(descriptor);
 
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<ApplicationDbContext>((sp, options) =>
             {
                 options.UseSqlite($"Data Source=testdb.db");
+
+                options.AddInterceptors(
+                    sp.GetRequiredService<OutboxSaveChangesInterceptor>(),
+                    sp.GetRequiredService<AuditableEntitySaveChangesInterceptor>());
+
+    #if DEBUG
+                    options
+                        .LogTo(Console.WriteLine)
+                        .EnableSensitiveDataLogging();
+    #endif
             });
 
             services.AddMassTransitTestHarness(cfg =>
@@ -62,5 +86,10 @@ public class CustomWebApplicationFactory<TStartup>
                 }
             }
         });
+    }
+
+    async Task IAsyncLifetime.DisposeAsync()
+    {
+        await testContainer.StopAsync();
     }
 }

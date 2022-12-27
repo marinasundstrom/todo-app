@@ -60,6 +60,23 @@ public class TodosPageTest
 
         ctx.Services.AddSingleton<ITodosClient>(fakeTodosClient);
 
+        var fakeUsersClient = Substitute.For<IUsersClient>();
+        fakeUsersClient.GetUsersAsync(Arg.Any<int>(), null, null, null, null, default)
+            .ReturnsForAnyArgs(t => new ItemsResultOfUser()
+            {
+                Items = new[]
+                {
+                    new User
+                    {
+                        Id = "foo",
+                        Name = "Test"
+                    }
+                },
+                TotalItems = 3
+            });
+
+        ctx.Services.AddSingleton<IUsersClient>(fakeUsersClient);
+
         var cut = ctx.RenderComponent<TodosPage>();
 
         // Act
@@ -68,7 +85,7 @@ public class TodosPageTest
         // Assert
         cut.WaitForState(() => cut.Find("tr") != null);
 
-        int expectedNoOfTr = 4; // incl <td> in <thead>
+        int expectedNoOfTr = 2; // incl <td> in <thead>
 
         cut.FindAll("tr").Count.Should().Be(expectedNoOfTr);
     }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Polly;
 using TodoApp.Domain.Entities;
 using TodoApp.Infrastructure.Persistence;
 using TodoApp.Infrastructure.Persistence.Repositories;
@@ -19,6 +20,11 @@ public class TodoRepositoryTest
     public async Task TodoShouldBeAdded()
     {
         var unitOfWork = fixture.CreateDbContext();
+
+        unitOfWork.Users.Add(new Domain.Entities.User("foo", "Test Tesston", "test@foo.com"));
+
+        await unitOfWork.SaveChangesAsync();
+
         var todoRepository = new TodoRepository(unitOfWork);
 
         var todo = new Todo("Test", "Desc");
@@ -36,6 +42,11 @@ public class TodoRepositoryTest
     public async Task AllTodosShouldBeRetrieved()
     {
         var unitOfWork = fixture.CreateDbContext();
+
+        unitOfWork.Users.Add(new Domain.Entities.User("foo", "Test Tesston", "test@foo.com"));
+
+        await unitOfWork.SaveChangesAsync();
+
         var todoRepository = new TodoRepository(unitOfWork);
 
         var todo = new Todo("Test1", "Desc");

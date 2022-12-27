@@ -1,8 +1,12 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using NSubstitute;
 using TodoApp.Application.Services;
 using TodoApp.Application.Todos.Queries;
 using TodoApp.Domain;
+using TodoApp.Infrastructure.Persistence;
+using TodoApp.Infrastructure.Persistence.Repositories;
 using TodoApp.Infrastructure.Persistence.Repositories.Mocks;
 using Xunit;
 
@@ -17,21 +21,33 @@ public class GetTodoTest
 
         var fakeDomainEventDispatcher = Substitute.For<IDomainEventDispatcher>();
 
-        // TODO: Fix with EF Core Sqlite provider
-        var unitOfWork = new MockUnitOfWork(fakeDomainEventDispatcher);
-        var todoRepository = new MockTodoRepository(unitOfWork);
-        var commandHandler = new GetTodoById.Handler(todoRepository);
+        using (var connection = new SqliteConnection("Data Source=:memory:"))
+        {
+            connection.Open();
 
-        int nonExistentTodoId = 9999;
+            var dbContextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseSqlite(connection)
+                .Options;
 
-        // Act
+            using var unitOfWork = new ApplicationDbContext(dbContextOptions);
 
-        var getTodoByIdCommand = new GetTodoById(nonExistentTodoId);
+            await unitOfWork.Database.EnsureCreatedAsync();
 
-        var result = await commandHandler.Handle(getTodoByIdCommand, default);
+            var todoRepository = new TodoRepository(unitOfWork);
 
-        // Assert
+            var commandHandler = new GetTodoById.Handler(todoRepository);
 
-        Assert.True(result.HasError(Errors.Todos.TodoNotFound));
+            int nonExistentTodoId = 9999;
+
+            // Act
+
+            var getTodoByIdCommand = new GetTodoById(nonExistentTodoId);
+
+            var result = await commandHandler.Handle(getTodoByIdCommand, default);
+
+            // Assert
+
+            Assert.True(result.HasError(Errors.Todos.TodoNotFound));
+        }
     }
 }
