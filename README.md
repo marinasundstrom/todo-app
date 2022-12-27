@@ -26,7 +26,7 @@ Feel free to adopt and modify this to your own needs. Instructions below.
 
 * Architecture: Clean Architecture / Layered Architecture / Event-driven architecture
 * CQRS
-* Tests - Architecture, Application, Domain, Integration Tests
+* Tests - Architecture, Application, Domain, Integration Tests (with TestContainers)
 * Client app in Blazor and MudBlazor
   * Localization
   * Theming - Dark mode
