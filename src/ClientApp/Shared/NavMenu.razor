@@ -1,6 +1,21 @@
-﻿@inject IStringLocalizer<NavMenu> T
+﻿@using Microsoft.FeatureManagement;
+
+@inject IStringLocalizer<NavMenu> T
+@inject IFeatureManager FeatureManager
 
 <MudNavMenu>
     <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.List">@T["Todos"]</MudNavLink>
-    <MudNavLink Href="/board" Icon="@Icons.Material.Filled.Task">@T["Board"]</MudNavLink>
+
+    @if (isBoardEnabled)
+    {
+        <MudNavLink Href="/board" Icon="@Icons.Material.Filled.Task">@T["Board"]</MudNavLink>
+    }
 </MudNavMenu>
+
+@code {
+    bool isBoardEnabled = false;
+    protected override async Task OnInitializedAsync()
+    {
+        isBoardEnabled = await FeatureManager.IsEnabledAsync("FeatureA");
+    }
+}

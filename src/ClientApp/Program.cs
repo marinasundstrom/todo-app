@@ -1,6 +1,7 @@
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.FeatureManagement;
 using MudBlazor.Services;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
@@ -11,6 +12,8 @@ using TodoApp.Theming;
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
+
+builder.Services.AddFeatureManagement();
 
 builder.Services.AddTransient<CustomAuthorizationMessageHandler>();
 
