@@ -1,4 +1,4 @@
-﻿using MediatR;
+﻿using Mediator;
 using Microsoft.EntityFrameworkCore;
 using TodoApp.Application.Common;
 using TodoApp.Application.Todos.Dtos;
@@ -17,7 +17,7 @@ public record GetTodos(TodoStatusDto? Status, string? AssignedTo, int Page = 1, 
             this.todoRepository = todoRepository;
         }
 
-        public async Task<ItemsResult<TodoDto>> Handle(GetTodos request, CancellationToken cancellationToken)
+        public async ValueTask<ItemsResult<TodoDto>> Handle(GetTodos request, CancellationToken cancellationToken)
         {
             var query = todoRepository.GetAll();
 

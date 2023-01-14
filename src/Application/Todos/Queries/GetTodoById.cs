@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using MediatR;
+using Mediator;
 using TodoApp.Application.Todos.Dtos;
 
 namespace TodoApp.Application.Todos.Queries;
@@ -23,7 +23,7 @@ public record GetTodoById(int Id) : IRequest<Result<TodoDto>>
             this.todoRepository = todoRepository;
         }
 
-        public async Task<Result<TodoDto>> Handle(GetTodoById request, CancellationToken cancellationToken)
+        public async ValueTask<Result<TodoDto>> Handle(GetTodoById request, CancellationToken cancellationToken)
         {
             var todo = await todoRepository.FindByIdAsync(request.Id, cancellationToken);
 

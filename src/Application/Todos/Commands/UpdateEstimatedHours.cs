@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using MediatR;
+using Mediator;
 
 namespace TodoApp.Application.Todos.Commands;
 
@@ -24,7 +24,7 @@ public sealed record UpdateEstimatedHours(int Id, double? Hours) : IRequest<Resu
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<Result> Handle(UpdateEstimatedHours request, CancellationToken cancellationToken)
+        public async ValueTask<Result> Handle(UpdateEstimatedHours request, CancellationToken cancellationToken)
         {
             var todo = await todoRepository.FindByIdAsync(request.Id, cancellationToken);
 

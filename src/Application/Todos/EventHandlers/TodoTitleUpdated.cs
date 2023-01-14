@@ -1,4 +1,4 @@
-using MediatR;
+using Mediator;
 using TodoApp.Application.Common;
 using TodoApp.Application.Services;
 using TodoApp.Application.Todos.Dtos;
@@ -16,7 +16,7 @@ public sealed class TodoTitleUpdatedEventHandler : IDomainEventHandler<TodoTitle
         this.todoNotificationService = todoNotificationService;
     }
 
-    public async Task Handle(TodoTitleUpdated notification, CancellationToken cancellationToken)
+    public async ValueTask Handle(TodoTitleUpdated notification, CancellationToken cancellationToken)
     {
         var todo = await todoRepository.FindByIdAsync(notification.TodoId, cancellationToken);
 

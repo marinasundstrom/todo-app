@@ -16,7 +16,7 @@ public sealed class TodoAssignedUserEventHandler : IDomainEventHandler<TodoAssig
         this.todoNotificationService = todoNotificationService;
     }
 
-    public async Task Handle(TodoAssignedUserUpdated notification, CancellationToken cancellationToken)
+    public async ValueTask Handle(TodoAssignedUserUpdated notification, CancellationToken cancellationToken)
     {
         var todo = await todoRepository.FindByIdAsync(notification.TodoId, cancellationToken);
 

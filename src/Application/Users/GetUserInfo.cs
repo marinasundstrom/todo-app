@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using MediatR;
+using Mediator;
 
 namespace TodoApp.Application.Users;
 
@@ -23,7 +23,7 @@ public record GetUserInfo() : IRequest<Result<UserInfoDto>>
             this.currentUserService = currentUserService;
         }
 
-        public async Task<Result<UserInfoDto>> Handle(GetUserInfo request, CancellationToken cancellationToken)
+        public async ValueTask<Result<UserInfoDto>> Handle(GetUserInfo request, CancellationToken cancellationToken)
         {
             var user = await userRepository.FindByIdAsync(currentUserService.UserId!, cancellationToken);
 

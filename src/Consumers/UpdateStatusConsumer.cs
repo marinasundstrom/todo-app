@@ -1,5 +1,5 @@
 using MassTransit;
-using MediatR;
+using Mediator;
 using TodoApp.Contracts;
 
 namespace TodoApp.Consumers;

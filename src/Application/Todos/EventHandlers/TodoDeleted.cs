@@ -1,3 +1,4 @@
+using Mediator;
 using TodoApp.Application.Common;
 using TodoApp.Application.Services;
 using TodoApp.Domain.Entities;
@@ -15,7 +16,7 @@ public sealed class TodoDeletedEventHandler : IDomainEventHandler<TodoDeleted>
         this.todoNotificationService = todoNotificationService;
     }
 
-    public async Task Handle(TodoDeleted notification, CancellationToken cancellationToken)
+    public async ValueTask Handle(TodoDeleted notification, CancellationToken cancellationToken)
     {
         await todoNotificationService.Deleted(notification.TodoId, notification.Title);
     }

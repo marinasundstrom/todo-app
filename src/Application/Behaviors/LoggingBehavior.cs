@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using MediatR;
+using Mediator;
 using Microsoft.Extensions.Logging;
 using ValidationException = TodoApp.Application.Exceptions.ValidationException;
 
@@ -16,14 +16,14 @@ public sealed class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRe
         this.logger = logger;
     }
 
-    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+    public async ValueTask<TResponse> Handle(TRequest request, CancellationToken cancellationToken, MessageHandlerDelegate<TRequest, TResponse> next)
     {
         logger.LogInformation(
             "Starting request {@RequestName}, {@DateTimeUtc}",
             typeof(TRequest).Name,
             DateTime.UtcNow);
 
-        var response = await next();
+        var response = await next(request, cancellationToken);
 
         if (response is Result result && result.IsFailure)
         {
@@ -40,5 +40,10 @@ public sealed class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRe
                     DateTime.UtcNow);
 
         return response;
+    }
+
+    ValueTask<TResponse> IPipelineBehavior<TRequest, TResponse>.Handle(TRequest message, CancellationToken cancellationToken, MessageHandlerDelegate<TRequest, TResponse> next)
+    {
+        throw new NotImplementedException();
     }
 }

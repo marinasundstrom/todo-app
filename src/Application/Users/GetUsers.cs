@@ -1,4 +1,4 @@
-﻿using MediatR;
+﻿using Mediator;
 using Microsoft.EntityFrameworkCore;
 using TodoApp.Application.Common;
 using TodoApp.Domain.Enums;
@@ -16,7 +16,7 @@ public record GetUsers(int Page = 1, int PageSize = 10, string? SearchTerm = nul
             this.userRepository = userRepository;
         }
 
-        public async Task<ItemsResult<UserDto>> Handle(GetUsers request, CancellationToken cancellationToken)
+        public async ValueTask<ItemsResult<UserDto>> Handle(GetUsers request, CancellationToken cancellationToken)
         {
             var query = userRepository.GetAll();
 

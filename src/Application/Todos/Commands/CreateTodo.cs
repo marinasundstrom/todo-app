@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using MediatR;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 using TodoApp.Application.Todos.Dtos;
 
@@ -30,7 +30,7 @@ public sealed record CreateTodo(string Title, string? Description, TodoStatusDto
             this.domainEventDispatcher = domainEventDispatcher;
         }
 
-        public async Task<Result<TodoDto>> Handle(CreateTodo request, CancellationToken cancellationToken)
+        public async ValueTask<Result<TodoDto>> Handle(CreateTodo request, CancellationToken cancellationToken)
         {
             var todo = new Todo(request.Title, request.Description, (Domain.Enums.TodoStatus)request.Status);
 

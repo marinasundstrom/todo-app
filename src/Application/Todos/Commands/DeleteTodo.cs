@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using MediatR;
+using Mediator;
 
 namespace TodoApp.Application.Todos.Commands;
 
@@ -24,7 +24,7 @@ public sealed record DeleteTodo(int Id) : IRequest<Result>
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<Result> Handle(DeleteTodo request, CancellationToken cancellationToken)
+        public async ValueTask<Result> Handle(DeleteTodo request, CancellationToken cancellationToken)
         {
             var todo = await todoRepository.FindByIdAsync(request.Id, cancellationToken);
 

@@ -13,7 +13,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="LinqKit" Version="1.2.3" />
-		<PackageReference Include="MediatR.Contracts" Version="1.0.1" />
+		<PackageReference Include="Mediator.Abstractions" Version="2.1.0-preview.9" />
 	</ItemGroup>
 
 </Project>

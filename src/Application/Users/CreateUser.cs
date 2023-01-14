@@ -1,5 +1,5 @@
 using FluentValidation;
-using MediatR;
+using Mediator;
 
 namespace TodoApp.Application.Users;
 
@@ -28,7 +28,7 @@ public record CreateUser(string Name, string Email) : IRequest<Result<UserInfoDt
             this.currentUserService = currentUserService;
         }
 
-        public async Task<Result<UserInfoDto>> Handle(CreateUser request, CancellationToken cancellationToken)
+        public async ValueTask<Result<UserInfoDto>> Handle(CreateUser request, CancellationToken cancellationToken)
         {
             string userId = currentUserService.UserId!;
 
