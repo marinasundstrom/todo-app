@@ -27,7 +27,6 @@ public static class ServiceExtensions
 
 #if DEBUG
             options
-                .LogTo(Console.WriteLine)
                 .EnableSensitiveDataLogging();
 #endif
         });

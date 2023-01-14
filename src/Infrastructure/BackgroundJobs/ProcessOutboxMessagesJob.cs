@@ -27,7 +27,7 @@ public sealed class ProcessOutboxMessagesJob : IJob
 
     public async Task Execute(IJobExecutionContext context)
     {
-        logger.LogDebug("Processing Outbox");
+        logger.LogInformation("Processing Outbox");
 
         List<OutboxMessage> messages = await dbContext
             .Set<OutboxMessage>()
@@ -60,7 +60,7 @@ public sealed class ProcessOutboxMessagesJob : IJob
             outboxMessage.ProcessedOnUtc = DateTime.UtcNow;
         }
 
-        logger.LogDebug("Finished processing Outbox");
+        logger.LogInformation("Finished processing Outbox");
 
         await dbContext.SaveChangesAsync(context.CancellationToken);
     }
