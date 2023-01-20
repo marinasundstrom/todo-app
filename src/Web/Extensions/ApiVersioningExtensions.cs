@@ -20,7 +20,7 @@ public static class ApiVersioningExtensions
             option.GroupNameFormat = "VVV";
             option.SubstituteApiVersionInUrl = true;
         });
-        
+
         return services;
     }
 }

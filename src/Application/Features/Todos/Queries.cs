@@ -1,10 +1,9 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TodoApp.Application.Common;
-using TodoApp.Application.Todos.Dtos;
-using TodoApp.Domain.Enums;
 
-namespace TodoApp.Application.Todos.Queries;
+namespace TodoApp.Application.Features.Todos.Queries;
 
 public record GetTodos(TodoStatusDto? Status, string? AssignedTo, int Page = 1, int PageSize = 10, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<ItemsResult<TodoDto>>
 {
@@ -52,6 +51,39 @@ public record GetTodos(TodoStatusDto? Status, string? AssignedTo, int Page = 1, 
                 .ToArrayAsync(cancellationToken);
 
             return new ItemsResult<TodoDto>(todos.Select(x => x.ToDto()), totalCount);
+        }
+    }
+}
+
+public record GetTodoById(int Id) : IRequest<Result<TodoDto>>
+{
+    public class Validator : AbstractValidator<GetTodoById>
+    {
+        public Validator()
+        {
+            RuleFor(x => x.Id).NotEmpty();
+        }
+    }
+
+    public class Handler : IRequestHandler<GetTodoById, Result<TodoDto>>
+    {
+        private readonly ITodoRepository todoRepository;
+
+        public Handler(ITodoRepository todoRepository)
+        {
+            this.todoRepository = todoRepository;
+        }
+
+        public async Task<Result<TodoDto>> Handle(GetTodoById request, CancellationToken cancellationToken)
+        {
+            var todo = await todoRepository.FindByIdAsync(request.Id, cancellationToken);
+
+            if (todo is null)
+            {
+                return Result.Failure<TodoDto>(Errors.Todos.TodoNotFound);
+            }
+
+            return Result.Success(todo.ToDto());
         }
     }
 }

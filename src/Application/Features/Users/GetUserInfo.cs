@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
 
-namespace TodoApp.Application.Users;
+namespace TodoApp.Application.Features.Users;
 
 public record GetUserInfo() : IRequest<Result<UserInfoDto>>
 {

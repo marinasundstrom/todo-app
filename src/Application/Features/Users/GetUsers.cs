@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using TodoApp.Application.Common;
 using TodoApp.Domain.Enums;
 
-namespace TodoApp.Application.Users;
+namespace TodoApp.Application.Features.Users;
 
 public record GetUsers(int Page = 1, int PageSize = 10, string? SearchTerm = null, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<ItemsResult<UserDto>>
 {

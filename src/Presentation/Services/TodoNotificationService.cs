@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.SignalR;
+using TodoApp.Application.Features.Todos;
 using TodoApp.Application.Services;
-using TodoApp.Application.Todos.Dtos;
 
 namespace TodoApp.Presentation.Hubs;
 

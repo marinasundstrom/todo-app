@@ -5,9 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using TodoApp.Application;
 using TodoApp.Application.Common;
-using TodoApp.Application.Todos.Dtos;
-using TodoApp.Application.Todos.Queries;
-using TodoApp.Application.Users;
+using TodoApp.Application.Features.Todos;
+using TodoApp.Application.Features.Users;
 
 namespace TodoApp.Presentation.Controllers;
 

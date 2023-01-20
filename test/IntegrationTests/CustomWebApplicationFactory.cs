@@ -51,11 +51,11 @@ public sealed class CustomWebApplicationFactory<TStartup>
                     sp.GetRequiredService<OutboxSaveChangesInterceptor>(),
                     sp.GetRequiredService<AuditableEntitySaveChangesInterceptor>());
 
-    #if DEBUG
-                    options
-                        .LogTo(Console.WriteLine)
-                        .EnableSensitiveDataLogging();
-    #endif
+#if DEBUG
+                options
+                    .LogTo(Console.WriteLine)
+                    .EnableSensitiveDataLogging();
+#endif
             });
 
             services.AddMassTransitTestHarness(cfg =>

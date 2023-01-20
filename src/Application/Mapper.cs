@@ -1,5 +1,5 @@
-﻿using TodoApp.Application.Todos.Dtos;
-using TodoApp.Application.Users;
+﻿using TodoApp.Application.Features.Todos;
+using TodoApp.Application.Features.Users;
 
 namespace TodoApp.Application;
 
