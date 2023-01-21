@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Linq.Expressions;
-using LinqKit;
+﻿using System.Linq.Expressions;
 
 namespace TodoApp.Application.Specifications;
 
@@ -20,60 +18,5 @@ public abstract class BaseSpecification<T> : ISpecification<T>
     protected virtual void AddInclude(string includeString)
     {
         IncludeStrings.Add(includeString);
-    }
-}
-
-public class AndSpecification<T> : BaseSpecification<T>
-{
-    public AndSpecification(ISpecification<T> left, ISpecification<T> right)
-    {
-        var param = Expression.Parameter(typeof(T));
-
-        Criteria = left.Criteria.And(right.Criteria).Expand();
-
-        Includes.AddRange(left.Includes);
-        Includes.AddRange(right.Includes);
-
-        left.IncludeStrings
-            .Where(i => !IncludeStrings.Contains(i))
-            .ForEach(i => IncludeStrings.Add(i));
-
-        right.IncludeStrings
-            .Where(i => !IncludeStrings.Contains(i))
-            .ForEach(i => IncludeStrings.Add(i));
-    }
-}
-
-public class OrSpecification<T> : BaseSpecification<T>
-{
-    public OrSpecification(ISpecification<T> left, ISpecification<T> right)
-    {
-        var param = Expression.Parameter(typeof(T));
-
-        Criteria = left.Criteria.Or(right.Criteria).Expand();
-
-        Includes.AddRange(left.Includes);
-        Includes.AddRange(right.Includes);
-
-        left.IncludeStrings
-            .Where(i => !IncludeStrings.Contains(i))
-            .ForEach(i => IncludeStrings.Add(i));
-
-        right.IncludeStrings
-            .Where(i => !IncludeStrings.Contains(i))
-            .ForEach(i => IncludeStrings.Add(i));
-    }
-}
-
-public static class SpecificationExtensions
-{
-    public static ISpecification<T> And<T>(this ISpecification<T> left, ISpecification<T> right)
-    {
-        return new AndSpecification<T>(left, right);
-    }
-
-    public static ISpecification<T> Or<T>(this ISpecification<T> left, ISpecification<T> right)
-    {
-        return new OrSpecification<T>(left, right);
     }
 }
