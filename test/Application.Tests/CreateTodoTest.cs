@@ -4,14 +4,13 @@ using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
-using TodoApp.Application.Services;
-using TodoApp.Application.Todos.Dtos;
 using TodoApp.Application.Events;
+using TodoApp.Application.Features.Todos;
+using TodoApp.Application.Features.Todos.Commands;
+using TodoApp.Application.Services;
 using TodoApp.Infrastructure.Persistence;
 using TodoApp.Infrastructure.Persistence.Interceptors;
 using TodoApp.Infrastructure.Persistence.Repositories;
-using TodoApp.Infrastructure.Persistence.Repositories.Mocks;
-using Xunit;
 
 namespace TodoApp.Application.Todos.Commands;
 
@@ -44,7 +43,7 @@ public class CreateTodoTest
 
             await unitOfWork.Database.EnsureCreatedAsync();
 
-            unitOfWork.Users.Add(new Domain.Entities.User("foo", "Test Tesston", "test@foo.com"));
+            unitOfWork.Users.Add(new Entities.User("foo", "Test Tesston", "test@foo.com"));
 
             await unitOfWork.SaveChangesAsync();
 

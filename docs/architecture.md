@@ -10,7 +10,7 @@ Maximize Separation of Concern
 Reduce complexity and cognitive load
 Less projects
 
-Advantages of Clean Architecture (CA)
+Disadvantages of Clean Architecture (CA)
 
 ## CQRS
 

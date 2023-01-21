@@ -1,4 +1,5 @@
-﻿using TodoApp.Application.Entities;
+﻿using System.Linq;
+using TodoApp.Application.Entities;
 using TodoApp.Application.Enums;
 using TodoApp.Application.Events;
 
