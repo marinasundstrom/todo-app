@@ -7,10 +7,22 @@
     <RootNamespace>TodoApp.Application</RootNamespace>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <WarningsAsErrors>nullable</WarningsAsErrors>
-	<NoWarn>1701;1702;CS1591</NoWarn>
+	  <NoWarn>1701;1702;CS1591</NoWarn>
   </PropertyGroup>
 
-  <ItemGroup>
+  <PropertyGroup>
+		<IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
+	</PropertyGroup>	   
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="MassTransit.Abstractions" Version="8.0.10-develop.730" />
+	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
+	  <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.5.1" />
+    <PackageReference Include="LinqKit" Version="1.2.3" />
     <PackageReference Include="FluentValidation" Version="11.4.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.4.0" />
     <PackageReference Include="MediatR" Version="11.1.0" />
@@ -21,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\Domain.csproj" />
+		<ProjectReference Include="..\Contracts\Contracts.csproj" />
   </ItemGroup>
 
 </Project>

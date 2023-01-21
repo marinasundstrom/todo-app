@@ -45,7 +45,6 @@
 		<ProjectReference Include="..\Application\Application.csproj" />
 		<ProjectReference Include="..\Consumers\Consumers.csproj" />
 		<ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
-		<ProjectReference Include="..\Presentation\Presentation.csproj" />
 	</ItemGroup>
 
 </Project>
