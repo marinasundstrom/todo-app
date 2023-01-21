@@ -1,40 +1,6 @@
 # Design
 
-## Architecture
-
-### Vertical Slice Architecture
-
-Logically sliced vertically - by feature
-
-Eliminate unnecessary layers
-Emphasis on logical separation
-Maximize Separation of Concern
-Reduce complexity and cognitive load
-Less projects
-
-Advantages of Clean Architecture (CA)
-
-### CQRS
-
-TBA
-
-## Development methodologies
-
-### Domain-driven design (DDD)
-
-TBA
-
-### Behavior-driven development (BDD)
-
-TBA
-
-### Test-driven development (TDD)
-
-TBA
-
-## Application
-
-### Layers
+## Layers
 
 The appliction consists of layers which are represented by 3 projects.
 
@@ -44,7 +10,7 @@ The layers are:
 * Infrastructure
 * Web
 
-#### Dependencies between layers
+### Dependencies between layers
 
 * **Application** has no dependencies on the other layers.
 
@@ -52,7 +18,7 @@ The layers are:
 
 * **Web** is the hosting application, and it knows about the other two layers.
 
-### Concepts
+## Concepts
 
 Here are some concepts in this application that are worth knowing about:
 
@@ -66,7 +32,7 @@ Here are some concepts in this application that are worth knowing about:
 
 These last concepts (Request, Notifications, Handlers) belong to the CQRS and Event-driven architectural patterns, as implemented by the MediatR library.
 
-### Features
+## Features
 
 Types are grouped by feature, in the Features folder.
 
@@ -80,19 +46,19 @@ In a feature folder you might find these items:
 * Services
 * Other classes pertaining to the current feature.
 
-### Results
+## Results
 
 The ``Result`` class(es) are used for returning results, or eventual errors in the form of ``Error`` objects.
 
 Although results are commonly used in handlers, they can be used in services and domain objects.
 
-#### Errors
+### Errors
 
 Errors are known conditions that are represented by ``Error`` objects. Errors should be handled within the application logic.
 
 Ultimately, errors should preferably be surfaced to the user via the API.
 
-### Exceptions
+## Exceptions
 
 Exceptions are exceptional conditions that normally causes the application to unexpectedly crash.
 
