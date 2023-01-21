@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TodoApp.Domain;
+using TodoApp.Application;
 
-namespace TodoApp.Presentation;
+namespace TodoApp.Application;
 
 public static class ResultExtensions
 {

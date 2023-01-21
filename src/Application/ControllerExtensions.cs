@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TodoApp.Application;
-using TodoApp.Domain;
+using TodoApp.Application;
 
-namespace TodoApp.Presentation;
+namespace TodoApp.Application;
 
 public static class ControllerExtensions
 {

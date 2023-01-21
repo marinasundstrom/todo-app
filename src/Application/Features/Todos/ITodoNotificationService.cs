@@ -1,6 +1,6 @@
 using TodoApp.Application.Features.Todos;
 
-namespace TodoApp.Application.Services;
+namespace TodoApp.Application.Features.Todos;
 
 public interface ITodoNotificationService
 {

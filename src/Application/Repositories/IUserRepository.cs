@@ -1,7 +1,7 @@
-using TodoApp.Domain.Entities;
-using TodoApp.Domain.Specifications;
+using TodoApp.Application.Entities;
+using TodoApp.Application.Specifications;
 
-namespace TodoApp.Domain.Repositories;
+namespace TodoApp.Application.Repositories;
 
 public interface IUserRepository : IRepository<User, string>
 {

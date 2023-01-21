@@ -1,5 +1,5 @@
-﻿using TodoApp.Domain.Enums;
+﻿using TodoApp.Application.Enums;
 
-namespace TodoApp.Domain.Events;
+namespace TodoApp.Application.Events;
 
 public sealed record TodoStatusUpdated(int TodoId, TodoStatus NewStatus, TodoStatus OldStatus) : DomainEvent;

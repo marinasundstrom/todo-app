@@ -1,6 +1,6 @@
 using TodoApp.Application.Features.Todos;
 
-namespace TodoApp.Presentation.Hubs;
+namespace TodoApp.Application.Features.Todos;
 
 public interface ITodosHubClient
 {

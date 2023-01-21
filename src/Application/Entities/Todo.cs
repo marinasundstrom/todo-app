@@ -1,7 +1,7 @@
-﻿using TodoApp.Domain.Enums;
-using TodoApp.Domain.Events;
+﻿using TodoApp.Application.Enums;
+using TodoApp.Application.Events;
 
-namespace TodoApp.Domain.Entities;
+namespace TodoApp.Application.Entities;
 
 public class Todo : AggregateRoot<int>, IAuditable
 {

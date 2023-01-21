@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace TodoApp.Domain.Specifications;
+namespace TodoApp.Application.Specifications;
 
 public interface ISpecification<T>
 {

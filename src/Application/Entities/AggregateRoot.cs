@@ -1,4 +1,4 @@
-namespace TodoApp.Domain.Entities;
+namespace TodoApp.Application.Entities;
 
 public abstract class AggregateRoot<TId> : Entity<TId>
     where TId : notnull

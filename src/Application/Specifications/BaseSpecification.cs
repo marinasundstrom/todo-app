@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using LinqKit;
 
-namespace TodoApp.Domain.Specifications;
+namespace TodoApp.Application.Specifications;
 
 public abstract class BaseSpecification<T> : ISpecification<T>
 {

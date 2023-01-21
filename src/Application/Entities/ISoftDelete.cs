@@ -1,4 +1,4 @@
-﻿namespace TodoApp.Domain.Entities;
+﻿namespace TodoApp.Application.Entities;
 
 public interface ISoftDelete
 {

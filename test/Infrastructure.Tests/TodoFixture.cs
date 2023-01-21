@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using NSubstitute;
 using TodoApp.Application.Services;
-using TodoApp.Domain;
+using TodoApp.Application;
 using TodoApp.Infrastructure.Persistence;
 using TodoApp.Infrastructure.Persistence.Interceptors;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;

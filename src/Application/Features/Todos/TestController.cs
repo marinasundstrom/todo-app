@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.FeatureManagement.Mvc;
 using TodoApp.Contracts;
 
-namespace TodoApp.Presentation.Controllers;
+namespace TodoApp.Application.Features.Todos;
 
 [ApiController]
 [ApiVersion("1")]

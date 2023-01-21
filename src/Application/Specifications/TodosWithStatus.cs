@@ -1,8 +1,8 @@
 ﻿using System;
-using TodoApp.Domain.Entities;
-using TodoApp.Domain.Enums;
+using TodoApp.Application.Entities;
+using TodoApp.Application.Enums;
 
-namespace TodoApp.Domain.Specifications;
+namespace TodoApp.Application.Specifications;
 
 public class TodosWithStatus : BaseSpecification<Todo>
 {

@@ -1,14 +1,9 @@
-using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.RateLimiting;
-using TodoApp.Application;
 using TodoApp.Application.Common;
-using TodoApp.Application.Features.Todos;
-using TodoApp.Application.Features.Users;
 
-namespace TodoApp.Presentation.Controllers;
+namespace TodoApp.Application.Features.Users;
 
 [ApiController]
 [ApiVersion("1")]

@@ -9,7 +9,7 @@ using TodoApp.Application.Features.Todos;
 using TodoApp.Application.Features.Todos.Commands;
 using TodoApp.Application.Features.Todos.Queries;
 
-namespace TodoApp.Presentation.Controllers;
+namespace TodoApp.Application.Controllers;
 
 [ApiController]
 [ApiVersion("1")]

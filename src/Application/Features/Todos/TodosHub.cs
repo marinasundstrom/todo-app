@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 
-namespace TodoApp.Presentation.Hubs;
+namespace TodoApp.Application.Features.Todos;
 
 [Authorize]
 public sealed class TodosHub : Hub<ITodosHubClient>

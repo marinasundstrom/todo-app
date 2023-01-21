@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using NSubstitute;
 using TodoApp.Application.Services;
 using TodoApp.Application.Todos.Dtos;
-using TodoApp.Domain.Events;
+using TodoApp.Application.Events;
 using TodoApp.Infrastructure.Persistence;
 using TodoApp.Infrastructure.Persistence.Interceptors;
 using TodoApp.Infrastructure.Persistence.Repositories;

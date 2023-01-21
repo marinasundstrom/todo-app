@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using TodoApp.Presentation.Hubs;
+using TodoApp.Application.Features.Todos;
 
-namespace TodoApp.Presentation;
+namespace TodoApp.Application;
 
 public static class WebApplicationExtensions
 {

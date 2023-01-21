@@ -1,4 +1,4 @@
-﻿namespace TodoApp.Domain;
+﻿namespace TodoApp.Application;
 
 public static class Extensions
 {

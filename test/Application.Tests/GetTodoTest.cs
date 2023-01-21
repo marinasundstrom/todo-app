@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using NSubstitute;
 using TodoApp.Application.Services;
 using TodoApp.Application.Todos.Queries;
-using TodoApp.Domain;
+using TodoApp.Application;
 using TodoApp.Infrastructure.Persistence;
 using TodoApp.Infrastructure.Persistence.Repositories;
 using TodoApp.Infrastructure.Persistence.Repositories.Mocks;

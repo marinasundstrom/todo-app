@@ -1,15 +1,15 @@
-﻿using TodoApp.Domain.Entities;
-using TodoApp.Domain.Enums;
-using TodoApp.Domain.Events;
+﻿using TodoApp.Application.Entities;
+using TodoApp.Application.Enums;
+using TodoApp.Application.Events;
 
-namespace TodoApp.Domain.Tests;
+namespace TodoApp.Application.Tests;
 
 public class TodoTest
 {
     [Fact]
     public void CreateTodo()
     {
-        var todo = new Todo("Foo", "Bar", TodoApp.Domain.Enums.TodoStatus.NotStarted);
+        var todo = new Todo("Foo", "Bar", TodoApp.Application.Enums.TodoStatus.NotStarted);
 
         //todo.DomainEvents.OfType<TodoCreated>().Should().ContainSingle();
     }
@@ -20,7 +20,7 @@ public class TodoTest
         // Arrange
         var oldTitle = "Foo";
 
-        var todo = new Todo(oldTitle, "Bar", TodoApp.Domain.Enums.TodoStatus.NotStarted);
+        var todo = new Todo(oldTitle, "Bar", TodoApp.Application.Enums.TodoStatus.NotStarted);
 
         var newTitle = "Zack";
 
@@ -41,7 +41,7 @@ public class TodoTest
         // Arrange
         var oldDescription = "Bar";
 
-        var todo = new Todo("Foo", oldDescription, TodoApp.Domain.Enums.TodoStatus.NotStarted);
+        var todo = new Todo("Foo", oldDescription, TodoApp.Application.Enums.TodoStatus.NotStarted);
 
         var newDescription = "This is a new description";
 
@@ -60,7 +60,7 @@ public class TodoTest
     public void UpdateStatus()
     {
         // Arrange
-        var oldStatus = TodoApp.Domain.Enums.TodoStatus.NotStarted;
+        var oldStatus = TodoApp.Application.Enums.TodoStatus.NotStarted;
 
         var todo = new Todo("Foo", "Bar", oldStatus);
 

@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.SignalR;
 using TodoApp.Application.Features.Todos;
-using TodoApp.Application.Services;
 
-namespace TodoApp.Presentation.Hubs;
+namespace TodoApp.Application.Features.Todos;
 
 public class TodoNotificationService : ITodoNotificationService
 {

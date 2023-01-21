@@ -1,4 +1,4 @@
-﻿namespace TodoApp.Domain.Exceptions;
+﻿namespace TodoApp.Application.Exceptions;
 
 public class ApplicationException : Exception
 {

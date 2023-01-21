@@ -5,17 +5,17 @@ namespace TodoApp.Architecture.Tests;
 
 public class ArchitectureTests
 {
-    private const string DomainNamespace = "TodoApp.Domain";
+    private const string DomainNamespace = "TodoApp.Application";
     private const string ApplicationNamespace = "TodoApp.Application";
     private const string InfrastructureNamespace = "TodoApp.Infrastructure";
-    private const string PresentationNamespace = "TodoApp.Presentation";
+    private const string PresentationNamespace = "TodoApp.Application";
     private const string WebNamespace = "TodoApp.Web";
 
     [Fact]
     public void Domain_Should_Not_HaveDependencyOnOtherProjects()
     {
         // Arrange
-        var assembly = typeof(TodoApp.Domain.Extensions).Assembly;
+        var assembly = typeof(TodoApp.Application.Extensions).Assembly;
 
         var otherProjects = new[]
         {
@@ -130,7 +130,7 @@ public class ArchitectureTests
     public void Controllers_Should_Not_HaveDependencyOnMediatR()
     {
         // Arrange
-        var assembly = typeof(TodoApp.Presentation.ServiceExtensions).Assembly;
+        var assembly = typeof(TodoApp.Application.ServiceExtensions).Assembly;
 
         // Act
         var testResult = Types

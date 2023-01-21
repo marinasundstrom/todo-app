@@ -1,6 +1,6 @@
 ﻿using TodoApp.Application;
 using TodoApp.Infrastructure;
-using TodoApp.Presentation;
+using TodoApp.Application;
 
 namespace TodoApp.Web.Extensions;
 

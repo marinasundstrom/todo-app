@@ -1,4 +1,4 @@
-namespace TodoApp.Domain.ValueObjects;
+namespace TodoApp.Application.ValueObjects;
 
 public abstract class ValueObject : IEquatable<ValueObject>
 {
