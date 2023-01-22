@@ -2,7 +2,7 @@
 
 Reference project for an application organized into a Vertical Slice Architecture (VSA) with focus on Featured and Use Cases.
 
-This project started out as an implementation of Clean Architecture (CA).
+This project started out as an implementation of Clean Architecture (CA). For comparison, the [last commit](https://github.com/marinasundstrom/todo-app/commit/b83a117c4be4cdd973f307d183bb41287d987540) before moving to VSA.
 
 Let's you quickly build an enterprise-ready web app with focus on Use Cases first.
 
