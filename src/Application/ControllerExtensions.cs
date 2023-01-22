@@ -6,6 +6,7 @@ namespace TodoApp.Application;
 
 public static class ControllerExtensions
 {
+    /*
     public static ActionResult HandleResult(this ControllerBase controller, Result result) => result.Handle(
             onSuccess: () => controller.Ok(),
             onError: error =>
@@ -27,4 +28,6 @@ public static class ControllerExtensions
                 }
                 return controller.Problem(detail: error.Detail, title: error.Title, type: error.Id);
             });
+
+    */
 }

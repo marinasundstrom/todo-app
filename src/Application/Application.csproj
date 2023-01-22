@@ -20,7 +20,6 @@
 
 	<ItemGroup>
 	  <PackageReference Include="MassTransit.Abstractions" Version="8.0.11" />
-	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
 	  <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.5.1" />
     <PackageReference Include="LinqKit" Version="1.2.3" />
     <PackageReference Include="FluentValidation" Version="11.4.0" />
@@ -30,6 +29,9 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.2" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="Asp.Versioning.Http" Version="7.0.0" />
+    <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="7.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.2" />
   </ItemGroup>
 
   <ItemGroup>

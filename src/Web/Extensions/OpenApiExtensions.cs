@@ -1,4 +1,5 @@
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Asp.Versioning;
+using Asp.Versioning.ApiExplorer;
 using NSwag;
 using NSwag.Generation.Processors.Security;
 
@@ -16,15 +17,16 @@ public static class OpenApiExtensions
 
         foreach (ApiVersionDescription description in provider.ApiVersionDescriptions)
         {
+
             services.AddOpenApiDocument(config =>
             {
-                config.DocumentName = $"v{description.ApiVersion}";
+                config.DocumentName = $"v{GetApiVersion(description)}";
                 config.PostProcess = document =>
                 {
                     document.Info.Title = "Todo API";
-                    document.Info.Version = $"v{description.ApiVersion.ToString()}";
+                    document.Info.Version = $"v{GetApiVersion(description)}";
                 };
-                config.ApiGroupNames = new[] { description.ApiVersion.ToString() };
+                config.ApiGroupNames = new[] { GetApiVersion(description) };
 
                 config.AddSecurity("JWT", new OpenApiSecurityScheme
                 {
@@ -41,5 +43,13 @@ public static class OpenApiExtensions
         }
 
         return services;
+    }
+
+    private static string GetApiVersion(ApiVersionDescription description)
+    {
+        var apiVersion = description.ApiVersion;
+        return (apiVersion.MinorVersion == 0
+            ? apiVersion.MajorVersion.ToString()
+            : apiVersion.ToString())!;
     }
 }

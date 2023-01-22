@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using TodoApp.Application;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TodoApp.Application;
 
 public static class ResultExtensions
 {
-    public static ActionResult Handle(this Result result, Func<ActionResult> onSuccess, Func<Error, ActionResult> onError) => result.IsFailure ? onError(result) : onSuccess();
+    public static IResult Handle(this Result result, Func<IResult> onSuccess, Func<Error, IResult> onError) => result.IsFailure ? onError(result) : onSuccess();
 
-    public static ActionResult Handle<T>(this Result<T> result, Func<T, ActionResult> onSuccess, Func<Error, ActionResult> onError) => result.IsFailure ? onError(result) : onSuccess(result);
+    public static IResult Handle<T>(this Result<T> result, Func<T, IResult> onSuccess, Func<Error, IResult> onError) => result.IsFailure ? onError(result) : onSuccess(result);
 }

@@ -11,6 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
 
+builder.Services.AddProblemDetails();
+builder.Services.AddEndpointsApiExplorer();
+
 builder.Services
     .AddCorsService()
     .AddHttpContextAccessor()
@@ -53,7 +56,9 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.MapControllers();
+//app.MapControllers();
+
+app.MapApplicationEndpoints();
 
 app.MapHealthChecks("/healthz", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions()
 {
@@ -61,7 +66,7 @@ app.MapHealthChecks("/healthz", new Microsoft.AspNetCore.Diagnostics.HealthCheck
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
 
-app.MapHubsForApp();
+app.MapApplicationHubs();
 
 app.UseRateLimiter();
 

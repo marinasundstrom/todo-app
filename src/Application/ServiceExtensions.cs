@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using TodoApp.Application.Behaviors;
-using TodoApp.Application.Controllers;
 using TodoApp.Application.Features.Todos;
 
 namespace TodoApp.Application;
@@ -31,10 +30,12 @@ public static class ServiceExtensions
 
     public static IServiceCollection AddControllersForApp(this IServiceCollection services)
     {
+        /*
         var assembly = typeof(TodosController).Assembly;
 
         services.AddControllers()
             .AddApplicationPart(assembly);
+        */
 
         return services;
     }

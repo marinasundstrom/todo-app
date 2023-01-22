@@ -6,6 +6,7 @@ using TodoApp.Contracts;
 
 namespace TodoApp.Application.Features.Todos;
 
+/*
 [ApiController]
 [ApiVersion("1")]
 [Route("v{version:apiVersion}/[controller]")]
@@ -27,3 +28,4 @@ public sealed class Test : ControllerBase
         await publishEndpoint.Publish(new UpdateStatus(id, (Contracts.TodoStatus)status), cancellationToken);
     }
 }
+*/
