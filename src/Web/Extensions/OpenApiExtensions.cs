@@ -9,15 +9,13 @@ public static class OpenApiExtensions
 {
     public static IServiceCollection AddOpenApi(this IServiceCollection services, WebApplicationBuilder builder)
     {
-#pragma warning disable ASP0000 // Do not call 'IServiceCollection.BuildServiceProvider' in 'ConfigureServices'
-        var provider = builder.Services
-            .BuildServiceProvider()
-            .GetRequiredService<IApiVersionDescriptionProvider>();
-#pragma warning restore ASP0000 // Do not call 'IServiceCollection.BuildServiceProvider' in 'ConfigureServices'
+        var apiVersionDescriptions = new [] {
+            (ApiVersion: new ApiVersion(1, 0), foo: 1),
+            (ApiVersion: new ApiVersion(2, 0), foo: 1)
+        };
 
-        foreach (ApiVersionDescription description in provider.ApiVersionDescriptions)
+        foreach (var description in apiVersionDescriptions)
         {
-
             services.AddOpenApiDocument(config =>
             {
                 config.DocumentName = $"v{GetApiVersion(description)}";
@@ -45,7 +43,7 @@ public static class OpenApiExtensions
         return services;
     }
 
-    private static string GetApiVersion(ApiVersionDescription description)
+    private static string GetApiVersion((ApiVersion ApiVersion, int foo)  description)
     {
         var apiVersion = description.ApiVersion;
         return (apiVersion.MinorVersion == 0

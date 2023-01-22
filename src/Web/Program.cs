@@ -6,6 +6,7 @@ using TodoApp.Application;
 using TodoApp.Web.Extensions;
 using TodoApp.Web.Middleware;
 using TodoApp.Web.Services;
+using NSwag.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,9 +42,6 @@ app.UseRouting();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-
-    app.UseOpenApi();
-    app.UseSwaggerUi3();
 }
 
 app.UseCors(CorsExtensions.MyAllowSpecificOrigins);
@@ -67,6 +65,32 @@ app.MapHealthChecks("/healthz", new Microsoft.AspNetCore.Diagnostics.HealthCheck
 });
 
 app.MapApplicationHubs();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseOpenApi();
+
+    app.UseSwaggerUi3(options => {
+        var descriptions = app.DescribeApiVersions();
+
+        // build a swagger endpoint for each discovered API version
+        foreach (var description in descriptions)
+        {
+            var name = $"v{description.ApiVersion}";
+            var url = $"/swagger/v{GetApiVersion(description)}/swagger.json";
+
+            options.SwaggerRoutes.Add(new SwaggerUi3Route(name, url));
+        }
+    });
+
+    static string GetApiVersion(Asp.Versioning.ApiExplorer.ApiVersionDescription description)
+    {
+        var apiVersion = description.ApiVersion;
+        return (apiVersion.MinorVersion == 0
+            ? apiVersion.MajorVersion.ToString()
+            : apiVersion.ToString())!;
+    }
+}
 
 app.UseRateLimiter();
 
