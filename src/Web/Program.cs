@@ -2,14 +2,18 @@ using HealthChecks.UI.Client;
 using Microsoft.EntityFrameworkCore;
 using TodoApp.Application.Services;
 using TodoApp.Infrastructure.Persistence;
-using TodoApp.Presentation;
+using TodoApp.Application;
 using TodoApp.Web.Extensions;
 using TodoApp.Web.Middleware;
 using TodoApp.Web.Services;
+using NSwag.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
+
+builder.Services.AddProblemDetails();
+builder.Services.AddEndpointsApiExplorer();
 
 builder.Services
     .AddCorsService()
@@ -38,9 +42,6 @@ app.UseRouting();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-
-    app.UseOpenApi();
-    app.UseSwaggerUi3();
 }
 
 app.UseCors(CorsExtensions.MyAllowSpecificOrigins);
@@ -53,7 +54,9 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.MapControllers();
+//app.MapControllers();
+
+app.MapApplicationEndpoints();
 
 app.MapHealthChecks("/healthz", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions()
 {
@@ -61,7 +64,33 @@ app.MapHealthChecks("/healthz", new Microsoft.AspNetCore.Diagnostics.HealthCheck
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
 
-app.MapHubsForApp();
+app.MapApplicationHubs();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseOpenApi();
+
+    app.UseSwaggerUi3(options => {
+        var descriptions = app.DescribeApiVersions();
+
+        // build a swagger endpoint for each discovered API version
+        foreach (var description in descriptions)
+        {
+            var name = $"v{description.ApiVersion}";
+            var url = $"/swagger/v{GetApiVersion(description)}/swagger.json";
+
+            options.SwaggerRoutes.Add(new SwaggerUi3Route(name, url));
+        }
+    });
+
+    static string GetApiVersion(Asp.Versioning.ApiExplorer.ApiVersionDescription description)
+    {
+        var apiVersion = description.ApiVersion;
+        return (apiVersion.MinorVersion == 0
+            ? apiVersion.MajorVersion.ToString()
+            : apiVersion.ToString())!;
+    }
+}
 
 app.UseRateLimiter();
 

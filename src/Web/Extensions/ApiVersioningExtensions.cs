@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Versioning;
+using Asp.Versioning;
+using Asp.Versioning.ApiExplorer;
 
 namespace TodoApp.Web.Extensions;
 
@@ -13,13 +13,13 @@ public static class ApiVersioningExtensions
             options.DefaultApiVersion = new ApiVersion(1, 0);
             options.ReportApiVersions = true;
             options.ApiVersionReader = new UrlSegmentApiVersionReader();
-        });
-
-        services.AddVersionedApiExplorer(option =>
+        })
+       .AddApiExplorer(option =>
         {
             option.GroupNameFormat = "VVV";
             option.SubstituteApiVersionInUrl = true;
-        });
+        })
+        .EnableApiVersionBinding();
 
         return services;
     }

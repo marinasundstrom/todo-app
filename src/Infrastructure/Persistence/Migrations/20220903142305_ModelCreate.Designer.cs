@@ -24,7 +24,7 @@ namespace TodoApp.Infrastructure.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("TodoApp.Domain.Entities.Todo", b =>
+            modelBuilder.Entity("TodoApp.Application.Entities.Todo", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");

@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using ValidationException = TodoApp.Application.Exceptions.ValidationException;
 
 namespace TodoApp.Application.Behaviors;
 

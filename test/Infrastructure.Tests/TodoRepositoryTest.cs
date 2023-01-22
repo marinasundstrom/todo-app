@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Polly;
-using TodoApp.Domain.Entities;
+using TodoApp.Application.Entities;
 using TodoApp.Infrastructure.Persistence;
 using TodoApp.Infrastructure.Persistence.Repositories;
 
@@ -21,7 +21,7 @@ public class TodoRepositoryTest
     {
         var unitOfWork = fixture.CreateDbContext();
 
-        unitOfWork.Users.Add(new Domain.Entities.User("foo", "Test Tesston", "test@foo.com"));
+        unitOfWork.Users.Add(new User("foo", "Test Tesston", "test@foo.com"));
 
         await unitOfWork.SaveChangesAsync();
 
@@ -43,7 +43,7 @@ public class TodoRepositoryTest
     {
         var unitOfWork = fixture.CreateDbContext();
 
-        unitOfWork.Users.Add(new Domain.Entities.User("foo", "Test Tesston", "test@foo.com"));
+        unitOfWork.Users.Add(new User("foo", "Test Tesston", "test@foo.com"));
 
         await unitOfWork.SaveChangesAsync();
 

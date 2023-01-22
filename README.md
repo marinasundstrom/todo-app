@@ -1,8 +1,10 @@
 # Todo App
 
-Reference project for Clean architecture with focus on Use Cases.
+Reference project for an application organized into a Vertical Slice Architecture (VSA) with focus on Featured and Use Cases.
 
-Let's you quickly build an entreprise-ready web app with focus on Use Cases first.
+This project started out as an implementation of Clean Architecture (CA).
+
+Let's you quickly build an enterprise-ready web app with focus on Use Cases first.
 
 To run this solution, Install .NET Tye and Docker.
 
@@ -24,9 +26,9 @@ Feel free to adopt and modify this to your own needs. Instructions below.
 
 ## Contents
 
-* Architecture: Clean Architecture / Layered Architecture / Event-driven architecture
+* Architecture: Vertical Slice Architecture (VSA) / Event-driven architecture
 * CQRS
-* Tests - Architecture, Application, Domain, Integration Tests (with TestContainers)
+* Tests - Application, Integration Tests (with TestContainers)
 * Client app in Blazor and MudBlazor
   * Localization
   * Theming - Dark mode
