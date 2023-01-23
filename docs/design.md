@@ -1,5 +1,7 @@
 # Design
 
+This document aims at describing the structure of this project, and the technical concepts in this solution.
+
 ## Layers
 
 The appliction consists of layers which are represented by 3 projects.
@@ -24,7 +26,7 @@ Here are some concepts in this application that are worth knowing about:
 
 * **Domain objects** are objects that represent objects or concepts in the business domain, or problem domain. This includes Entities, Aggregates, and Value Objects.
 
-* **Repositories** purpose is to retrieve and persist Aggregates.
+* **Repositories** purpose is to retrieve and persist Aggregates (Aggregate Roots).
 
 * **Feature** is a distinctive piece of functionality within the application. What defines the feature is the area it deals with. Structurally, it is a logical grouping of artifacts that participate in that feature, like Requests, Handlers, Controllers etc.
 
@@ -54,9 +56,9 @@ If two instances of an entity type share the same identity (Id) then they repres
 
 #### Aggregates
 
-When an entity is dependant on another they  form what is called an "Aggregate". 
+When entities are dependant on each other they form what is called an "Aggregate". 
 
-Technically belongs here, but check the section "Aggregates" below.
+Technically belongs here, but check the "Aggregates" section below.
 
 ### Value Objects
 
@@ -80,14 +82,15 @@ One use case for guarded types is representing entity identifiers. Instead of ha
 
 ### Aggregates
 
-An aggregate entity, or "aggregate" for short, is an entity that directly depends on other entities. It acts as a _consistency boundary_ for all the changes to itself and the entities that it is depending on. 
+An aggregate is a set of entities that are depending on each other. Their main characteristic is consistency.
 
-An aggregate ensures that any changes to the aggregate gets committed or saved in one consistent transaction.
+The top or root entity within an aggregate is referred to as the "Aggregate Root".
+
+An Aggregate Root acts as a _consistency boundary_ for all the changes to itself and the entities that it is mutually depending on. It ensures that any changes to the aggregate gets committed or saved in one consistent transaction.
+
+An example of an aggregate is a ```Menu``` (Aggregate root) that has some ```MenuItems```. Because we are looking for consistency we can only change a particular menu item by retrieving it as part of the menu aggregate. This might be because, as a business rule, by changing some parameter for a menu item the actual serving amount could change for that menu. That is the meaning of _consistency_ within an aggregate.
 
 Designing an aggregate is not always straightforward. You have to determine what entities is essential for the operation that the aggregate handles. Then you design it so that only the entities that are supposed to get modified can be modified.
-
-
-An example of an aggregate is a ```Menu``` that has some ```MenuItems```. Because we are looking for consistency we can only change the menu items by retrieving the menu. As an example, as a business rule, by changing some parameter for a menu item the actual serving amount for that menu could change. That is the meaning of _consistency_ within an aggregate.
 
 Here are some vices:
 
@@ -95,7 +98,7 @@ An aggregate entity should only refer to non-essential entities by their Id. In 
 
 ## Repositories
 
-A repository is responsible in retrieving and persisting aggregates. This is unlike a repository in a traditional Data Access Layer (DAL) which mainly acts as an abstraction for retrieving data from a database.
+A repository is responsible in retrieving and persisting Aggregates - more precisely Aggregate Roots. This is unlike a repository in a traditional Data Access Layer (DAL) which mainly acts as an abstraction for retrieving data from a database.
 
 Aggregates are entities that depend on other entities for which it acts as a consistency boundary.
 
@@ -114,6 +117,18 @@ In a feature folder you might find these items:
 * SignalR Hubs
 * Services
 * Other classes pertaining to the current feature.
+
+## Requests
+
+TBA
+
+## Notifications
+
+TBA
+
+## Services
+
+TBA
 
 ## Results
 
