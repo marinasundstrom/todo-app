@@ -44,7 +44,7 @@ public sealed class AuditableEntitySaveChangesInterceptor : SaveChangesIntercept
             }
             else if (entry.State == EntityState.Modified || entry.HasChangedOwnedEntities())
             {
-                entry.Entity.LastModifiedById = _currentUserService.UserId;
+                entry.Entity.LastModifiedById = (_currentUserService.UserId ?? null)!;
                 entry.Entity.LastModified = _dateTime.Now;
             }
             else if (entry.State == EntityState.Deleted)

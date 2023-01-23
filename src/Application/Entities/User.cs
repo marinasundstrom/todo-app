@@ -1,16 +1,18 @@
+using TodoApp.Application.ValueObjects;
+
 namespace TodoApp.Application.Entities;
 
-public class User : AggregateRoot<string>, IAuditable
+public class User : AggregateRoot<UserId>, IAuditable
 {
 #nullable disable
 
-    protected User() : base(null)
+    protected User() : base(new UserId(null))
     {
     }
 
 #nullable restore
 
-    public User(string id, string name, string email)
+    public User(UserId id, string name, string email)
         : base(id)
     {
         Name = name;
@@ -22,10 +24,10 @@ public class User : AggregateRoot<string>, IAuditable
     public string Email { get; private set; }
 
     public User CreatedBy { get; set; } = null!;
-    public string CreatedById { get; set; } = null!;
+    public UserId CreatedById { get; set; } = null!;
     public DateTimeOffset Created { get; set; }
 
     public User? LastModifiedBy { get; set; }
-    public string? LastModifiedById { get; set; }
+    public UserId? LastModifiedById { get; set; }
     public DateTimeOffset? LastModified { get; set; }
 }

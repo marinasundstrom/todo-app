@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TodoApp.Application.Specifications;
+using TodoApp.Application.ValueObjects;
 
 namespace TodoApp.Infrastructure.Persistence.Repositories;
 
@@ -21,7 +22,7 @@ public sealed class UserRepository : IUserRepository
         return dbSet.AsQueryable();
     }
 
-    public async Task<User?> FindByIdAsync(string id, CancellationToken cancellationToken = default)
+    public async Task<User?> FindByIdAsync(UserId id, CancellationToken cancellationToken = default)
     {
         return await dbSet.FirstOrDefaultAsync(x => x.Id.Equals(id), cancellationToken);
     }

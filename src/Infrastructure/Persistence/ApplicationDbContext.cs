@@ -1,6 +1,8 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using TodoApp.Application.ValueObjects;
+using TodoApp.Infrastructure.Persistence.ValueConverters;
 
 namespace TodoApp.Infrastructure.Persistence;
 
@@ -67,6 +69,12 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork
 
             modelBuilder.Entity(entityType).HasQueryFilter(lambda);
         }
+    }
+
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        configurationBuilder.Properties<TodoId>().HaveConversion<TodoIdConverter>();
+        configurationBuilder.Properties<UserId>().HaveConversion<UserIdConverter>();
     }
 
 #nullable disable

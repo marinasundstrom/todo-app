@@ -1,16 +1,15 @@
-﻿using TodoApp.Application.Enums;
-using TodoApp.Application.Events;
+﻿using TodoApp.Application.ValueObjects;
 
 namespace TodoApp.Application.Entities;
 
-public class Todo : AggregateRoot<int>, IAuditable
+public class Todo : AggregateRoot<TodoId>, IAuditable
 {
-    protected Todo() : base(0)
+    protected Todo() : base(new TodoId(0))
     {
     }
 
     public Todo(string title, string? description, TodoStatus status = TodoStatus.NotStarted)
-        : base(0)
+        : base(new TodoId(0))
     {
         Title = title;
         Description = description;
@@ -26,8 +25,11 @@ public class Todo : AggregateRoot<int>, IAuditable
         {
             Title = title;
 
-            AddDomainEvent(new TodoUpdated(Id));
-            AddDomainEvent(new TodoTitleUpdated(Id, title));
+            if (Id != default) 
+            {
+                AddDomainEvent(new TodoUpdated(Id));
+                AddDomainEvent(new TodoTitleUpdated(Id, title));
+            }
 
             return true;
         }
@@ -44,8 +46,11 @@ public class Todo : AggregateRoot<int>, IAuditable
         {
             Description = description;
 
-            AddDomainEvent(new TodoUpdated(Id));
-            AddDomainEvent(new TodoDescriptionUpdated(Id, description));
+            if (Id != default) 
+            {
+                AddDomainEvent(new TodoUpdated(Id));
+                AddDomainEvent(new TodoDescriptionUpdated(Id, description));
+            }
 
             return true;
         }
@@ -62,8 +67,11 @@ public class Todo : AggregateRoot<int>, IAuditable
         {
             Status = status;
 
-            AddDomainEvent(new TodoUpdated(Id));
-            AddDomainEvent(new TodoStatusUpdated(Id, status, oldStatus));
+            if (Id != default) 
+            {
+                AddDomainEvent(new TodoUpdated(Id));
+                AddDomainEvent(new TodoStatusUpdated(Id, status, oldStatus));
+            }
 
             return true;
         }
@@ -73,15 +81,19 @@ public class Todo : AggregateRoot<int>, IAuditable
 
     public User? AssignedTo { get; private set; }
 
-    public string? AssignedToId { get; private set; }
+    public UserId? AssignedToId { get; private set; }
 
-    public bool UpdateAssignedTo(string? userId)
+    public bool UpdateAssignedTo(UserId? userId)
     {
         var oldAssignedToId = AssignedToId;
         if (userId != oldAssignedToId)
         {
             AssignedToId = userId;
-            AddDomainEvent(new TodoAssignedUserUpdated(Id, userId, oldAssignedToId));
+
+            if (Id != default) 
+            {
+                AddDomainEvent(new TodoAssignedUserUpdated(Id, userId, oldAssignedToId));
+            }
 
             return true;
         }
@@ -98,8 +110,11 @@ public class Todo : AggregateRoot<int>, IAuditable
         {
             EstimatedHours = hours;
 
-            AddDomainEvent(new TodoUpdated(Id));
-            AddDomainEvent(new TodoEstimatedHoursUpdated(Id, hours, oldHours));
+            if (Id != default) 
+            {
+                AddDomainEvent(new TodoUpdated(Id));
+                AddDomainEvent(new TodoEstimatedHoursUpdated(Id, hours, oldHours));
+            }
 
             return true;
         }
@@ -115,9 +130,12 @@ public class Todo : AggregateRoot<int>, IAuditable
         if (hours != oldHours)
         {
             RemainingHours = hours;
-
-            AddDomainEvent(new TodoUpdated(Id));
-            AddDomainEvent(new TodoRemainingHoursUpdated(Id, hours, oldHours));
+            
+            if (Id != default) 
+            {
+                AddDomainEvent(new TodoUpdated(Id));
+                AddDomainEvent(new TodoRemainingHoursUpdated(Id, hours, oldHours));
+            }
 
             return true;
         }
@@ -126,10 +144,10 @@ public class Todo : AggregateRoot<int>, IAuditable
     }
 
     public User CreatedBy { get; set; } = null!;
-    public string CreatedById { get; set; } = null!;
+    public UserId CreatedById { get; set; } = null!;
     public DateTimeOffset Created { get; set; }
 
     public User? LastModifiedBy { get; set; }
-    public string? LastModifiedById { get; set; }
+    public UserId? LastModifiedById { get; set; }
     public DateTimeOffset? LastModified { get; set; }
 }

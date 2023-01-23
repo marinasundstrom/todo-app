@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using TodoApp.Application.ValueObjects;
 
 namespace TodoApp.Application.Features.Todos.Commands;
 
@@ -62,7 +63,7 @@ public sealed record CreateTodo(string Title, string? Description, TodoStatusDto
     }
 }
 
-public sealed record DeleteTodo(int Id) : IRequest<Result>
+public sealed record DeleteTodo(TodoId Id) : IRequest<Result>
 {
     public sealed class Validator : AbstractValidator<DeleteTodo>
     {
@@ -103,7 +104,7 @@ public sealed record DeleteTodo(int Id) : IRequest<Result>
     }
 }
 
-public sealed record UpdateAssignedUser(int Id, string? UserId) : IRequest<Result>
+public sealed record UpdateAssignedUser(TodoId Id, string? UserId) : IRequest<Result>
 {
     public sealed class Validator : AbstractValidator<UpdateAssignedUser>
     {
@@ -153,7 +154,7 @@ public sealed record UpdateAssignedUser(int Id, string? UserId) : IRequest<Resul
     }
 }
 
-public sealed record UpdateDescription(int Id, string? Description) : IRequest<Result>
+public sealed record UpdateDescription(TodoId Id, string? Description) : IRequest<Result>
 {
     public sealed class Validator : AbstractValidator<UpdateDescription>
     {
@@ -193,7 +194,7 @@ public sealed record UpdateDescription(int Id, string? Description) : IRequest<R
     }
 }
 
-public sealed record UpdateEstimatedHours(int Id, double? Hours) : IRequest<Result>
+public sealed record UpdateEstimatedHours(TodoId Id, double? Hours) : IRequest<Result>
 {
     public sealed class Validator : AbstractValidator<UpdateEstimatedHours>
     {
@@ -231,7 +232,7 @@ public sealed record UpdateEstimatedHours(int Id, double? Hours) : IRequest<Resu
     }
 }
 
-public sealed record UpdateRemainingHours(int Id, double? Hours) : IRequest<Result>
+public sealed record UpdateRemainingHours(TodoId Id, double? Hours) : IRequest<Result>
 {
     public sealed class Validator : AbstractValidator<UpdateRemainingHours>
     {
@@ -269,7 +270,7 @@ public sealed record UpdateRemainingHours(int Id, double? Hours) : IRequest<Resu
     }
 }
 
-public sealed record UpdateStatus(int Id, TodoStatusDto Status) : IRequest<Result>
+public sealed record UpdateStatus(TodoId Id, TodoStatusDto Status) : IRequest<Result>
 {
     public sealed class Validator : AbstractValidator<UpdateStatus>
     {
@@ -307,7 +308,7 @@ public sealed record UpdateStatus(int Id, TodoStatusDto Status) : IRequest<Resul
     }
 }
 
-public sealed record UpdateTitle(int Id, string Title) : IRequest<Result>
+public sealed record UpdateTitle(TodoId Id, string Title) : IRequest<Result>
 {
     public sealed class Validator : AbstractValidator<UpdateTitle>
     {

@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using TodoApp.Application.Specifications;
+using TodoApp.Application.ValueObjects;
 
 namespace TodoApp.Infrastructure.Persistence.Repositories;
 
@@ -21,7 +22,7 @@ public sealed class CachedTodoRepository : ITodoRepository
         decorated.Add(item);
     }
 
-    public async Task<Todo?> FindByIdAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<Todo?> FindByIdAsync(TodoId id, CancellationToken cancellationToken = default)
     {
         string key = $"todo-{id}";
 

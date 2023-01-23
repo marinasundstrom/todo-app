@@ -1,6 +1,5 @@
 ﻿using System.Text.Json;
 using TodoApp.Application.Exceptions;
-using TodoApp.Application.Exceptions;
 using ApplicationException = TodoApp.Application.Exceptions.ApplicationException;
 
 namespace TodoApp.Web.Middleware;

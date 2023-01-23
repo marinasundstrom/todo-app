@@ -1,5 +1,6 @@
 ﻿using System;
 using TodoApp.Application.Specifications;
+using TodoApp.Application.ValueObjects;
 
 namespace TodoApp.Infrastructure.Persistence.Repositories.Mocks;
 
@@ -26,7 +27,7 @@ public sealed class MockTodoRepository : ITodoRepository
         }
     }
 
-    public Task<Todo?> FindByIdAsync(int id, CancellationToken cancellationToken = default)
+    public Task<Todo?> FindByIdAsync(TodoId id, CancellationToken cancellationToken = default)
     {
         var item = mockUnitOfWork.Items
             .OfType<Todo>()
