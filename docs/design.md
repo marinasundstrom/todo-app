@@ -76,7 +76,7 @@ One use case for guarded types is representing entity identifiers. Instead of ha
 
 ### Aggregates
 
-An aggregate entity, or "aggregate" for short, is an entity that directly depends on other entities. It acts as a _consistency boundary_ for all the changes to itself and its dependant entities. 
+An aggregate entity, or "aggregate" for short, is an entity that directly depends on other entities. It acts as a _consistency boundary_ for all the changes to itself and the entities that it is depending on. 
 
 An aggregate ensures that any changes to the aggregate gets committed or saved in one consistent transaction.
 
