@@ -22,7 +22,9 @@ The layers are:
 
 Here are some concepts in this application that are worth knowing about:
 
-* **Domain objects** are objects that represent objects or concepts in the business domain, or problem domain.
+* **Domain objects** are objects that represent objects or concepts in the business domain, or problem domain. This includes Entities, Aggregates, and Value Objects.
+
+* **Repositories** purpose is to retrieve and persist Aggregates.
 
 * **Feature** is a distinctive piece of functionality within the application. What defines the feature is the area it deals with. Structurally, it is a logical grouping of artifacts that participate in that feature, like Requests, Handlers, Controllers etc.
 
@@ -46,7 +48,9 @@ Entities are types of objects whose equality is determined by their identity (Id
 
 Every unique business object belongs to an entity type. For example, ``Order`` or ``Customer``. 
 
-The consequence is that if two instances of an entity type share the same identity (Id) then they represent the same thing, regardless of whether the values of their properties are different. Then the challenge is about determine which individual representation is most up-to-date.
+An entity owns its data and has behavior, or actions, defined with it, which affects it. For example, for an order the action might be completing it. Completing and order causes the order status to be set to ”completed” and preventing further updates.
+
+If two instances of an entity type share the same identity (Id) then they represent the same object, regardless of whether the values of their properties are different. Then the challenge is about determining which individual representation is valid and most up-to-date.
 
 #### Aggregates
 
@@ -80,13 +84,22 @@ An aggregate entity, or "aggregate" for short, is an entity that directly depend
 
 An aggregate ensures that any changes to the aggregate gets committed or saved in one consistent transaction.
 
-And example of an aggregate is a ```Menu``` that have some ```MenuItems```. Because we are looking for consistency we can only change the menu items by retrieving the menu.
-
 Designing an aggregate is not always straightforward. You have to determine what entities is essential for the operation that the aggregate handles. Then you design it so that only the entities that are supposed to get modified can be modified.
+
+
+An example of an aggregate is a ```Menu``` that has some ```MenuItems```. Because we are looking for consistency we can only change the menu items by retrieving the menu. As an example, as a business rule, by changing some parameter for a menu item the actual serving amount for that menu could change. That is the meaning of _consistency_ within an aggregate.
 
 Here are some vices:
 
 An aggregate entity should only refer to non-essential entities by their Id. In order that it may not be directly modified from the aggregate.
+
+## Repositories
+
+A repository is responsible in retrieving and persisting aggregates. This is unlike a repository in a traditional Data Access Layer (DAL) which mainly acts as an abstraction for retrieving data from a database.
+
+Aggregates are entities that depend on other entities for which it acts as a consistency boundary.
+
+For the purpose of retrieving data to display it, using repositories can and should be avoided. Repositories are solely for when an aggregate is needed.
 
 ## Features
 
