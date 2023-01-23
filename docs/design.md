@@ -65,3 +65,37 @@ Exceptions are exceptional conditions that normally causes the application to un
 They are usually caused by unexpected input or by the system itself, for instance, IO or Network exceptions. They can in some cases be prevented, or at least you can make sure to catch and handle them.
 
 A know exception should be handled and projected as a ``Result`` containing an well-defined ``Error`` object which describes the error within the context it occured.
+
+## Domain Objects
+
+The Domain Objects are objects that represent actual concepts in your problem domain - such as business objects, like ```Invoice``` and ```Payment```.
+
+They are the result of "Domain Modeling", and encapsulate both data and behavior as per Object-oriented programming principles.
+
+### Entities
+
+Entities are types of objects whose equality is determined by their identity (Id) - as indicated by an identifier, or key.
+
+Every unique business object belongs to an entity type. For example, ``Order`` or ``Customer``. 
+
+The consequence is that if two instances of an entity type share the same identity (Id) then they represent the same thing, regardless of whether the values of their properties are different. Then the challenge is about determine which individual representation is most up-to-date.
+
+### Value Objects
+
+Value Objects are objects whose equality with other objects (of the same kind) is determined by the equality of the values of their respective properties.
+
+Value of primitive types of programming languages (``int``, ``decimal``, ``bool``, etc) are technically value objects since they represent values. Then we have complex value types such as structs that represent sets of values.
+
+In essence, a value objects is any domain object that does not have an identity on its own. It might be an integral part of an entity, like the steering wheel of an entity car.
+
+#### Guarded types
+
+Guarded types are types that encapsulate values of common types (``int``, ``decimal``, ``Guid``, ``string``, etc) to validate, or "guard" them, for invalid values. 
+
+It also gives semantics to the value.
+
+For example, the value of property ```Temperature``` is not just a ``decimal``. It is ``Celsius`` that wraps the value after ensuring that it falls into the permitted range.
+
+Guarded types can be seen as an alternative to putting validation logic in property setters. By wrapping the logic in a type you can then also re-use it elsewhere.
+
+One use case for guarded types is representing entity identifiers. Instead of having a plain ```Guid```, or whatever as an Id, you represent it as an ```ItemId```.
