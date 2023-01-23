@@ -80,6 +80,12 @@ Every unique business object belongs to an entity type. For example, ``Order`` o
 
 The consequence is that if two instances of an entity type share the same identity (Id) then they represent the same thing, regardless of whether the values of their properties are different. Then the challenge is about determine which individual representation is most up-to-date.
 
+#### Aggregates
+
+When an entity is dependant on another they  form what is called an "Aggregate". 
+
+Technically belongs here, but check the section "Aggregates" below.
+
 ### Value Objects
 
 Value Objects are objects whose equality with other objects (of the same kind) is determined by the equality of the values of their respective properties.
@@ -99,3 +105,17 @@ For example, the value of property ```Temperature``` is not just a ``decimal``. 
 Guarded types can be seen as an alternative to putting validation logic in property setters. By wrapping the logic in a type you can then also re-use it elsewhere.
 
 One use case for guarded types is representing entity identifiers. Instead of having a plain ```Guid```, or whatever as an Id, you represent it as an ```ItemId```.
+
+### Aggregates
+
+An aggregate entity, or "aggregate" for short, is an entity that directly depends on other entities. It acts as a _consistency boundary_ for all the changes to itself and its dependant entities. 
+
+An aggregate ensures that any changes to the aggregate gets committed or saved in one consistent transaction.
+
+And example of an aggregate is a ```Menu``` that have some ```MenuItems```. Because we are looking for consistency we can only change the menu items by retrieving the menu.
+
+Designing an aggregate is not always straightforward. You have to determine what entities is essential for the operation that the aggregate handles. Then you design it so that only the entities that are supposed to get modified can be modified.
+
+Here are some vices:
+
+An aggregate entity should only refer to non-essential entities by their Id. In order that it may not be directly modified from the aggregate.
