@@ -1,6 +1,6 @@
 # Design
 
-This document aims at describing the structure of this project, and the technical concepts in this solution.
+This document aims at describing the structure of this solution. It outlines the technical concepts that are being used.
 
 ## Layers
 
@@ -54,11 +54,15 @@ An entity owns its data and has behavior, or actions, defined with it, which aff
 
 If two instances of an entity type share the same identity (Id) then they represent the same object, regardless of whether the values of their properties are different. Then the challenge is about determining which individual representation is valid and most up-to-date.
 
+In this solution, an entity is a class that derives from the abstract ```Entity<TId>``` class.
+
 #### Aggregates
 
 When entities are dependant on each other they form what is called an "Aggregate". 
 
 Technically belongs here, but check the "Aggregates" section below.
+
+In this solution, an aggregate root is a class that derivess from the abstract ```AggregateRoot<TId>``` class, which, in its turn, derives from the abstract ```Entity<TId>``` class.
 
 ### Value Objects
 
@@ -68,17 +72,21 @@ Value of primitive types of programming languages (``int``, ``decimal``, ``bool`
 
 In essence, a value objects is any domain object that does not have an identity on its own. It might be an integral part of an entity, like the steering wheel of an entity car.
 
+In this solution, Value Objects are mostly implemented as classes deriving from the abstract ```ValueObject``` base class which provides value semantics. But they can also be structs.
+
 #### Guarded types
 
 Guarded types are types that encapsulate values of common types (``int``, ``decimal``, ``Guid``, ``string``, etc) to validate, or "guard" them, for invalid values. 
 
 It also gives semantics to the value.
 
-For example, the value of property ```Temperature``` is not just a ``decimal``. It is ``Celsius`` that wraps the value after ensuring that it falls into the permitted range.
+For example, the value of property ```Temperature``` is not just a ``decimal``. It is ``TemperatureCelsius`` that wraps the value after ensuring that it falls into the permitted range. 
+
+And then you could involve inheritance to generalize a concept, such as temperature and allow for Farenheit as well.
 
 Guarded types can be seen as an alternative to putting validation logic in property setters. By wrapping the logic in a type you can then also re-use it elsewhere.
 
-One use case for guarded types is representing entity identifiers. Instead of having a plain ```Guid```, or whatever as an Id, you represent it as an ```ItemId```.
+A specific use case for guarded types is representing entity identifiers. Instead of having a plain ```Guid```, or whatever as an Id for an Item, you represent it as an ```ItemId``` or similar.
 
 ### Aggregates
 
