@@ -66,13 +66,13 @@ In this solution, an aggregate root is a class that derivess from the abstract `
 
 ### Value Objects
 
-Value Objects are objects whose equality with other objects (of the same kind) is determined by the equality of the values of their respective properties.
+Value Objects are types of objects whose equality with other objects of the same kind is determined by the equality of the values of their respective properties.
 
 Value of primitive types of programming languages (``int``, ``decimal``, ``bool``, etc) are technically value objects since they represent values. Then we have complex value types such as structs that represent sets of values.
 
 In essence, a value objects is any domain object that does not have an identity on its own. It might be an integral part of an entity, like the steering wheel of an entity car.
 
-In this solution, Value Objects are mostly implemented as classes deriving from the abstract ```ValueObject``` base class which provides value semantics. But they can also be structs.
+In this solution, Value Objects are mostly implemented as classes deriving from the abstract ```ValueObject``` base class which provides the with value semantics. But Value Objects can also be implemented as plain structs.
 
 #### Guarded types
 
@@ -80,9 +80,9 @@ Guarded types are types that encapsulate values of common types (``int``, ``deci
 
 It also gives semantics to the value.
 
-For example, the value of property ```Temperature``` is not just a ``decimal``. It is ``TemperatureCelsius`` that wraps the value after ensuring that it falls into the permitted range. 
+For example, the value of property ```Temperature``` is not just a ``decimal``. The value is of type ``TemperatureCelsius`` that wraps the value after ensuring that it falls into the permitted range. 
 
-And then you could involve inheritance to generalize a concept, such as temperature and allow for Farenheit as well.
+And then you could involve inheritance to generalize a concept, such as temperature and allow for Fahrenheit as well.
 
 Guarded types can be seen as an alternative to putting validation logic in property setters. By wrapping the logic in a type you can then also re-use it elsewhere.
 
@@ -90,15 +90,15 @@ A specific use case for guarded types is representing entity identifiers. Instea
 
 ### Aggregates
 
-An aggregate is a set of entities that are depending on each other. Their main characteristic is consistency.
+An aggregate is a set of entities that are depending on each other. It is a relationship between objects in which the main characteristic is that they all stay consistent with each other.
 
-The top or root entity within an aggregate is referred to as the "Aggregate Root".
+The root entity within an aggregate is referred to as the "Aggregate Root".
 
-An Aggregate Root acts as a _consistency boundary_ for all the changes to itself and the entities that it is mutually depending on. It ensures that any changes to the aggregate gets committed or saved in one consistent transaction.
+An Aggregate Root acts as a _consistency boundary_ for all the changes to itself and the entities that it is mutually depending on. It ensures that any changes to any entity in the aggregate gets committed or saved in one consistent transaction.
 
 An example of an aggregate is a ```Menu``` (Aggregate root) that has some ```MenuItems```. Because we are looking for consistency we can only change a particular menu item by retrieving it as part of the menu aggregate. This might be because, as a business rule, by changing some parameter for a menu item the actual serving amount could change for that menu. That is the meaning of _consistency_ within an aggregate.
 
-Designing an aggregate is not always straightforward. You have to determine what entities is essential for the operation that the aggregate handles. Then you design it so that only the entities that are supposed to get modified can be modified.
+Designing an aggregate is not always straightforward. You have to determine what entities are essential for aggregate to function. Then you design it so that only the entities that are supposed to get modified can be modified.
 
 Here are some vices:
 
