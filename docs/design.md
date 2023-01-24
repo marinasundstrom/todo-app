@@ -28,6 +28,8 @@ Here are some concepts in this application that are worth knowing about:
 
 * **Repositories** purpose is to retrieve and persist Aggregates (Aggregate Roots).
 
+* **Services** are units that perform some function - much like services performed by people in real life.
+
 * **Feature** is a distinctive piece of functionality within the application. What defines the feature is the area it deals with. Structurally, it is a logical grouping of artifacts that participate in that feature, like Requests, Handlers, Controllers etc.
 
 * **Requests** represents a request that is being made to the application. They are divided into the sub types _Commands_ or a _Queries_. There can only be one handler of a specific request.
@@ -38,11 +40,31 @@ Here are some concepts in this application that are worth knowing about:
 
 These last concepts (Request, Notifications, Handlers) belong to the CQRS and Event-driven architectural patterns, as implemented by the MediatR library.
 
+## Domain Modeling
+
+In Software design, Domain modeling is the discipline in which the domain is modeled in code as part of the development process.
+
+With the use of a Domain Model when building software you ensure maintainability of your code as new business requirements get added.
+
+Domain Modeling is the process in which to explore a complex real-life problem domain with the aim at creating a model of it - containing knowledge of its objects and their behaviors and interactions. 
+
+The end result is a "Domain Model" that represents the understanding of the domain. The model is represented in code using programming concepts.
+
+In many project settings, domain modeling involves people from various positions, both experts and software developers, in discussing the domain and to reach a common understanding of it.
+
+A person who holds intricate knowledge about a domain is referred to as a Domain Expert.
+
+### Rich Domain Model
+
+A Rich Domain Model is a model consisting of Domain Objects that encapsulate their own data and behavior according to Object-oriented programming (OOP) principles. 
+
+This is opposed to having a pure "Data model" with Data objects from which behavior is separate, like with services in so called "transaction scripts".
+
 ## Domain Objects
 
 The Domain Objects are objects that represent actual concepts in your problem domain - such as business objects, like ```Invoice``` and ```Payment```.
 
-They are the result of "Domain Modeling", and encapsulate both data and behavior as per Object-oriented programming principles.
+They are the result of "Domain Modeling", and they encapsulate both data and behavior as per Object-oriented programming principles.
 
 ### Entities
 
@@ -128,15 +150,37 @@ In a feature folder you might find these items:
 
 ## Requests
 
-TBA
+Request are objects that represent a request to the application to do something. It may be performing an operation or retrieving some data.
+
+A request is described as being of a type that defines any number of (or no) parameters that are being passed with it.
+
+Requests are handled by "handlers" that receive and handles specific requests of certain request types. 
+
+By their nature, a certain request type can only be handled by a specific handler.
+
+In this solution, requests are separated into two categories: Commands and Queries. 
+
+Commands perform some action that affects the state of the application and its data. Queries retrieves (queries) and returns some data from the application.
 
 ## Notifications
 
-TBA
+Notifications are objects that represent _events_ occurring in your application. Each notification has a type and may carry data, such as state, that is available for others to subscribe to.
+
+A notification may be subscribed to or handled by multiple handlers. The handlers get executed in the order that they have been registered with the application.
+
+An sub-type to notifications are "Domain events" that represent events happening in the business domain. For example, if and order has been placed, or something got added or deleted.
 
 ## Services
 
-TBA
+A Services is a unit that has a dedicated function - much like a services performed by people in real life.
+
+The service encapsulate some piece of logic that performs that function. Example: Calling an API, or perform some calculation. It could really be something abstract.
+
+It is in essence about grouping functionality together. So when some logic does not logically belong to or fit your Domain Objects you should consider if it is separate functionality and perhaps place it in a service.
+
+An example for the common use of services is so called "transaction scripts" acting on a Data model. They imply that instead of putting domain logic with your Domain Objects (OOP principles) you place it in the service. 
+
+There are many reasons involved when pursuing this route, such as design decisions and preference. Some believe that it is easier to version a service than a Rich Domain Model.
 
 ## Results
 
