@@ -8,6 +8,8 @@ This is a "Monolith".
 
 Parts that may be shared are Domain, Data Access, and other common code. Apply abstractions and interfaces when appropriate.
 
+Do not primarily group stuff in you application by technical concern, like folders for Controllers, RequestHandlers, Services etc. Instead group by feature, like TaxReturns.
+
 However, Bounded Contexts, or Features, should stay separate and not be directly dependent on each other.
 
 That makes the application a "Distributed Monolith".
