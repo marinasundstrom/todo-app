@@ -3,7 +3,7 @@
 
 ## Domain-driven design (DDD)
 
-A development approach where developers and stakeholders model the business domain, aiming at understanding it, to easier develop and maintain a software solution.
+A development approach where developers and stakeholders together model the business domain, aiming at understanding it, to easier develop and maintain a software solution.
 
 ## Behavior-driven development (BDD)
 
