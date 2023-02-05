@@ -97,9 +97,8 @@ In order to adapt this into your own project, you should do this:
 Proceed to perform changes to the structure of each project:
 
 * In ```Application```, remove the Todos folder, containing Commands and Queries. Add your own.
-* In ```Domain```, replace Entities, Enums and Events etc with your domain.
+  * Replace Entities, Enums and Events etc with your domain.
 * In ```Infrastructure```, update ApplicationDbContext and define your own Repositories.
-* In ```Presentation```, empty Controllers and Hubs. Create your own.
 
 And for the client-side, just empty ```ClientApp``` and build your own. Or, replace with whatever tech you like, e.g. an app build with a JS framework, like React.
 
