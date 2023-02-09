@@ -2,7 +2,6 @@
 using System.Net.Http.Headers;
 using MassTransit;
 using MassTransit.Testing;
-using TodoApp.Consumers;
 using TodoApp.Contracts;
 using static MassTransit.Logging.OperationName;
 

@@ -25,7 +25,7 @@ public class Todo : AggregateRoot<TodoId>, IAuditable
         {
             Title = title;
 
-            if (Id != default) 
+            if (Id != default)
             {
                 AddDomainEvent(new TodoUpdated(Id));
                 AddDomainEvent(new TodoTitleUpdated(Id, title));
@@ -46,7 +46,7 @@ public class Todo : AggregateRoot<TodoId>, IAuditable
         {
             Description = description;
 
-            if (Id != default) 
+            if (Id != default)
             {
                 AddDomainEvent(new TodoUpdated(Id));
                 AddDomainEvent(new TodoDescriptionUpdated(Id, description));
@@ -67,7 +67,7 @@ public class Todo : AggregateRoot<TodoId>, IAuditable
         {
             Status = status;
 
-            if (Id != default) 
+            if (Id != default)
             {
                 AddDomainEvent(new TodoUpdated(Id));
                 AddDomainEvent(new TodoStatusUpdated(Id, status, oldStatus));
@@ -90,7 +90,7 @@ public class Todo : AggregateRoot<TodoId>, IAuditable
         {
             AssignedToId = userId;
 
-            if (Id != default) 
+            if (Id != default)
             {
                 AddDomainEvent(new TodoAssignedUserUpdated(Id, userId, oldAssignedToId));
             }
@@ -110,7 +110,7 @@ public class Todo : AggregateRoot<TodoId>, IAuditable
         {
             EstimatedHours = hours;
 
-            if (Id != default) 
+            if (Id != default)
             {
                 AddDomainEvent(new TodoUpdated(Id));
                 AddDomainEvent(new TodoEstimatedHoursUpdated(Id, hours, oldHours));
@@ -130,8 +130,8 @@ public class Todo : AggregateRoot<TodoId>, IAuditable
         if (hours != oldHours)
         {
             RemainingHours = hours;
-            
-            if (Id != default) 
+
+            if (Id != default)
             {
                 AddDomainEvent(new TodoUpdated(Id));
                 AddDomainEvent(new TodoRemainingHoursUpdated(Id, hours, oldHours));

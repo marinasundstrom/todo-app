@@ -1,5 +1,4 @@
 using TodoApp.Application.Common;
-using TodoApp.Application.Services;
 
 namespace TodoApp.Application.Features.Todos.EventHandlers;
 

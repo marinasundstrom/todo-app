@@ -1,6 +1,6 @@
-﻿namespace TodoApp.Application;
+﻿namespace TodoApp.Application.Extensions;
 
-public static class Extensions
+public static class HashSetExtensions
 {
     public static bool AddRange<T>(this HashSet<T> source, IEnumerable<T> items)
     {

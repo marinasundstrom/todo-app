@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TodoApp.Application.Behaviors;
 using TodoApp.Application.Features.Todos;
 
-namespace TodoApp.Application;
+namespace TodoApp.Application.Extensions;
 
 public static class ServiceExtensions
 {
@@ -21,21 +21,9 @@ public static class ServiceExtensions
 
     public static IServiceCollection AddPresentation(this IServiceCollection services)
     {
-        services.AddControllersForApp();
+        services.AddTodoControllers();
 
         services.AddScoped<ITodoNotificationService, TodoNotificationService>();
-
-        return services;
-    }
-
-    public static IServiceCollection AddControllersForApp(this IServiceCollection services)
-    {
-        /*
-        var assembly = typeof(TodosController).Assembly;
-
-        services.AddControllers()
-            .AddApplicationPart(assembly);
-        */
 
         return services;
     }

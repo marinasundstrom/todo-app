@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TodoApp.Application.Common;
-using TodoApp.Application.Enums;
+using TodoApp.Application.Extensions;
 
 namespace TodoApp.Application.Features.Users;
 

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
-using TodoApp.Consumers;
+using TodoApp.Application;
 using TodoApp.Infrastructure.Persistence;
 using TodoApp.Infrastructure.Persistence.Interceptors;
 
@@ -60,7 +60,7 @@ public sealed class CustomWebApplicationFactory<TStartup>
 
             services.AddMassTransitTestHarness(cfg =>
             {
-                cfg.AddConsumersForApp();
+                cfg.AddApplicationConsumers();
             });
 
             var sp = services.BuildServiceProvider();

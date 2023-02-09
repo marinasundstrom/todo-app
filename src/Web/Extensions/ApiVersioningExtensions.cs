@@ -1,5 +1,4 @@
 using Asp.Versioning;
-using Asp.Versioning.ApiExplorer;
 
 namespace TodoApp.Web.Extensions;
 

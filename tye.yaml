@@ -67,7 +67,7 @@ services:
     - port: 9411
 
 - name: healthchecks
-  project: src/HealthChecks/HealthChecks.csproj
+  project: other/HealthChecks/HealthChecks.csproj
   bindings:
   - name: http
     protocol: http
@@ -77,7 +77,7 @@ services:
     port: 5031
 
 - name: identityservice
-  project: src/IdentityService/IdentityService.csproj
+  project: other/IdentityService/IdentityService.csproj
   bindings:
   - name: http
     protocol: http

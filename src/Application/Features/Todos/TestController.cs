@@ -1,10 +1,4 @@
-﻿using MassTransit;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.FeatureManagement.Mvc;
-using TodoApp.Contracts;
-
-namespace TodoApp.Application.Features.Todos;
+﻿namespace TodoApp.Application.Features.Todos;
 
 /*
 [ApiController]

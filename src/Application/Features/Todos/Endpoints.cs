@@ -1,12 +1,9 @@
-﻿using Asp.Versioning;
-using Asp.Versioning.Builder;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TodoApp.Application;
 using TodoApp.Application.Common;
-using TodoApp.Application.Features.Todos;
+using TodoApp.Application.Extensions;
 using TodoApp.Application.Features.Todos.Commands;
 using TodoApp.Application.Features.Todos.Queries;
 
@@ -14,7 +11,7 @@ namespace TodoApp.Application.Features.Todos;
 
 public static class Endpoints
 {
-    public static WebApplication AddTodoEndpoints(this WebApplication app)
+    public static WebApplication MapTodoEndpoints(this WebApplication app)
     {
         var todos = app.NewVersionedApi("Todos")
            .HasApiVersion(1, 0);

@@ -1,5 +1,3 @@
-using TodoApp.Application.Entities;
-using TodoApp.Application.Specifications;
 using TodoApp.Application.ValueObjects;
 
 namespace TodoApp.Application.Repositories;

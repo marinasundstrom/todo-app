@@ -1,12 +1,12 @@
 using HealthChecks.UI.Client;
 using Microsoft.EntityFrameworkCore;
+using NSwag.AspNetCore;
+using TodoApp.Application.Extensions;
 using TodoApp.Application.Services;
 using TodoApp.Infrastructure.Persistence;
-using TodoApp.Application;
 using TodoApp.Web.Extensions;
 using TodoApp.Web.Middleware;
 using TodoApp.Web.Services;
-using NSwag.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -70,7 +70,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseOpenApi();
 
-    app.UseSwaggerUi3(options => {
+    app.UseSwaggerUi3(options =>
+    {
         var descriptions = app.DescribeApiVersions();
 
         // build a swagger endpoint for each discovered API version

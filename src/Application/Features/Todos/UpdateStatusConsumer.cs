@@ -2,7 +2,7 @@ using MassTransit;
 using MediatR;
 using TodoApp.Contracts;
 
-namespace TodoApp.Consumers;
+namespace TodoApp.Application.Features.Todos;
 
 public sealed class UpdateStatusConsumer : IConsumer<UpdateStatus>
 {

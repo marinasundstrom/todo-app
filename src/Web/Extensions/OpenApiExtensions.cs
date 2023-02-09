@@ -1,5 +1,4 @@
 using Asp.Versioning;
-using Asp.Versioning.ApiExplorer;
 using NSwag;
 using NSwag.Generation.Processors.Security;
 
@@ -9,7 +8,7 @@ public static class OpenApiExtensions
 {
     public static IServiceCollection AddOpenApi(this IServiceCollection services, WebApplicationBuilder builder)
     {
-        var apiVersionDescriptions = new [] {
+        var apiVersionDescriptions = new[] {
             (ApiVersion: new ApiVersion(1, 0), foo: 1),
             (ApiVersion: new ApiVersion(2, 0), foo: 1)
         };
@@ -43,7 +42,7 @@ public static class OpenApiExtensions
         return services;
     }
 
-    private static string GetApiVersion((ApiVersion ApiVersion, int foo)  description)
+    private static string GetApiVersion((ApiVersion ApiVersion, int foo) description)
     {
         var apiVersion = description.ApiVersion;
         return (apiVersion.MinorVersion == 0

@@ -1,14 +1,14 @@
-﻿using Asp.Versioning;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using TodoApp.Application.Common;
+using TodoApp.Application.Extensions;
 
 namespace TodoApp.Application.Features.Users;
 
 public static class Endpoints
 {
-    public static WebApplication AddUsersEndpoints(this WebApplication app)
+    public static WebApplication MapUsersEndpoints(this WebApplication app)
     {
         var users = app.NewVersionedApi("Users");
 
