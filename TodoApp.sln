@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "src\Application\Application.csproj", "{BE3F6CDF-2328-46FE-891B-73BC05C816EA}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\Infrastructure\Infrastructure.csproj", "{A00542FD-B81E-4782-BCBB-19B08C45D5A6}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B1ABE61F-21B9-46C0-9595-E18D01CA1CDB}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
@@ -26,8 +22,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Specs", "test\Specs\Specs.c
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "src\Contracts\Contracts.csproj", "{572E794E-21DB-411C-B488-D38021AB1369}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consumers", "src\Consumers\Consumers.csproj", "{DBE36746-2537-4649-9B8E-6159A4BC0E91}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientApp", "src\ClientApp\ClientApp.csproj", "{83912CB4-D384-404C-A71C-6E5C96A8BC7A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "test\IntegrationTests\IntegrationTests.csproj", "{E3E9668B-E644-4E8D-9F0D-9D7284197BD5}"
@@ -38,11 +32,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientApp.Tests", "test\Cli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Tests", "test\Infrastructure.Tests\Infrastructure.Tests.csproj", "{7F0E756F-48EC-4273-9858-DC4C7E9FC179}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthChecks", "src\HealthChecks\HealthChecks.csproj", "{F3B1D79F-B13A-458D-9B77-9DF7C41AB317}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthChecks", "other\HealthChecks\HealthChecks.csproj", "{F3B1D79F-B13A-458D-9B77-9DF7C41AB317}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityService", "src\IdentityService\IdentityService.csproj", "{855EC777-26EF-451D-8B9D-3220250BDA26}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityService", "other\IdentityService\IdentityService.csproj", "{855EC777-26EF-451D-8B9D-3220250BDA26}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other", "Other", "{681B7E4D-8679-4B27-A52A-D67D179CBD69}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "other", "other", "{681B7E4D-8679-4B27-A52A-D67D179CBD69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -133,7 +127,6 @@ Global
 		{7F0E756F-48EC-4273-9858-DC4C7E9FC179} = {07C55352-242E-4C75-AFF6-1B68E79FC0C7}
 		{F3B1D79F-B13A-458D-9B77-9DF7C41AB317} = {681B7E4D-8679-4B27-A52A-D67D179CBD69}
 		{855EC777-26EF-451D-8B9D-3220250BDA26} = {681B7E4D-8679-4B27-A52A-D67D179CBD69}
-		{681B7E4D-8679-4B27-A52A-D67D179CBD69} = {CC4DF350-195A-4AE8-986B-33BCE8451AAF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09A01B16-723F-4210-98B4-080307916EC3}

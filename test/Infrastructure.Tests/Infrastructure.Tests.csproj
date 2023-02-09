@@ -33,11 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Infrastructure\Infrastructure.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="Microsoft.EntityFrameworkCore.Sqlite" />
-    <None Remove="NSubstitute.Analyzers.CSharp" />
-    <None Remove="NSubstitute" />
+    <ProjectReference Include="..\..\src\Web\Web.csproj" />
   </ItemGroup>
 </Project>

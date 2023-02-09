@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-using TodoApp.Application.Services;
 
 namespace TodoApp.Web.Services;
 

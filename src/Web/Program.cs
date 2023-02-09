@@ -1,8 +1,7 @@
 using HealthChecks.UI.Client;
 using Microsoft.EntityFrameworkCore;
 using NSwag.AspNetCore;
-using TodoApp.Application.Extensions;
-using TodoApp.Application.Services;
+using TodoApp.Extensions;
 using TodoApp.Infrastructure.Persistence;
 using TodoApp.Web.Extensions;
 using TodoApp.Web.Middleware;

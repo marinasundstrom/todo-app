@@ -1,5 +1,5 @@
 using MassTransit;
-using TodoApp.Application.Extensions;
+using TodoApp.Features.Todos;
 
 namespace TodoApp.Web.Extensions;
 
@@ -13,7 +13,7 @@ public static class MassTransitExtensions
 
             //x.AddConsumers(typeof(Program).Assembly);
 
-            x.AddApplicationConsumers();
+            x.AddTodoConsumers();
 
             x.UsingRabbitMq((context, cfg) =>
             {

@@ -1,4 +1,4 @@
-﻿using TodoApp.Application.Extensions;
+﻿using TodoApp.Extensions;
 using TodoApp.Infrastructure;
 
 namespace TodoApp.Web.Extensions;
