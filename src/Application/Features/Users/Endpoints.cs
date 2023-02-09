@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Asp.Versioning.Builder;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using TodoApp.Application.Common;
@@ -12,6 +13,14 @@ public static class Endpoints
     {
         var users = app.NewVersionedApi("Users");
 
+        MapVersion1(users);
+        MapVersion2(users);
+
+        return app;
+    }
+
+    private static void MapVersion1(IVersionedEndpointRouteBuilder users)
+    {
         var group = users.MapGroup("/v{version:apiVersion}/Users")
             .WithTags("Users")
             .RequireAuthorization()
@@ -29,18 +38,20 @@ public static class Endpoints
         group.MapPost("/", CreateUser)
             .Produces<UserInfoDto>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status404NotFound);
+    }
 
-        var group2 = users.MapGroup("/v{version:apiVersion}/Users")
+    private static void MapVersion2(IVersionedEndpointRouteBuilder users)
+    {
+        var group = users.MapGroup("/v{version:apiVersion}/Users")
            .WithTags("Users")
            .RequireAuthorization()
            .WithOpenApi()
            .HasApiVersion(2, 0);
 
-        group2.MapGet("/", GetUsers)
+        group.MapGet("/", GetUsers)
             .Produces<ItemsResult<UserDto>>(StatusCodes.Status200OK);
-
-        return app;
     }
+
     public static async Task<ItemsResult<UserDto>> GetUsers(int page = 1, int pageSize = 10, string? searchTerm = null, string? sortBy = null, SortDirection? sortDirection = null, CancellationToken cancellationToken = default, IMediator mediator = default!)
         => await mediator.Send(new GetUsers(page, pageSize, searchTerm, sortBy, sortDirection), cancellationToken);
 

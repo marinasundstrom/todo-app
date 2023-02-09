@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Asp.Versioning.Builder;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +14,18 @@ public static class Endpoints
 {
     public static WebApplication MapTodoEndpoints(this WebApplication app)
     {
-        var todos = app.NewVersionedApi("Todos")
-           .HasApiVersion(1, 0);
+        var todos = app.NewVersionedApi("Todos");
 
+        MapVersion1(todos);
+
+        return app;
+    }
+
+    private static void MapVersion1(IVersionedEndpointRouteBuilder todos)
+    {
         var group = todos.MapGroup("/v{version:apiVersion}/Todos")
             .WithTags("Todos")
+            .HasApiVersion(1, 0)
             .RequireAuthorization()
             .WithOpenApi();
 
@@ -62,8 +70,6 @@ public static class Endpoints
         group.MapPut("/{id}/RemainingHours", UpdateRemainingHours)
             .Produces(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status404NotFound);
-
-        return app;
     }
 
     public static async Task<ItemsResult<TodoDto>> GetTodos(TodoStatusDto? status, string? assignedTo, int page = 1, int pageSize = 10, string? sortBy = null, SortDirection? sortDirection = null, CancellationToken cancellationToken = default, IMediator mediator = default!)
