@@ -14,6 +14,7 @@
     "/v1/Todos": {
       "get": {
         "tags": [
+          "Todos",
           "Todos"
         ],
         "operationId": "Todos_GetTodos",
@@ -111,6 +112,7 @@
       },
       "post": {
         "tags": [
+          "Todos",
           "Todos"
         ],
         "operationId": "Todos_CreateTodo",
@@ -159,6 +161,7 @@
     "/v1/Todos/{id}": {
       "get": {
         "tags": [
+          "Todos",
           "Todos"
         ],
         "operationId": "Todos_GetTodoById",
@@ -204,6 +207,7 @@
       },
       "delete": {
         "tags": [
+          "Todos",
           "Todos"
         ],
         "operationId": "Todos_DeleteTodo",
@@ -244,6 +248,7 @@
     "/v1/Todos/{id}/Title": {
       "put": {
         "tags": [
+          "Todos",
           "Todos"
         ],
         "operationId": "Todos_UpdateTitle",
@@ -297,6 +302,7 @@
     "/v1/Todos/{id}/Description": {
       "put": {
         "tags": [
+          "Todos",
           "Todos"
         ],
         "operationId": "Todos_UpdateDescription",
@@ -349,6 +355,7 @@
     "/v1/Todos/{id}/Status": {
       "put": {
         "tags": [
+          "Todos",
           "Todos"
         ],
         "operationId": "Todos_UpdateStatus",
@@ -402,6 +409,7 @@
     "/v1/Todos/{id}/AssignedUser": {
       "put": {
         "tags": [
+          "Todos",
           "Todos"
         ],
         "operationId": "Todos_UpdateAssignedUser",
@@ -454,6 +462,7 @@
     "/v1/Todos/{id}/EstimatedHours": {
       "put": {
         "tags": [
+          "Todos",
           "Todos"
         ],
         "operationId": "Todos_UpdateEstimatedHours",
@@ -507,6 +516,7 @@
     "/v1/Todos/{id}/RemainingHours": {
       "put": {
         "tags": [
+          "Todos",
           "Todos"
         ],
         "operationId": "Todos_UpdateRemainingHours",
@@ -560,6 +570,7 @@
     "/v1/Users": {
       "get": {
         "tags": [
+          "Users",
           "Users"
         ],
         "operationId": "Users_GetUsers",
@@ -634,6 +645,7 @@
       },
       "post": {
         "tags": [
+          "Users",
           "Users"
         ],
         "operationId": "Users_CreateUser",
@@ -682,6 +694,7 @@
     "/v1/Users/UserInfo": {
       "get": {
         "tags": [
+          "Users",
           "Users"
         ],
         "operationId": "Users_GetUserInfo",
