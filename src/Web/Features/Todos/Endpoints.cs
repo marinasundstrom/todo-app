@@ -23,50 +23,60 @@ public static class Endpoints
     private static void MapVersion1(IVersionedEndpointRouteBuilder todos)
     {
         var group = todos.MapGroup("/v{version:apiVersion}/Todos")
-            .WithTags("Todos")
+            //.WithTags("Todos")
             .HasApiVersion(1, 0)
             .RequireAuthorization()
             .WithOpenApi();
 
         group.MapGet("/", GetTodos)
+            .WithName($"Todos_{nameof(GetTodos)}")
             .Produces<ItemsResult<TodoDto>>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status429TooManyRequests)
             .RequireRateLimiting("fixed");
 
         group.MapGet("/{id}", GetTodoById)
+            .WithName($"Todos_{nameof(GetTodoById)}")
             .Produces<TodoDto>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .WithName(nameof(GetTodoById));
 
         group.MapPost("/", CreateTodo)
+            .WithName($"Todos_{nameof(CreateTodo)}")
             .Produces<TodoDto>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status404NotFound);
 
         group.MapDelete("/{id}", DeleteTodo)
+            .WithName($"Todos_{nameof(DeleteTodo)}")
             .Produces(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status404NotFound);
 
         group.MapPut("/{id}/Title", UpdateTitle)
+            .WithName($"Todos_{nameof(UpdateTitle)}")
             .Produces(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status404NotFound);
 
         group.MapPut("/{id}/Description", UpdateDescription)
+            .WithName($"Todos_{nameof(UpdateDescription)}")
             .Produces(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status404NotFound);
 
         group.MapPut("/{id}/Status", UpdateStatus)
+            .WithName($"Todos_{nameof(UpdateStatus)}")
             .Produces(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status404NotFound);
 
         group.MapPut("/{id}/AssignedUser", UpdateAssignedUser)
+            .WithName($"Todos_{nameof(UpdateAssignedUser)}")
             .Produces(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status404NotFound);
 
         group.MapPut("/{id}/EstimatedHours", UpdateEstimatedHours)
+            .WithName($"Todos_{nameof(UpdateEstimatedHours)}")
             .Produces(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status404NotFound);
 
         group.MapPut("/{id}/RemainingHours", UpdateRemainingHours)
+            .WithName($"Todos_{nameof(UpdateRemainingHours)}")
             .Produces(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status404NotFound);
     }

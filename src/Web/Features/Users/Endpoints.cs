@@ -21,20 +21,23 @@ public static class Endpoints
     private static void MapVersion1(IVersionedEndpointRouteBuilder users)
     {
         var group = users.MapGroup("/v{version:apiVersion}/Users")
-            .WithTags("Users")
+            //.WithTags("Users")
             .RequireAuthorization()
             .WithOpenApi()
             .HasApiVersion(1, 0);
 
         group.MapGet("/", GetUsers)
+            .WithName($"Users_{nameof(GetUsers)}")
             .Produces<ItemsResult<UserDto>>(StatusCodes.Status200OK);
 
         group.MapGet("/UserInfo", GetUserInfo)
+            .WithName($"Users_{nameof(GetUserInfo)}")
             .Produces<UserInfoDto>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .WithName(nameof(GetUserInfo));
 
         group.MapPost("/", CreateUser)
+            .WithName($"Users_{nameof(CreateUser)}")
             .Produces<UserInfoDto>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status404NotFound);
     }
@@ -42,12 +45,13 @@ public static class Endpoints
     private static void MapVersion2(IVersionedEndpointRouteBuilder users)
     {
         var group = users.MapGroup("/v{version:apiVersion}/Users")
-           .WithTags("Users")
+           //.WithTags("Users")
            .RequireAuthorization()
            .WithOpenApi()
            .HasApiVersion(2, 0);
 
         group.MapGet("/", GetUsers)
+            .WithName($"Users_{nameof(GetUsers)}V2")
             .Produces<ItemsResult<UserDto>>(StatusCodes.Status200OK);
     }
 
