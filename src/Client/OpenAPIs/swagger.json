@@ -11,56 +11,10 @@
     }
   ],
   "paths": {
-    "/v1/Test/{id}/status": {
-      "put": {
-        "tags": [
-          "Test"
-        ],
-        "operationId": "Test_UpdateStatus",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "x-position": 1
-          }
-        ],
-        "requestBody": {
-          "x-name": "status",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TodoStatus"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 2
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/v1/Todos": {
       "get": {
         "tags": [
+          "Todos",
           "Todos"
         ],
         "operationId": "Todos_GetTodos",
@@ -92,8 +46,7 @@
             "in": "query",
             "schema": {
               "type": "integer",
-              "format": "int32",
-              "default": 1
+              "format": "int32"
             },
             "x-position": 3
           },
@@ -102,8 +55,7 @@
             "in": "query",
             "schema": {
               "type": "integer",
-              "format": "int32",
-              "default": 10
+              "format": "int32"
             },
             "x-position": 4
           },
@@ -120,14 +72,10 @@
             "name": "sortDirection",
             "in": "query",
             "schema": {
+              "nullable": true,
               "oneOf": [
                 {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/SortDirection"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/SortDirection"
                 }
               ]
             },
@@ -150,17 +98,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
+                  "$ref": "#/components/schemas/ItemsResultOfTodo"
                 }
               }
             }
@@ -174,11 +112,13 @@
       },
       "post": {
         "tags": [
+          "Todos",
           "Todos"
         ],
         "operationId": "Todos_CreateTodo",
         "requestBody": {
           "x-name": "request",
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -190,7 +130,7 @@
           "x-position": 1
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "",
             "content": {
               "application/json": {
@@ -200,7 +140,7 @@
               }
             }
           },
-          "default": {
+          "404": {
             "description": "",
             "content": {
               "application/json": {
@@ -221,6 +161,7 @@
     "/v1/Todos/{id}": {
       "get": {
         "tags": [
+          "Todos",
           "Todos"
         ],
         "operationId": "Todos_GetTodoById",
@@ -256,16 +197,6 @@
                 }
               }
             }
-          },
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -276,6 +207,7 @@
       },
       "delete": {
         "tags": [
+          "Todos",
           "Todos"
         ],
         "operationId": "Todos_DeleteTodo",
@@ -295,7 +227,7 @@
           "200": {
             "description": ""
           },
-          "default": {
+          "404": {
             "description": "",
             "content": {
               "application/json": {
@@ -313,9 +245,10 @@
         ]
       }
     },
-    "/v1/Todos/{id}/title": {
+    "/v1/Todos/{id}/Title": {
       "put": {
         "tags": [
+          "Todos",
           "Todos"
         ],
         "operationId": "Todos_UpdateTitle",
@@ -333,6 +266,7 @@
         ],
         "requestBody": {
           "x-name": "title",
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -347,7 +281,7 @@
           "200": {
             "description": ""
           },
-          "default": {
+          "404": {
             "description": "",
             "content": {
               "application/json": {
@@ -365,9 +299,10 @@
         ]
       }
     },
-    "/v1/Todos/{id}/description": {
+    "/v1/Todos/{id}/Description": {
       "put": {
         "tags": [
+          "Todos",
           "Todos"
         ],
         "operationId": "Todos_UpdateDescription",
@@ -385,6 +320,7 @@
         ],
         "requestBody": {
           "x-name": "description",
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -398,7 +334,7 @@
           "200": {
             "description": ""
           },
-          "default": {
+          "404": {
             "description": "",
             "content": {
               "application/json": {
@@ -416,9 +352,10 @@
         ]
       }
     },
-    "/v1/Todos/{id}/status": {
+    "/v1/Todos/{id}/Status": {
       "put": {
         "tags": [
+          "Todos",
           "Todos"
         ],
         "operationId": "Todos_UpdateStatus",
@@ -436,6 +373,7 @@
         ],
         "requestBody": {
           "x-name": "status",
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -450,7 +388,7 @@
           "200": {
             "description": ""
           },
-          "default": {
+          "404": {
             "description": "",
             "content": {
               "application/json": {
@@ -468,9 +406,10 @@
         ]
       }
     },
-    "/v1/Todos/{id}/assignedUser": {
+    "/v1/Todos/{id}/AssignedUser": {
       "put": {
         "tags": [
+          "Todos",
           "Todos"
         ],
         "operationId": "Todos_UpdateAssignedUser",
@@ -488,6 +427,7 @@
         ],
         "requestBody": {
           "x-name": "userId",
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -501,7 +441,7 @@
           "200": {
             "description": ""
           },
-          "default": {
+          "404": {
             "description": "",
             "content": {
               "application/json": {
@@ -519,9 +459,10 @@
         ]
       }
     },
-    "/v1/Todos/{id}/estimatedHours": {
+    "/v1/Todos/{id}/EstimatedHours": {
       "put": {
         "tags": [
+          "Todos",
           "Todos"
         ],
         "operationId": "Todos_UpdateEstimatedHours",
@@ -539,6 +480,7 @@
         ],
         "requestBody": {
           "x-name": "hours",
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -553,7 +495,7 @@
           "200": {
             "description": ""
           },
-          "default": {
+          "404": {
             "description": "",
             "content": {
               "application/json": {
@@ -571,9 +513,10 @@
         ]
       }
     },
-    "/v1/Todos/{id}/remainingHours": {
+    "/v1/Todos/{id}/RemainingHours": {
       "put": {
         "tags": [
+          "Todos",
           "Todos"
         ],
         "operationId": "Todos_UpdateRemainingHours",
@@ -591,6 +534,7 @@
         ],
         "requestBody": {
           "x-name": "hours",
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -605,7 +549,7 @@
           "200": {
             "description": ""
           },
-          "default": {
+          "404": {
             "description": "",
             "content": {
               "application/json": {
@@ -626,6 +570,7 @@
     "/v1/Users": {
       "get": {
         "tags": [
+          "Users",
           "Users"
         ],
         "operationId": "Users_GetUsers",
@@ -635,8 +580,7 @@
             "in": "query",
             "schema": {
               "type": "integer",
-              "format": "int32",
-              "default": 1
+              "format": "int32"
             },
             "x-position": 1
           },
@@ -645,8 +589,7 @@
             "in": "query",
             "schema": {
               "type": "integer",
-              "format": "int32",
-              "default": 10
+              "format": "int32"
             },
             "x-position": 2
           },
@@ -672,14 +615,10 @@
             "name": "sortDirection",
             "in": "query",
             "schema": {
+              "nullable": true,
               "oneOf": [
                 {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/SortDirection"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/SortDirection"
                 }
               ]
             },
@@ -696,36 +635,23 @@
                 }
               }
             }
-          },
-          "429": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       },
       "post": {
         "tags": [
+          "Users",
           "Users"
         ],
         "operationId": "Users_CreateUser",
         "requestBody": {
           "x-name": "request",
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -756,23 +682,19 @@
                 }
               }
             }
-          },
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/v1/Users/UserInfo": {
       "get": {
         "tags": [
+          "Users",
           "Users"
         ],
         "operationId": "Users_GetUserInfo",
@@ -796,68 +718,18 @@
                 }
               }
             }
-          },
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     }
   },
   "components": {
     "schemas": {
-      "ProblemDetails": {
-        "type": "object",
-        "additionalProperties": {
-          "nullable": true
-        },
-        "properties": {
-          "type": {
-            "type": "string",
-            "nullable": true
-          },
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "status": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "detail": {
-            "type": "string",
-            "nullable": true
-          },
-          "instance": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
-      "TodoStatus": {
-        "type": "integer",
-        "description": "",
-        "x-enumNames": [
-          "NotStarted",
-          "InProgress",
-          "OnHold",
-          "Completed"
-        ],
-        "enum": [
-          0,
-          1,
-          2,
-          3
-        ]
-      },
       "ItemsResultOfTodo": {
         "type": "object",
         "additionalProperties": false,
@@ -932,6 +804,22 @@
           }
         }
       },
+      "TodoStatus": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "NotStarted",
+          "InProgress",
+          "OnHold",
+          "Completed"
+        ],
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
       "User": {
         "type": "object",
         "additionalProperties": false,
@@ -955,6 +843,35 @@
           "Ascending",
           "Descending"
         ]
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "additionalProperties": {
+          "nullable": true
+        },
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        }
       },
       "CreateTodoRequest": {
         "type": "object",
