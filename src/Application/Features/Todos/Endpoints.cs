@@ -44,7 +44,7 @@ public static class Endpoints
 
         group.MapPost("/", CreateTodo)
             .WithName($"Todos_{nameof(CreateTodo)}")
-            .Produces<TodoDto>(StatusCodes.Status200OK)
+            .Produces<TodoDto>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status404NotFound);
 
         group.MapDelete("/{id}", DeleteTodo)
