@@ -5,10 +5,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
-using TodoApp.Application;
+using TodoApp.Application.Extensions;
 using TodoApp.Infrastructure.Persistence;
 using TodoApp.Infrastructure.Persistence.Interceptors;
-using TodoApp.Application.Extensions;
 
 namespace TodoApp.IntegrationTests;
 

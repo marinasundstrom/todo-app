@@ -1,7 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Polly;
-using TodoApp.Application.Entities;
-using TodoApp.Infrastructure.Persistence;
 using TodoApp.Infrastructure.Persistence.Repositories;
 
 namespace TodoApp.Infrastructure;

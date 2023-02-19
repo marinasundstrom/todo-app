@@ -1,7 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using TodoApp.Application.Domain.Entities;
 
 namespace TodoApp.Infrastructure.Persistence;
 

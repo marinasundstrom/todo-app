@@ -1,5 +1,4 @@
 ﻿using System.Net.Http.Headers;
-using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.SignalR.Client;
 
 namespace TodoApp.IntegrationTests;

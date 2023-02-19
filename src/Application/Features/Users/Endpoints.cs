@@ -58,7 +58,7 @@ public static class Endpoints
             .WithName($"Users_{nameof(GetUsers)}V2")
             .Produces<ItemsResult<UserDto>>(StatusCodes.Status200OK);
     }
-    
+
     public static async Task<ItemsResult<UserDto>> GetUsers(int page = 1, int pageSize = 10, string? searchTerm = null, string? sortBy = null, SortDirection? sortDirection = null, CancellationToken cancellationToken = default, IMediator mediator = default!)
         => await mediator.Send(new GetUsers(page, pageSize, searchTerm, sortBy, sortDirection), cancellationToken);
 

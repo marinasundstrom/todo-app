@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
-using TodoApp.Application.Common;
 using TodoApp.Infrastructure.BackgroundJobs;
 using TodoApp.Infrastructure.Idempotence;
 using TodoApp.Infrastructure.Persistence;

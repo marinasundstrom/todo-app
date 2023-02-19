@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Newtonsoft.Json;
 using TodoApp.Infrastructure.Persistence.Outbox;

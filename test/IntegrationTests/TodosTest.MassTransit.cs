@@ -1,9 +1,6 @@
-﻿using System;
-using System.Net.Http.Headers;
-using MassTransit;
+﻿using System.Net.Http.Headers;
 using MassTransit.Testing;
 using TodoApp.Contracts;
-using static MassTransit.Logging.OperationName;
 
 namespace TodoApp.IntegrationTests;
 

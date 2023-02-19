@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TodoApp.Infrastructure.Persistence.Outbox;
+﻿namespace TodoApp.Infrastructure.Persistence.Outbox;
 
 public sealed class OutboxMessage
 {
