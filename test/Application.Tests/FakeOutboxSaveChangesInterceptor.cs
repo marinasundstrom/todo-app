@@ -1,10 +1,9 @@
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Newtonsoft.Json;
-using System.Threading.Tasks;
-using System.Threading;
 using System.Linq;
-using TodoApp.Services;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using TodoApp.Domain.Entities;
+using TodoApp.Services;
 
 namespace TodoApp.Infrastructure.Persistence.Interceptors;
 

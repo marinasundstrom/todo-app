@@ -7,10 +7,10 @@ using NSubstitute;
 using TodoApp.Domain.Events;
 using TodoApp.Features.Todos;
 using TodoApp.Features.Todos.Commands;
-using TodoApp.Services;
 using TodoApp.Infrastructure.Persistence;
 using TodoApp.Infrastructure.Persistence.Interceptors;
 using TodoApp.Infrastructure.Persistence.Repositories;
+using TodoApp.Services;
 
 namespace TodoApp.Todos.Commands;
 

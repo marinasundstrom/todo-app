@@ -2,11 +2,11 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
+using TodoApp.Domain;
 using TodoApp.Features.Todos.Queries;
-using TodoApp.Services;
 using TodoApp.Infrastructure.Persistence;
 using TodoApp.Infrastructure.Persistence.Repositories;
-using TodoApp.Domain;
+using TodoApp.Services;
 
 namespace TodoApp.Todos.Commands;
 

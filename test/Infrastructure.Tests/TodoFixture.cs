@@ -1,14 +1,10 @@
 ﻿using System.Data.Common;
-using System.Xml.Linq;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using NSubstitute;
-using TodoApp.Services;
-using TodoApp;
 using TodoApp.Infrastructure.Persistence;
 using TodoApp.Infrastructure.Persistence.Interceptors;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using TodoApp.Services;
 
 namespace TodoApp.Infrastructure;
 

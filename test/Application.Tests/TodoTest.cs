@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using TodoApp.Domain.Entities;
-using TodoApp.Domain.Enums;
-using TodoApp.Domain.Events;
+﻿using TodoApp.Domain.Entities;
 
 namespace TodoApp.Tests;
 
