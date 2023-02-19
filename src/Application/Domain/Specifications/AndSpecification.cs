@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using LinqKit;
 
-namespace TodoApp.Application.Domain.Specifications;
+namespace TodoApp.Domain.Specifications;
 
 public class AndSpecification<T> : BaseSpecification<T>
 {

@@ -1,4 +1,4 @@
-﻿namespace TodoApp.Application.Extensions;
+﻿namespace TodoApp.Extensions;
 
 public static class ControllerExtensions
 {

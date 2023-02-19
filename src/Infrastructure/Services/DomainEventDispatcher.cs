@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using TodoApp.Application.Domain;
+using TodoApp.Domain;
 
 namespace TodoApp.Infrastructure.Services;
 

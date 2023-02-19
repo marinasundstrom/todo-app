@@ -1,7 +1,7 @@
 using MediatR;
-using TodoApp.Application.Domain;
+using TodoApp.Domain;
 
-namespace TodoApp.Application.Common;
+namespace TodoApp.Common;
 
 public interface IDomainEventHandler<TDomainEvent>
     : INotificationHandler<TDomainEvent>

@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using TodoApp.Application.Common;
-using TodoApp.Application.Domain;
-using TodoApp.Application.Extensions;
+using TodoApp.Common;
+using TodoApp.Domain;
+using TodoApp.Extensions;
 
-namespace TodoApp.Application.Features.Todos.Queries;
+namespace TodoApp.Features.Todos.Queries;
 
 public record GetTodos(TodoStatusDto? Status, string? AssignedTo, int Page = 1, int PageSize = 10, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<ItemsResult<TodoDto>>
 {

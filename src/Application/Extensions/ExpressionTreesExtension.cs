@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
 
-namespace TodoApp.Application.Extensions;
+namespace TodoApp.Extensions;
 
 public static class ExpressionTreesExtension
 {

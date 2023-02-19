@@ -2,12 +2,12 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
-using TodoApp.Application.Features.Todos.Queries;
-using TodoApp.Application.Services;
+using TodoApp.Features.Todos.Queries;
+using TodoApp.Services;
 using TodoApp.Infrastructure.Persistence;
 using TodoApp.Infrastructure.Persistence.Repositories;
 
-namespace TodoApp.Application.Todos.Commands;
+namespace TodoApp.Todos.Commands;
 
 public class GetTodoTest
 {

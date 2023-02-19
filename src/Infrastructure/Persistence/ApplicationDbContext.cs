@@ -1,8 +1,8 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TodoApp.Application.Domain;
-using TodoApp.Application.Domain.ValueObjects;
+using TodoApp.Domain;
+using TodoApp.Domain.ValueObjects;
 using TodoApp.Infrastructure.Persistence.ValueConverters;
 
 namespace TodoApp.Infrastructure.Persistence;

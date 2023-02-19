@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TodoApp.Application.Common;
-using TodoApp.Application.Domain;
+using TodoApp.Common;
+using TodoApp.Domain;
 using TodoApp.Infrastructure.Persistence;
 using TodoApp.Infrastructure.Persistence.Outbox;
 

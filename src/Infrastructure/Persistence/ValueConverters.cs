@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TodoApp.Application.Domain.ValueObjects;
+using TodoApp.Domain.ValueObjects;
 
 namespace TodoApp.Infrastructure.Persistence.ValueConverters;
 

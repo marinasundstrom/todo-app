@@ -1,6 +1,6 @@
-﻿using TodoApp.Application.Domain.ValueObjects;
+﻿using TodoApp.Domain.ValueObjects;
 
-namespace TodoApp.Application.Domain.Entities;
+namespace TodoApp.Domain.Entities;
 
 public class Todo : AggregateRoot<TodoId>, IAuditable
 {

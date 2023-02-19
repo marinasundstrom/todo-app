@@ -1,6 +1,6 @@
 using MassTransit;
 
-namespace TodoApp.Application.Features.Todos;
+namespace TodoApp.Features.Todos;
 
 public static class MassTransitExtensions
 {

@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace TodoApp.Application.Domain.ValueObjects;
+namespace TodoApp.Domain.ValueObjects;
 
 public struct UserId
 {

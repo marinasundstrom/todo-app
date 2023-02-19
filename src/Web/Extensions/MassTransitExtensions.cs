@@ -1,5 +1,5 @@
 using MassTransit;
-using TodoApp.Application.Extensions;
+using TodoApp.Extensions;
 
 namespace TodoApp.Web.Extensions;
 

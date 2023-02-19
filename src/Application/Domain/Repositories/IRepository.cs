@@ -1,5 +1,5 @@
-﻿using TodoApp.Application.Domain.Specifications;
-namespace TodoApp.Application.Domain.Repositories;
+﻿using TodoApp.Domain.Specifications;
+namespace TodoApp.Domain.Repositories;
 
 public interface IRepository<T, TId>
     where T : AggregateRoot<TId>

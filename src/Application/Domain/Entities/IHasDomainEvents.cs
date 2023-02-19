@@ -1,4 +1,4 @@
-namespace TodoApp.Application.Domain.Entities;
+namespace TodoApp.Domain.Entities;
 
 public interface IHasDomainEvents
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
-using TodoApp.Application.Domain;
+using TodoApp.Domain;
 
-namespace TodoApp.Application.Extensions;
+namespace TodoApp.Extensions;
 
 public static class ResultExtensions
 {

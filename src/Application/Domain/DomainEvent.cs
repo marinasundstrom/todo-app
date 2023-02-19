@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace TodoApp.Application.Domain;
+namespace TodoApp.Domain;
 
 public abstract record DomainEvent : INotification
 {

@@ -4,15 +4,15 @@ using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
-using TodoApp.Application.Domain.Events;
-using TodoApp.Application.Features.Todos;
-using TodoApp.Application.Features.Todos.Commands;
-using TodoApp.Application.Services;
+using TodoApp.Domain.Events;
+using TodoApp.Features.Todos;
+using TodoApp.Features.Todos.Commands;
+using TodoApp.Services;
 using TodoApp.Infrastructure.Persistence;
 using TodoApp.Infrastructure.Persistence.Interceptors;
 using TodoApp.Infrastructure.Persistence.Repositories;
 
-namespace TodoApp.Application.Todos.Commands;
+namespace TodoApp.Todos.Commands;
 
 public class CreateTodoTest
 {

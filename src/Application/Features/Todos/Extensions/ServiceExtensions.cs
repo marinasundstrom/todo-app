@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace TodoApp.Application.Features.Todos;
+namespace TodoApp.Features.Todos;
 
 public static class ServiceExtensions
 {

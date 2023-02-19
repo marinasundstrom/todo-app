@@ -2,8 +2,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using TodoApp.Application.Domain.Entities;
-using TodoApp.Application.Services;
+using TodoApp.Domain.Entities;
+using TodoApp.Services;
 
 namespace TodoApp.Infrastructure.Persistence.Interceptors;
 

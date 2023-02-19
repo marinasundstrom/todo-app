@@ -2,7 +2,7 @@ using MassTransit;
 using MediatR;
 using TodoApp.Contracts;
 
-namespace TodoApp.Application.Features.Todos;
+namespace TodoApp.Features.Todos;
 
 public sealed class UpdateStatusConsumer : IConsumer<UpdateStatus>
 {
@@ -17,6 +17,6 @@ public sealed class UpdateStatusConsumer : IConsumer<UpdateStatus>
     {
         var message = context.Message;
 
-        await mediator.Send(new Application.Features.Todos.Commands.UpdateStatus(message.Id, (Application.Features.Todos.TodoStatusDto)message.Status));
+        await mediator.Send(new Features.Todos.Commands.UpdateStatus(message.Id, (Features.Todos.TodoStatusDto)message.Status));
     }
 }

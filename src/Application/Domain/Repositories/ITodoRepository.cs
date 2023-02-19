@@ -1,6 +1,6 @@
-﻿using TodoApp.Application.Domain.ValueObjects;
+﻿using TodoApp.Domain.ValueObjects;
 
-namespace TodoApp.Application.Domain.Repositories;
+namespace TodoApp.Domain.Repositories;
 
 public interface ITodoRepository : IRepository<Todo, TodoId>
 {

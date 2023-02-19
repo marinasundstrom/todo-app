@@ -4,7 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>TodoApp.Application</RootNamespace>
+    <RootNamespace>TodoApp</RootNamespace>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <WarningsAsErrors>nullable</WarningsAsErrors>
 	  <NoWarn>1701;1702;CS1591</NoWarn>

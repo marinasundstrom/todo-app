@@ -1,4 +1,4 @@
-﻿using TodoApp.Application.Domain;
+﻿using TodoApp.Domain;
 
 namespace TodoApp.Infrastructure.Persistence.Repositories.Mocks;
 

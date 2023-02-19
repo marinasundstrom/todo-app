@@ -3,13 +3,13 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TodoApp.Application.Common;
-using TodoApp.Application.Domain;
-using TodoApp.Application.Extensions;
-using TodoApp.Application.Features.Todos.Commands;
-using TodoApp.Application.Features.Todos.Queries;
+using TodoApp.Common;
+using TodoApp.Domain;
+using TodoApp.Extensions;
+using TodoApp.Features.Todos.Commands;
+using TodoApp.Features.Todos.Queries;
 
-namespace TodoApp.Application.Features.Todos;
+namespace TodoApp.Features.Todos;
 
 public static class Endpoints
 {

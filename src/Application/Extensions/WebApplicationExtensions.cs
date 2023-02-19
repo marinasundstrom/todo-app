@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using TodoApp.Application.Features.Todos;
-using TodoApp.Application.Features.Users;
+using TodoApp.Features.Todos;
+using TodoApp.Features.Users;
 
-namespace TodoApp.Application.Extensions;
+namespace TodoApp.Extensions;
 
 public static class WebApplicationExtensions
 {

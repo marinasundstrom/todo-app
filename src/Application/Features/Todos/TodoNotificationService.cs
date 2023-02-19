@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.SignalR;
 
-namespace TodoApp.Application.Features.Todos;
+namespace TodoApp.Features.Todos;
 
 public interface ITodoNotificationService
 {

@@ -1,4 +1,4 @@
-﻿namespace TodoApp.Application.Services;
+﻿namespace TodoApp.Services;
 
 public interface IEmailService
 {

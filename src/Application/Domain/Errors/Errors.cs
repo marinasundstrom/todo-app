@@ -1,4 +1,4 @@
-﻿namespace TodoApp.Application.Domain;
+﻿namespace TodoApp.Domain;
 
 public static class Errors
 {

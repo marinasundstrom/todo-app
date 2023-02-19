@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TodoApp.Application.Domain.Specifications;
+using TodoApp.Domain.Specifications;
 
 namespace TodoApp.Infrastructure.Persistence;
 

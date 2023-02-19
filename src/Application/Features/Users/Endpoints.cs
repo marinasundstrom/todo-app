@@ -2,11 +2,11 @@
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using TodoApp.Application.Common;
-using TodoApp.Application.Domain;
-using TodoApp.Application.Extensions;
+using TodoApp.Common;
+using TodoApp.Domain;
+using TodoApp.Extensions;
 
-namespace TodoApp.Application.Features.Users;
+namespace TodoApp.Features.Users;
 
 public static class Endpoints
 {

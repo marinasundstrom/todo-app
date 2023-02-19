@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 using MediatR;
-using ValidationException = TodoApp.Application.Domain.Exceptions.ValidationException;
+using ValidationException = TodoApp.Domain.Exceptions.ValidationException;
 
-namespace TodoApp.Application.Behaviors;
+namespace TodoApp.Behaviors;
 
 public sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : class, IRequest<TResponse>

@@ -1,6 +1,6 @@
-﻿using TodoApp.Application.Domain.Specifications;
+﻿using TodoApp.Domain.Specifications;
 
-namespace TodoApp.Application.Features.Todos;
+namespace TodoApp.Features.Todos;
 
 public class TodosWithStatusSpecification : BaseSpecification<Todo>
 {

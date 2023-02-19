@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using TodoApp.Application.Domain;
-using TodoApp.Application.Domain.ValueObjects;
+using TodoApp.Domain;
+using TodoApp.Domain.ValueObjects;
 
-namespace TodoApp.Application.Features.Todos.Commands;
+namespace TodoApp.Features.Todos.Commands;
 
 public sealed record CreateTodo(string Title, string? Description, TodoStatusDto Status, string? AssignedTo, double? EstimatedHours, double? RemainingHours) : IRequest<Result<TodoDto>>
 {

@@ -1,6 +1,6 @@
-using TodoApp.Application.Common;
+using TodoApp.Common;
 
-namespace TodoApp.Application.Features.Todos.EventHandlers;
+namespace TodoApp.Features.Todos.EventHandlers;
 
 public sealed class TodoAssignedUserEventHandler : IDomainEventHandler<TodoAssignedUserUpdated>
 {

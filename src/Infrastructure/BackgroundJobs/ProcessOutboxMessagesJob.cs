@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Polly;
 using Polly.Retry;
 using Quartz;
-using TodoApp.Application.Domain;
+using TodoApp.Domain;
 using TodoApp.Infrastructure.Persistence;
 using TodoApp.Infrastructure.Persistence.Outbox;
 

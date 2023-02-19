@@ -1,6 +1,6 @@
-using TodoApp.Application.Domain.ValueObjects;
+using TodoApp.Domain.ValueObjects;
 
-namespace TodoApp.Application.Domain.Events;
+namespace TodoApp.Domain.Events;
 
 public sealed record TodoAssignedUserUpdated(TodoId TodoId, string? AssignedUserId, string? OldAssignedUserId) : DomainEvent;
 

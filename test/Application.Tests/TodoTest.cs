@@ -1,13 +1,13 @@
-﻿using TodoApp.Application.Domain.Entities;
+﻿using TodoApp.Domain.Entities;
 
-namespace TodoApp.Application.Tests;
+namespace TodoApp.Tests;
 
 public class TodoTest
 {
     [Fact]
     public void CreateTodo()
     {
-        var todo = new Todo("Foo", "Bar", TodoApp.Application.Domain.Enums.TodoStatus.NotStarted);
+        var todo = new Todo("Foo", "Bar", TodoApp.Domain.Enums.TodoStatus.NotStarted);
 
         //todo.DomainEvents.OfType<TodoCreated>().Should().ContainSingle();
     }

@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using TodoApp.Application.Domain;
+using TodoApp.Domain;
 
-namespace TodoApp.Application.Behaviors;
+namespace TodoApp.Behaviors;
 
 public sealed class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : class, IRequest<TResponse>

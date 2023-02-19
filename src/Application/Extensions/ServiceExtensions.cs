@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using TodoApp.Application.Behaviors;
-using TodoApp.Application.Features.Todos;
+using TodoApp.Behaviors;
+using TodoApp.Features.Todos;
 
-namespace TodoApp.Application.Extensions;
+namespace TodoApp.Extensions;
 
 public static class ServiceExtensions
 {

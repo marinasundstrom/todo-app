@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using TodoApp.Application.Domain;
+using TodoApp.Domain;
 
-namespace TodoApp.Application.Services;
+namespace TodoApp.Services;
 
 public sealed class DomainEventNotification<TDomainEvent> : INotification where TDomainEvent : DomainEvent
 {

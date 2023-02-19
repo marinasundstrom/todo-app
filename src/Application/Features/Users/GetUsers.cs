@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using TodoApp.Application.Common;
-using TodoApp.Application.Extensions;
+using TodoApp.Common;
+using TodoApp.Extensions;
 
-namespace TodoApp.Application.Features.Users;
+namespace TodoApp.Features.Users;
 
 public record GetUsers(int Page = 1, int PageSize = 10, string? SearchTerm = null, string? SortBy = null, SortDirection? SortDirection = null) : IRequest<ItemsResult<UserDto>>
 {

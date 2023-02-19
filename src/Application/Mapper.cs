@@ -1,7 +1,7 @@
-﻿using TodoApp.Application.Features.Todos;
-using TodoApp.Application.Features.Users;
+﻿using TodoApp.Features.Todos;
+using TodoApp.Features.Users;
 
-namespace TodoApp.Application;
+namespace TodoApp;
 
 public static class Mappings
 {

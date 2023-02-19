@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace TodoApp.Application.Domain.Specifications;
+namespace TodoApp.Domain.Specifications;
 
 public abstract class BaseSpecification<T> : ISpecification<T>
 {

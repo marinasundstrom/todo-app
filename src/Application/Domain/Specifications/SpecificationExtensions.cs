@@ -1,4 +1,4 @@
-namespace TodoApp.Application.Domain.Specifications;
+namespace TodoApp.Domain.Specifications;
 
 public static class SpecificationExtensions
 {

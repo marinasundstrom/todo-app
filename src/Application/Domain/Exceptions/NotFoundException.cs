@@ -1,4 +1,4 @@
-﻿namespace TodoApp.Application.Domain.Exceptions;
+﻿namespace TodoApp.Domain.Exceptions;
 
 public class NotFoundException : Exception
 {
