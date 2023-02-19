@@ -3,8 +3,8 @@ using Newtonsoft.Json;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Linq;
-using TodoApp.Application.Services;
-using TodoApp.Application.Entities;
+using TodoApp.Services;
+using TodoApp.Domain.Entities;
 
 namespace TodoApp.Infrastructure.Persistence.Interceptors;
 

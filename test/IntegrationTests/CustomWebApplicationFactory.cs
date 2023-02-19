@@ -9,7 +9,6 @@ using TodoApp;
 using TodoApp.Features.Todos;
 using TodoApp.Infrastructure.Persistence;
 using TodoApp.Infrastructure.Persistence.Interceptors;
-using TodoApp.Application.Extensions;
 
 namespace TodoApp.IntegrationTests;
 
