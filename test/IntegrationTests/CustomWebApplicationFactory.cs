@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using TodoApp.Application;
 using TodoApp.Infrastructure.Persistence;
 using TodoApp.Infrastructure.Persistence.Interceptors;
+using TodoApp.Application.Extensions;
 
 namespace TodoApp.IntegrationTests;
 
