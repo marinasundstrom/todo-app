@@ -97,7 +97,7 @@ public partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Progr
 
         // Act
 
-        var exception = await Assert.ThrowsAsync<ApiException<ProblemDetails>>(async () =>
+        var exception = await Assert.ThrowsAsync<ApiException>(async () =>
         {
             var todo = await todosClient.GetTodoByIdAsync(nonExistentId);
         });
