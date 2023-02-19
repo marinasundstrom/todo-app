@@ -32,6 +32,7 @@ public sealed class FakeOutboxSaveChangesInterceptor : SaveChangesInterceptor
 
         var domainEvents = entities
             .SelectMany(e => e.DomainEvents)
+            .OrderBy(e => e.Timestamp)
             .ToList();
 
         await Task.WhenAll(domainEvents.Select(x => domainEventDispatcher.Dispatch(x)));
