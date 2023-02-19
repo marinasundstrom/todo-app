@@ -35,7 +35,7 @@ public class CreateTodoTest
             connection.Open();
 
             var dbContextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .AddInterceptors(new AuditableEntitySaveChangesInterceptor(fakeCurrentUserService, fakeDateTimeService), new OutboxSaveChangesInterceptor())
+                .AddInterceptors(new AuditableEntitySaveChangesInterceptor(fakeCurrentUserService, fakeDateTimeService), new FakeOutboxSaveChangesInterceptor(fakeDomainEventDispatcher))
                 .UseSqlite(connection)
                 .Options;
 
