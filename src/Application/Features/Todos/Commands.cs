@@ -1,7 +1,8 @@
 ﻿using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using TodoApp.Application.ValueObjects;
+using TodoApp.Application.Domain;
+using TodoApp.Application.Domain.ValueObjects;
 
 namespace TodoApp.Application.Features.Todos.Commands;
 
@@ -32,7 +33,7 @@ public sealed record CreateTodo(string Title, string? Description, TodoStatusDto
 
         public async Task<Result<TodoDto>> Handle(CreateTodo request, CancellationToken cancellationToken)
         {
-            var todo = new Todo(request.Title, request.Description, (Enums.TodoStatus)request.Status);
+            var todo = new Todo(request.Title, request.Description, (Domain.Enums.TodoStatus)request.Status);
 
             todo.UpdateEstimatedHours(request.EstimatedHours);
             todo.UpdateRemainingHours(request.RemainingHours);

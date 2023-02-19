@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
-using TodoApp.Application.Specifications;
-using TodoApp.Application.ValueObjects;
+using TodoApp.Application.Domain.Specifications;
+using TodoApp.Application.Domain.ValueObjects;
 
 namespace TodoApp.Infrastructure.Persistence.Repositories;
 

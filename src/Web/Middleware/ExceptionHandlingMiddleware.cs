@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
-using TodoApp.Application.Exceptions;
-using ApplicationException = TodoApp.Application.Exceptions.ApplicationException;
+using TodoApp.Application.Domain.Exceptions;
+using ApplicationException = TodoApp.Application.Domain.Exceptions.ApplicationException;
 
 namespace TodoApp.Web.Middleware;
 

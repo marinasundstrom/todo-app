@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using TodoApp.Application.Entities;
-using TodoApp.Application.Enums;
-using TodoApp.Application.Events;
+using TodoApp.Application.Domain.Entities;
+using TodoApp.Application.Domain.Enums;
+using TodoApp.Application.Domain.Events;
 
 namespace TodoApp.Application.Tests;
 
@@ -10,7 +10,7 @@ public class TodoTest
     [Fact]
     public void CreateTodo()
     {
-        var todo = new Todo("Foo", "Bar", TodoApp.Application.Enums.TodoStatus.NotStarted);
+        var todo = new Todo("Foo", "Bar", TodoApp.Application.Domain.Enums.TodoStatus.NotStarted);
 
         //todo.DomainEvents.OfType<TodoCreated>().Should().ContainSingle();
     }

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
-using ValidationException = TodoApp.Application.Exceptions.ValidationException;
+using ValidationException = TodoApp.Application.Domain.Exceptions.ValidationException;
 
 namespace TodoApp.Application.Behaviors;
 

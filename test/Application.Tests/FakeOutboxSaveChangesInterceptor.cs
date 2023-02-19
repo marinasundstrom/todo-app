@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Linq;
 using TodoApp.Application.Services;
-using TodoApp.Application.Entities;
+using TodoApp.Application.Domain.Entities;
 
 namespace TodoApp.Infrastructure.Persistence.Interceptors;
 

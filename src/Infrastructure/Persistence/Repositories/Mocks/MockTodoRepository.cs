@@ -1,6 +1,6 @@
 ﻿using System;
-using TodoApp.Application.Specifications;
-using TodoApp.Application.ValueObjects;
+using TodoApp.Application.Domain.Specifications;
+using TodoApp.Application.Domain.ValueObjects;
 
 namespace TodoApp.Infrastructure.Persistence.Repositories.Mocks;
 

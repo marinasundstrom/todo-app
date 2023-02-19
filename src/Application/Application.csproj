@@ -38,4 +38,26 @@
 		<ProjectReference Include="..\Contracts\Contracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Domain\" />
+    <None Remove="Domain\Entities\" />
+    <None Remove="Domain\Enums\" />
+    <None Remove="Domain\Errors\" />
+    <None Remove="Domain\Events\" />
+    <None Remove="Domain\Exceptions\" />
+    <None Remove="Domain\Repositories\" />
+    <None Remove="Domain\Specifications\" />
+    <None Remove="Domain\ValueObjects\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Domain\" />
+    <Folder Include="Domain\Entities\" />
+    <Folder Include="Domain\Enums\" />
+    <Folder Include="Domain\Errors\" />
+    <Folder Include="Domain\Events\" />
+    <Folder Include="Domain\Exceptions\" />
+    <Folder Include="Domain\Repositories\" />
+    <Folder Include="Domain\Specifications\" />
+    <Folder Include="Domain\ValueObjects\" />
+  </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-﻿using TodoApp.Application.Specifications;
+﻿using TodoApp.Application.Domain.Specifications;
 
 namespace TodoApp.Application.Features.Todos;
 

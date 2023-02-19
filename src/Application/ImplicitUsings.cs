@@ -1,5 +1,5 @@
-﻿global using TodoApp.Application.Entities;
-global using TodoApp.Application.Enums;
-global using TodoApp.Application.Events;
-global using TodoApp.Application.Repositories;
+﻿global using TodoApp.Application.Domain.Entities;
+global using TodoApp.Application.Domain.Enums;
+global using TodoApp.Application.Domain.Events;
+global using TodoApp.Application.Domain.Repositories;
 global using TodoApp.Application.Services;

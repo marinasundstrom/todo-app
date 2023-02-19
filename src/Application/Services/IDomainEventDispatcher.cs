@@ -1,4 +1,6 @@
-﻿namespace TodoApp.Application.Services;
+﻿using TodoApp.Application.Domain;
+
+namespace TodoApp.Application.Services;
 
 public interface IDomainEventDispatcher
 {

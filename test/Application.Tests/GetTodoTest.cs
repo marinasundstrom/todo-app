@@ -44,7 +44,7 @@ public class GetTodoTest
 
             // Assert
 
-            Assert.True(result.HasError(Errors.Todos.TodoNotFound));
+            Assert.True(result.HasError(Domain.Errors.Todos.TodoNotFound));
         }
     }
 }

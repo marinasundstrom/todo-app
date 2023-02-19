@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TodoApp.Application.Domain;
 using TodoApp.Infrastructure.Idempotence;
 using TodoApp.Infrastructure.Persistence.Interceptors;
 using TodoApp.Infrastructure.Persistence.Repositories;

@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using TodoApp.Application.Common;
+using TodoApp.Application.Domain;
 using TodoApp.Application.Extensions;
 
 namespace TodoApp.Application.Features.Users;

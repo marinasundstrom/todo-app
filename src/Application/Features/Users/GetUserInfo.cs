@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
+using TodoApp.Application.Domain;
 
 namespace TodoApp.Application.Features.Users;
 
