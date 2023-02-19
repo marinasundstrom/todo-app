@@ -14,7 +14,7 @@ public partial class TodosTest : IClassFixture<CustomWebApplicationFactory<Progr
     }
 
     [Fact]
-    public async Task CreatedoShouldBeRetrievedByItsId()
+    public async Task CreateTodoShouldBeRetrievedByItsId()
     {
         // Arrange
 
