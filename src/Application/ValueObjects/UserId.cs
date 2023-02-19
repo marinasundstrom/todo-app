@@ -20,7 +20,7 @@ public struct UserId
 
     public override string ToString()
     {
-        return Value.ToString();
+        return Value?.ToString() ?? string.Empty;
     }
 
     public static bool operator ==(UserId lhs, UserId rhs) => lhs.Value == rhs.Value;
