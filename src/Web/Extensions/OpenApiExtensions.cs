@@ -25,6 +25,8 @@ public static class OpenApiExtensions
                 };
                 config.ApiGroupNames = new[] { GetApiVersion(description) };
 
+                config.DefaultReferenceTypeNullHandling = NJsonSchema.Generation.ReferenceTypeNullHandling.NotNull;
+
                 config.AddSecurity("JWT", new OpenApiSecurityScheme
                 {
                     Type = OpenApiSecuritySchemeType.ApiKey,

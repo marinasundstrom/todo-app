@@ -11,7 +11,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<OpenApiReference Include="OpenAPIs\swagger.json" Options="/UseBaseUrl:false /GenerateClientInterfaces:true" Namespace="TodoApp">
+		<OpenApiReference Include="OpenAPIs\swagger.json" Options="/UseBaseUrl:false /GenerateClientInterfaces:true /GenerateNullableReferenceTypes:true" Namespace="TodoApp">
 			<SourceUri>https://localhost:5001/swagger/v1/swagger.json</SourceUri>
 			<ClassName>{controller}Client</ClassName>
 			<OutputPath>TodoAppClient.cs</OutputPath>
