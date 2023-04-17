@@ -1,3 +1,5 @@
+***Archived:** Please check [ChatApp](https://github.com/marinasundstrom/ChatApp) instead. It is based on this project.*
+
 # Todo App
 
 Reference project for an application organized into a Vertical Slice Architecture (VSA) with focus on Featured and Use Cases.
